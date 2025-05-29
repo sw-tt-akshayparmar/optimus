@@ -6,6 +6,7 @@ export default [
   route('services', 'routes/services.tsx'),
   route('product/:productId',"routes/product.tsx"),
   route('products',"routes/products.tsx"),
+  route('todo',"routes/todo.tsx"),
   route('dashboard', 'routes/dashboard.tsx', [
     route('','routes/dashboard-home.tsx'),
     route('map','routes/map.tsx'),

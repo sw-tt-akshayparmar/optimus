@@ -5,7 +5,7 @@ export default function Products(props: Route.ComponentProps) {
   return (
     <>
       <div>Product List</div>
-      <ul>{props.loaderData.data.map((prod)=><li><a href={'product/' + prod.productId}>{prod.productId}</a></li>)}</ul>
+      <ul>{props.loaderData.data.map((prod,index)=><li key={index}><a href={'product/' + prod.productId}>{prod.productId}</a></li>)}</ul>
     </>
   );
 }
