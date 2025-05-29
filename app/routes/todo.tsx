@@ -10,10 +10,11 @@ export default function Todo() {
         setCurr(e.target.value)
       }}/>
       <button onClick={()=>{
-        list.push({title:'', descrition: curr});
-        setList([...list]);
+        setList([...list, {title:'', descrition: curr}]);
         setCurr('');
-      }}>Add</button>
+      }}
+      disabled={!curr}
+      >Add</button>
       <ul>
         {list.map((item, index) => {
           return (
@@ -21,8 +22,7 @@ export default function Todo() {
               <div>{item.title}</div>
               <div>{item.descrition}</div>
               <button onClick={()=>{
-                list.splice(index, 1);
-                setList([...list])
+                setList((prev)=>prev.filter((_,i)=>i!==index))
               }} >
                 Remove
               </button>

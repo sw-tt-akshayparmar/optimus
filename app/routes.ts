@@ -14,5 +14,3 @@ export default [
     route('weather','routes/weather.tsx'),
   ]),
 ] satisfies RouteConfig;
-
-

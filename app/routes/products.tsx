@@ -1,7 +1,6 @@
 import type { Route } from "./+types/products";
 
 export default function Products(props: Route.ComponentProps) {
-  console.log(props)
   return (
     <>
       <div>Product List</div>
