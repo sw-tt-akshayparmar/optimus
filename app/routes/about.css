@@ -1,0 +1,61 @@
+.about-container {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(120deg, #f8fafc 0%, #e0e7ef 100%);
+  padding: 32px 0;
+}
+
+.about-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px #0001;
+  padding: 48px 36px;
+  max-width: 540px;
+  width: 100%;
+  text-align: center;
+}
+
+.about-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 18px;
+  color: #2563eb;
+}
+
+.about-desc {
+  font-size: 1.15rem;
+  color: #4a5568;
+  margin-bottom: 28px;
+  line-height: 1.6;
+}
+
+.about-section {
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.about-section h2 {
+  font-size: 1.15rem;
+  color: #1e293b;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.about-section ul {
+  padding-left: 20px;
+  color: #334155;
+  margin: 0;
+}
+
+.about-section li {
+  margin-bottom: 6px;
+  font-size: 1rem;
+}
+
+.about-footer {
+  margin-top: 32px;
+  color: #64748b;
+  font-size: 0.98rem;
+}
