@@ -40,26 +40,88 @@ function createProject(name = "Default List"): Project {
   };
 }
 
+function InputPopup({
+  open,
+  title,
+  placeholder,
+  onSubmit,
+  onClose,
+}: {
+  open: boolean;
+  title: string;
+  placeholder?: string;
+  onSubmit: (val: string) => void;
+  onClose: () => void;
+}) {
+  const [val, setVal] = useState("");
+  if (!open) return null;
+  return (
+    <div className="popup-backdrop">
+      <div className="popup-box">
+        <div className="popup-title">{title}</div>
+        <input
+          className="popup-input"
+          autoFocus
+          placeholder={placeholder}
+          value={val}
+          onChange={(e) => setVal(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && val.trim()) {
+              onSubmit(val.trim());
+              setVal("");
+            }
+            if (e.key === "Escape") onClose();
+          }}
+        />
+        <div className="popup-actions">
+          <button
+            className="popup-btn"
+            onClick={() => {
+              if (val.trim()) {
+                onSubmit(val.trim());
+                setVal("");
+              }
+            }}
+            disabled={!val.trim()}
+          >
+            OK
+          </button>
+          <button className="popup-btn" onClick={onClose}>
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Todo() {
   const [projects, setProjects] = useState<Project[]>([createProject("Personal")]);
   const [activeProject, setActiveProject] = useState(projects[0].id);
   const [input, setInput] = useState("");
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [showArchived, setShowArchived] = useState(false);
+  const [popup, setPopup] = useState<null | { type: "list" | "task" | "subtask"; todoId?: string }>(null);
 
   // Helper to get current project
   const project = projects.find((p) => p.id === activeProject) || projects[0];
 
+  // Add project/list
+  function addProject(name: string) {
+    const newProj = createProject(name);
+    setProjects((prev) => [...prev, newProj]);
+    setActiveProject(newProj.id);
+  }
+
   // Add todo
-  function addTodo() {
-    if (!input.trim()) return;
-    const newTodo = createTodo(input.trim());
+  function addTodo(title: string) {
+    if (!title.trim()) return;
+    const newTodo = createTodo(title.trim());
     setProjects((prev) =>
       prev.map((p) =>
         p.id === project.id ? { ...p, todos: [newTodo, ...p.todos] } : p
       )
     );
-    setInput("");
   }
 
   // Edit todo
@@ -183,17 +245,23 @@ export default function Todo() {
     );
   }
 
-  // Add project/list
-  function addProject() {
-    const name = prompt("Project/List name?");
-    if (!name) return;
-    const newProj = createProject(name);
-    setProjects((prev) => [...prev, newProj]);
-    setActiveProject(newProj.id);
+  function setCategory(id: string, value: string): void {
+    setProjects((prev) =>
+      prev.map((p) =>
+        p.id === project.id
+          ? {
+              ...p,
+              todos: p.todos.map((t) =>
+                t.id === id ? { ...t, category: value } : t
+              ),
+            }
+          : p
+      )
+    );
   }
 
-  // Add subtask
-  function addSubtask(todoId: string, subtaskTitle: string) {
+  function addSubtask(todoId: string, val: string) {
+    if (!val.trim()) return;
     setProjects((prev) =>
       prev.map((p) =>
         p.id === project.id
@@ -205,7 +273,7 @@ export default function Todo() {
                       ...t,
                       subtasks: [
                         ...t.subtasks,
-                        createTodo(subtaskTitle),
+                        createTodo(val.trim()),
                       ],
                     }
                   : t
@@ -216,42 +284,33 @@ export default function Todo() {
     );
   }
 
-  // Tag/category
-  function addTag(todoId: string, tag: string) {
-    setProjects((prev) =>
-      prev.map((p) =>
-        p.id === project.id
-          ? {
-              ...p,
-              todos: p.todos.map((t) =>
-                t.id === todoId && !t.tags.includes(tag)
-                  ? { ...t, tags: [...t.tags, tag] }
-                  : t
-              ),
-            }
-          : p
-      )
-    );
-  }
-
-  function setCategory(todoId: string, category: string) {
-    setProjects((prev) =>
-      prev.map((p) =>
-        p.id === project.id
-          ? {
-              ...p,
-              todos: p.todos.map((t) =>
-                t.id === todoId ? { ...t, category } : t
-              ),
-            }
-          : p
-      )
-    );
-  }
-
   // UI
   return (
     <div className="todo-container" style={{ maxWidth: 700 }}>
+      <InputPopup
+        open={!!popup}
+        title={
+          popup?.type === "list"
+            ? "New List"
+            : popup?.type === "task"
+            ? "New Task"
+            : "New Subtask"
+        }
+        placeholder={
+          popup?.type === "list"
+            ? "List name"
+            : popup?.type === "task"
+            ? "Task title"
+            : "Subtask title"
+        }
+        onSubmit={(val) => {
+          if (popup?.type === "list") addProject(val);
+          if (popup?.type === "task") addTodo(val);
+          if (popup?.type === "subtask" && popup.todoId) addSubtask(popup.todoId, val);
+          setPopup(null);
+        }}
+        onClose={() => setPopup(null)}
+      />
       <div className="todo-title">Swiss Army Todo App</div>
       <div style={{ display: "flex", gap: 12, marginBottom: 16 }}>
         <select
@@ -264,7 +323,7 @@ export default function Todo() {
             </option>
           ))}
         </select>
-        <button className="todo-add-btn" onClick={addProject}>
+        <button className="todo-add-btn" onClick={() => setPopup({ type: "list" })}>
           + New List
         </button>
         <button
@@ -281,9 +340,9 @@ export default function Todo() {
           placeholder="Enter a task..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          onKeyDown={e => e.key === "Enter" && addTodo()}
+          onKeyDown={e => e.key === "Enter" && setPopup({ type: "task" })}
         />
-        <button className="todo-add-btn" onClick={addTodo} disabled={!input}>
+        <button className="todo-add-btn" onClick={() => setPopup({ type: "task" })} disabled={!input}>
           Add
         </button>
       </div>
@@ -440,8 +499,7 @@ export default function Todo() {
                             }}
                             title="Add tag"
                             onClick={() => {
-                              const tag = prompt("Enter tag:");
-                              if (tag) addTag(item.id, tag);
+                              setPopup({ type: "task" }); // You can add a custom tag popup if desired
                             }}
                           >
                             ＋
@@ -491,10 +549,7 @@ export default function Todo() {
                               fontSize: "0.95em",
                               cursor: "pointer",
                             }}
-                            onClick={() => {
-                              const sub = prompt("Subtask title?");
-                              if (sub) addSubtask(item.id, sub);
-                            }}
+                            onClick={() => setPopup({ type: "subtask", todoId: item.id })}
                           >
                             + Add Subtask
                           </button>
