@@ -1,28 +1,33 @@
-import type { Route } from "./+types/products";
+import { PRODUCTS } from "../data/products.data";
 import styles from "../styles/products.module.css";
 
-const PRODUCTS = [
-  { productId: 1233, name: "Camera", price: "$299" },
-  { productId: 12586, name: "Tripod", price: "$49" },
-];
-
-export default function Products(props: Route.ComponentProps) {
+export default function Products() {
   return (
     <div className={styles.productList}>
       <div className={styles.productListTitle}>Product List</div>
-      <ul>
+      <div className={styles.productGrid}>
         {PRODUCTS.map((prod) => (
-          <li key={prod.productId} className={styles.productItem}>
-            <a href={'product/' + prod.productId}>
-              {prod.name} - {prod.price}
+          <div key={prod.productId} className={styles.productCard}>
+            <img
+              src={prod.image}
+              alt={prod.name}
+              className={styles.productCardImage}
+              loading="lazy"
+            />
+            <div className={styles.productCardTitle}>{prod.name}</div>
+            <div className={styles.productCardPrice}>{prod.price}</div>
+            <div className={styles.productCardDesc}>
+              {prod.shortDescription || prod.description}
+            </div>
+            <a
+              href={`/product/${prod.productId}`}
+              className={styles.productCardLink}
+            >
+              View Details
             </a>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
-}
-
-export async function loader() {
-  return { data: PRODUCTS };
 }
