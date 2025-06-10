@@ -3,7 +3,7 @@ export const PRODUCTS = [
     productId: 1001,
     name: "Camera",
     price: "$299",
-    image: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80",
+    image: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80", // DSLR camera
     description: "A high-quality digital camera.",
     shortDescription: "24MP DSLR with 18-55mm lens.",
     specifications: [
@@ -19,7 +19,7 @@ export const PRODUCTS = [
     productId: 1002,
     name: "Tripod",
     price: "$49",
-    image: "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80",
+    image: "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80", // Tripod
     description: "A sturdy tripod for cameras.",
     shortDescription: "Aluminum, 160cm max height.",
     specifications: [
@@ -35,7 +35,7 @@ export const PRODUCTS = [
     productId: 1003,
     name: "Smartphone",
     price: "$699",
-    image: "https://images.unsplash.com/photo-1593642632784-6889f1cc7a2e?auto=format&fit=crop&w=400&q=80",
+    image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=400&q=80", // Smartphone
     description: "Latest generation smartphone with stunning display.",
     shortDescription: "6.5\" OLED, 48MP camera.",
     specifications: [
@@ -51,7 +51,7 @@ export const PRODUCTS = [
     productId: 1004,
     name: "Laptop",
     price: "$1099",
-    image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&q=80",
+    image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&q=80", // Laptop
     description: "Powerful laptop for work and play.",
     shortDescription: "Intel i7, 16GB RAM, 512GB SSD.",
     specifications: [
@@ -67,7 +67,7 @@ export const PRODUCTS = [
     productId: 1005,
     name: "Wireless Headphones",
     price: "$129",
-    image: "https://images.unsplash.com/photo-1601758003110-1b2a2f3f3f3f?auto=format&fit=crop&w=400&q=80",
+    image: "https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=crop&w=400&q=80", // Headphones
     description: "Noise-cancelling wireless headphones.",
     shortDescription: "30 hours battery, Bluetooth 5.2.",
     specifications: [
@@ -83,7 +83,7 @@ export const PRODUCTS = [
     productId: 1006,
     name: "Smartwatch",
     price: "$199",
-    image: "https://images.unsplash.com/photo-1587822175052-6c6f6f6f6f6f?auto=format&fit=crop&w=400&q=80",
+    image: "https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?auto=format&fit=crop&w=400&q=80", // Smartwatch
     description: "Fitness-focused smartwatch with heart rate monitor.",
     shortDescription: "1.4\" AMOLED, 7 days battery.",
     specifications: [
@@ -99,7 +99,7 @@ export const PRODUCTS = [
     productId: 1007,
     name: "Bluetooth Speaker",
     price: "$59",
-    image: "https://images.unsplash.com/photo-1517841905240-472d8ee40554?auto=format&fit=crop&w=400&q=80",
+    image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80", // Bluetooth speaker
     description: "Portable Bluetooth speaker with deep bass.",
     shortDescription: "12 hours battery, IPX7 waterproof.",
     specifications: [
@@ -115,7 +115,7 @@ export const PRODUCTS = [
     productId: 1008,
     name: "Gaming Mouse",
     price: "$39",
-    image: "https://images.unsplash.com/photo-1517841905240-472d8ee40554?auto=format&fit=crop&w=400&q=80",
+    image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&q=80", // Gaming mouse
     description: "High-precision gaming mouse with RGB lighting.",
     shortDescription: "16000 DPI, 8 programmable buttons.",
     specifications: [
@@ -131,7 +131,7 @@ export const PRODUCTS = [
     productId: 1009,
     name: "Mechanical Keyboard",
     price: "$89",
-    image: "https://images.unsplash.com/photo-1517841905240-472d8ee40554?auto=format&fit=crop&w=400&q=80",
+    image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&q=80", // Mechanical keyboard
     description: "RGB mechanical keyboard with blue switches.",
     shortDescription: "Blue switches, USB-C connectivity.",
     specifications: [
@@ -147,7 +147,7 @@ export const PRODUCTS = [
     productId: 1010,
     name: "4K Monitor",
     price: "$399",
-    image: "https://images.unsplash.com/photo-1517841905240-472d8ee40554?auto=format&fit=crop&w=400&q=80",
+    image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&q=80", // Monitor
     description: "Ultra HD 27-inch monitor for professionals.",
     shortDescription: "3840x2160 resolution, 60Hz refresh rate.",
     specifications: [
@@ -163,7 +163,7 @@ export const PRODUCTS = [
     productId: 1011,
     name: "External SSD",
     price: "$149",
-    image: "https://images.unsplash.com/photo-1517841905240-472d8ee40554?auto=format&fit=crop&w=400&q=80",
+    image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&q=80", // SSD
     description: "Fast and portable external SSD drive.",
     shortDescription: "1TB capacity, 1050MB/s speed.",
     specifications: [
@@ -179,7 +179,7 @@ export const PRODUCTS = [
     productId: 1012,
     name: "Fitness Tracker",
     price: "$59",
-    image: "https://images.unsplash.com/photo-1517841905240-472d8ee40554?auto=format&fit=crop&w=400&q=80",
+    image: "https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=crop&w=400&q=80", // Fitness tracker
     description: "Track your steps, sleep, and heart rate.",
     shortDescription: "10 days battery, 5ATM water resistant.",
     specifications: [
@@ -195,7 +195,7 @@ export const PRODUCTS = [
     productId: 1013,
     name: "Drone",
     price: "$499",
-    image: "https://images.unsplash.com/photo-1517841905240-472d8ee40554?auto=format&fit=crop&w=400&q=80",
+    image: "https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80", // Drone
     description: "4K camera drone with GPS and obstacle avoidance.",
     shortDescription: "4K camera, 30 min flight time.",
     specifications: [
@@ -211,7 +211,7 @@ export const PRODUCTS = [
     productId: 1014,
     name: "Action Camera",
     price: "$199",
-    image: "https://images.unsplash.com/photo-1517841905240-472d8ee40554?auto=format&fit=crop&w=400&q=80",
+    image: "https://images.unsplash.com/photo-1509395176047-4a66953fd231?auto=format&fit=crop&w=400&q=80", // Action camera
     description: "Waterproof action camera for adventures.",
     shortDescription: "4K resolution, 30m waterproof.",
     specifications: [
@@ -227,7 +227,7 @@ export const PRODUCTS = [
     productId: 1015,
     name: "E-Book Reader",
     price: "$129",
-    image: "https://images.unsplash.com/photo-1517841905240-472d8ee40554?auto=format&fit=crop&w=400&q=80",
+    image: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0ea?auto=format&fit=crop&w=400&q=80", // E-book reader
     description: "Read your favorite books anywhere.",
     shortDescription: "6\" E-Ink display, 8GB storage.",
     specifications: [
@@ -243,7 +243,7 @@ export const PRODUCTS = [
     productId: 1016,
     name: "Wireless Charger",
     price: "$29",
-    image: "https://images.unsplash.com/photo-1517841905240-472d8ee40554?auto=format&fit=crop&w=400&q=80",
+    image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&q=80", // Wireless charger
     description: "Fast wireless charger for smartphones.",
     shortDescription: "15W output, Qi compatible.",
     specifications: [
@@ -259,7 +259,7 @@ export const PRODUCTS = [
     productId: 1017,
     name: "Smart Home Hub",
     price: "$79",
-    image: "https://images.unsplash.com/photo-1517841905240-472d8ee40554?auto=format&fit=crop&w=400&q=80",
+    image: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80", // Smart home hub
     description: "Control all your smart devices from one place.",
     shortDescription: "Works with Alexa, Google Assistant.",
     specifications: [
@@ -275,7 +275,7 @@ export const PRODUCTS = [
     productId: 1018,
     name: "Electric Toothbrush",
     price: "$59",
-    image: "https://images.unsplash.com/photo-1517841905240-472d8ee40554?auto=format&fit=crop&w=400&q=80",
+    image: "https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=crop&w=400&q=80", // Toothbrush
     description: "Smart electric toothbrush with app connectivity.",
     shortDescription: "2 weeks battery, 5 cleaning modes.",
     specifications: [
@@ -291,7 +291,7 @@ export const PRODUCTS = [
     productId: 1019,
     name: "Coffee Maker",
     price: "$89",
-    image: "https://images.unsplash.com/photo-1517841905240-472d8ee40554?auto=format&fit=crop&w=400&q=80",
+    image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80", // Coffee maker
     description: "Automatic coffee maker with programmable timer.",
     shortDescription: "1.5L capacity, 900W power.",
     specifications: [
@@ -307,7 +307,7 @@ export const PRODUCTS = [
     productId: 1020,
     name: "Air Purifier",
     price: "$159",
-    image: "https://images.unsplash.com/photo-1517841905240-472d8ee40554?auto=format&fit=crop&w=400&q=80",
+    image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80", // Air purifier
     description: "HEPA air purifier for clean indoor air.",
     shortDescription: "400 sq.ft. coverage, ultra-quiet.",
     specifications: [
