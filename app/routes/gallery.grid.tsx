@@ -1,4 +1,4 @@
-import { type GalleryImage } from "./gallery.data";
+import { type GalleryImage } from "../data/gallery.data";
 
 type GalleryGridProps = {
   images: GalleryImage[];

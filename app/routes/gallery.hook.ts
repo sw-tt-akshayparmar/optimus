@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { IMAGES, type GalleryImage } from "./gallery.data";
+import { IMAGES, type GalleryImage } from "../data/gallery.data";
 
 export function useGallery() {
   const [modal, setModal] = useState<GalleryImage | null>(null);
