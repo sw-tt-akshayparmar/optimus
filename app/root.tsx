@@ -32,7 +32,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body style={{margin: '0'}}>
+      <body
+        style={{
+          margin: 0,
+          background: "#181c24",
+          color: "#e5e7ef",
+          fontFamily: "'Inter', system-ui, sans-serif",
+          minHeight: "100vh",
+        }}
+      >
         {children}
         <ScrollRestoration />
         <Scripts />
@@ -42,10 +50,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <>
+  return (
+    <>
       <Navbar />
       <Outlet />
-    </>;
+    </>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
@@ -65,11 +75,29 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   }
 
   return (
-    <main className="pt-16 p-4 container mx-auto">
-      <h1>{message}</h1>
+    <main
+      className="pt-16 p-4 container mx-auto"
+      style={{
+        background: "#232837",
+        color: "#e5e7ef",
+        borderRadius: "12px",
+        boxShadow: "0 2px 12px #000a",
+        marginTop: "2rem",
+        maxWidth: 600,
+      }}
+    >
+      <h1 style={{ color: "#60a5fa" }}>{message}</h1>
       <p>{details}</p>
       {stack && (
-        <pre className="w-full p-4 overflow-x-auto">
+        <pre
+          className="w-full p-4 overflow-x-auto"
+          style={{
+            background: "#181c24",
+            color: "#e5e7ef",
+            borderRadius: "8px",
+            marginTop: "1rem",
+          }}
+        >
           <code>{stack}</code>
         </pre>
       )}

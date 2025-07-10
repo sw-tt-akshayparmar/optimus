@@ -1,0 +1,123 @@
+.chat-container {
+  max-width: 480px;
+  margin: 2rem auto;
+  background: #232837;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px #000a;
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 60vh;
+}
+.chat-header {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #60a5fa;
+  text-align: center;
+  margin-bottom: 1rem;
+  letter-spacing: 0.5px;
+}
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+  background: #181c24;
+  border-radius: 8px;
+  padding: 1rem;
+  min-height: 220px;
+}
+.chat-message {
+  margin-bottom: 0.7em;
+  color: #e5e7ef;
+  font-size: 1.05rem;
+}
+.chat-message.self {
+  color: #38bdf8;
+  text-align: right;
+}
+.chat-user {
+  font-weight: 600;
+  color: #60a5fa;
+  margin-right: 6px;
+}
+.chat-input-row {
+  display: flex;
+  gap: 0.5rem;
+}
+.chat-input {
+  flex: 1;
+  padding: 0.7rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #334155;
+  font-size: 1rem;
+  background: #181c24;
+  color: #e5e7ef;
+  outline: none;
+  transition: border 0.15s;
+}
+.chat-input:focus {
+  border: 1.5px solid #60a5fa;
+}
+.chat-send-btn {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.7rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.chat-send-btn:disabled {
+  background: #334155;
+  color: #7b8499;
+  cursor: not-allowed;
+}
+.chat-send-btn:hover:not(:disabled) {
+  background: #60a5fa;
+  color: #181c24;
+}
+.chat-join-container {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.chat-join-box {
+  background: #232837;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px #000a;
+  padding: 2rem 2.5rem;
+  text-align: center;
+}
+.chat-join-input {
+  padding: 0.7rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #334155;
+  font-size: 1rem;
+  background: #181c24;
+  color: #e5e7ef;
+  margin-bottom: 1rem;
+  width: auto;
+  outline: none;
+  transition: border 0.15s;
+}
+.chat-join-input:focus {
+  border: 1.5px solid #60a5fa;
+}
+.chat-join-btn {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.7rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.chat-join-btn:hover {
+  background: #60a5fa;
+  color: #181c24;
+}

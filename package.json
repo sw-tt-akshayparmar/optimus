@@ -16,7 +16,8 @@
     "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^19.1.0",
     "react-router": "^7.5.3",
-    "react-router-dom": "^7.6.1"
+    "react-router-dom": "^7.6.1",
+    "socket.io-client": "^4.8.1"
   },
   "devDependencies": {
     "@react-router/dev": "^7.5.3",
@@ -24,6 +25,7 @@
     "@types/node": "^20",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
+    "@types/socket.io-client": "^1.4.36",
     "tailwindcss": "^4.1.4",
     "typescript": "^5.8.3",
     "vite": "^6.3.3",

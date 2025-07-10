@@ -1,43 +1,48 @@
 nav.nav {
-  box-shadow: none;
-  border-radius: 0;
+  background: #232837;
+  box-shadow: 0 2px 12px #000a;
+  border-radius: 10px;
   margin: 16px auto;
   max-width: 900px;
   padding: 0 32px;
   align-items: center;
+  justify-content: space-between;
+  display: flex;
+  min-height: 56px;
 }
 
 ul.nav-list {
   gap: 16px;
   list-style: none;
   display: flex;
+  margin: 0;
+  padding: 0;
 }
 
 li.nav-item {
-  border-radius: 0;
-  transition: none;
+  border-radius: 6px;
+  transition: background 0.15s, box-shadow 0.15s;
 }
 
 li.nav-item:hover {
-  background: #e3f0fa;
-  transform: none;
-  box-shadow: none;
+  background: #181c24;
+  box-shadow: 0 1px 4px #0004;
 }
 
 .nav-link {
-  color: #1a3a5d;
+  color: #60a5fa;
   font-weight: 500;
   font-size: 1.05rem;
   padding: 8px 14px;
-  border-radius: 0;
-  transition: none;
+  border-radius: 6px;
+  transition: background 0.15s, color 0.15s;
   display: inline-block;
   text-decoration: none;
 }
 
 .nav-link:hover {
-  background: #e3f0fa;
-  color: #1a3a5d;
+  background: #60a5fa;
+  color: #181c24;
   text-decoration: none;
 }
 
@@ -45,7 +50,36 @@ li.nav-item:hover {
   height: 32px;
   width: 32px;
   margin-right: 12px;
-  border-radius: 0;
-  box-shadow: none;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px #0004;
   object-fit: cover;
+  background: #181c24;
+}
+
+.nav-signin-btn {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 20px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-left: 16px;
+  height: 40px;
+  transition: background 0.15s, color 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-signin-btn:disabled {
+  background: #334155;
+  color: #7b8499;
+  cursor: not-allowed;
+}
+
+.nav-signin-btn:hover:not(:disabled) {
+  background: #60a5fa;
+  color: #181c24;
 }

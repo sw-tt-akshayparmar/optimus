@@ -3,14 +3,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(120deg, #f8fafc 0%, #e0e7ef 100%);
+  background: linear-gradient(120deg, #232837 0%, #181c24 100%);
   padding: 32px 0;
 }
 
 .home-hero {
-  background: #fff;
+  background: #232837;
   border-radius: 16px;
-  box-shadow: 0 4px 24px #0001;
+  box-shadow: 0 4px 24px #000a;
   padding: 48px 36px;
   max-width: 480px;
   text-align: center;
@@ -20,12 +20,12 @@
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 18px;
-  color: #2d3748;
+  color: #60a5fa;
 }
 
 .home-subtitle {
   font-size: 1.15rem;
-  color: #4a5568;
+  color: #e5e7ef;
   margin-bottom: 32px;
   line-height: 1.6;
 }
@@ -40,7 +40,7 @@
   text-decoration: none;
   font-size: 1.1rem;
   box-shadow: 0 2px 8px #2563eb22;
-  transition: background 0.18s;
+  transition: background 0.18s, color 0.18s;
 }
 
 .home-cta:hover {
