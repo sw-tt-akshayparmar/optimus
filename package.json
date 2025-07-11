@@ -11,6 +11,7 @@
   "dependencies": {
     "@react-router/node": "^7.5.3",
     "@react-router/serve": "^7.5.3",
+    "dotenv": "^17.2.0",
     "isbot": "^5.1.27",
     "react": "^19.1.0",
     "react-beautiful-dnd": "^13.1.1",
@@ -22,6 +23,7 @@
   "devDependencies": {
     "@react-router/dev": "^7.5.3",
     "@tailwindcss/vite": "^4.1.4",
+    "@types/dotenv": "^6.1.1",
     "@types/node": "^20",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",

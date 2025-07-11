@@ -1,0 +1,8 @@
+const EnvConstants = {
+  SERVER_URL: "SERVER_URL",
+  SERVER_DOMAIN: "SERVER_DOMAIN",
+  SERVER_PORT: "SERVER_PORT",
+  SERVER_SOCKETIO_URL: "SERVER_SOCKETIO_URL",
+};
+
+export default EnvConstants;
