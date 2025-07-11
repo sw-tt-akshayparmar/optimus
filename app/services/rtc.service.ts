@@ -15,9 +15,11 @@ let socket: Socket | null = null;
 let userId: string = "";
 let user: string = "";
 export function connect(username: string) {
-  socket = io("ws://localhost:5000");
-  userId = Math.floor(Math.random()*100000).toString();
+  socket = io("ws://192.168.4.57:5000");
+  userId = Math.floor(Math.random() * 100000).toString();
+  localStorage.setItem(Constants.USER_ID, userId);
   user = username;
+  socket?.emit(Constants.REGISTER_EVENT, { userId, user });
 }
 export function disconnect() {
   socket?.disconnect();
@@ -39,10 +41,15 @@ export function send(message: string) {
 export function onRecive(
   callback: (data: { user: string; userId: string; message: string }) => void
 ) {
+  socket?.on(Constants.PRIVATE_CHAT, callback);
+}
+
+export function onRegister(
+  callback: (data: { user: string; userId: string }) => void
+) {
   socket?.on(
-    Constants.PRIVATE_CHAT,
-    (data: { userId: string; user: string; message: string }) => {
-      console.log(data);
+    Constants.REGISTER_EVENT,
+    (data: { user: string; userId: string }) => {
       if (data.userId !== userId) {
         callback(data);
       }

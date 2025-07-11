@@ -4,8 +4,10 @@ import {
   disconnect,
   onRecive,
   send,
+  onRegister,
 } from "../services/rtc.service";
 import "./chat.css";
+import Constants from "~/constants/constants";
 
 export default function Chat() {
   const [messages, setMessages] = useState<
@@ -24,10 +26,18 @@ export default function Chat() {
     setMessages((prevMessages) => [...prevMessages, message]);
   };
 
+  const onRegisterCallback = (data: { user: string }) => {
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      { user: data.user, message: "has Joined", userId: "" },
+    ]);
+  };
+
   useEffect(() => {
     if (!joined) return;
     connect(username);
     onRecive(onReciveCallback);
+    onRegister(onRegisterCallback);
     return disconnect;
   }, [joined]);
 
@@ -83,7 +93,7 @@ export default function Chat() {
         {messages.map((msg, i) => (
           <div
             key={i}
-            className={`chat-message${msg.user === username ? " self" : ""}`}
+            className={`chat-message${msg.userId === localStorage.getItem(Constants.USER_ID) ? " self" : ""}`}
           >
             <span className="chat-user">{msg.user}:</span> {msg.message}
           </div>
