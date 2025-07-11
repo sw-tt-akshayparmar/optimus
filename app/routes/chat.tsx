@@ -3,28 +3,30 @@ import {
   connect,
   disconnect,
   onRecive,
-  register,
   send,
 } from "../services/rtc.service";
 import "./chat.css";
 
 export default function Chat() {
-  const [messages, setMessages] = useState<{ user: string; text: string }[]>(
-    []
-  );
+  const [messages, setMessages] = useState<
+    { userId: string; user: string; message: string }[]
+  >([]);
   const [input, setInput] = useState("");
   const [username, setUsername] = useState("");
   const [joined, setJoined] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const onReciveCallback = (message: { user: string; text: string }) => {
-    setMessages([...messages, message]);
+  const onReciveCallback = (message: {
+    user: string;
+    userId: string;
+    message: string;
+  }) => {
+    setMessages((prevMessages) => [...prevMessages, message]);
   };
 
   useEffect(() => {
     if (!joined) return;
-    connect();
-    register();
+    connect(username);
     onRecive(onReciveCallback);
     return disconnect;
   }, [joined]);
@@ -83,7 +85,7 @@ export default function Chat() {
             key={i}
             className={`chat-message${msg.user === username ? " self" : ""}`}
           >
-            <span className="chat-user">{msg.user}:</span> {msg.text}
+            <span className="chat-user">{msg.user}:</span> {msg.message}
           </div>
         ))}
         <div ref={messagesEndRef} />

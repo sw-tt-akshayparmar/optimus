@@ -12,9 +12,12 @@ import Constants from "../constants/constants";
 //     socket.emit("private_message", { user: username, text: input });
 
 let socket: Socket | null = null;
-
-export function connect() {
+let userId: string = "";
+let user: string = "";
+export function connect(username: string) {
   socket = io("ws://localhost:5000");
+  userId = Math.floor(Math.random()*100000).toString();
+  user = username;
 }
 export function disconnect() {
   socket?.disconnect();
@@ -27,16 +30,22 @@ export function register() {
 }
 export function send(message: string) {
   socket?.emit(Constants.PRIVATE_CHAT, {
-    toUserId: localStorage.getItem(Constants.TO_USER_ID),
+    user,
+    userId,
     message,
   });
 }
 
 export function onRecive(
-  callback: (data: { user: string; text: string }) => void
+  callback: (data: { user: string; userId: string; message: string }) => void
 ) {
-  socket?.on(Constants.PRIVATE_CHAT, (data: any) => {
-    console.log(data);
-    callback({ text: data.message, user: data.toUserId });
-  });
+  socket?.on(
+    Constants.PRIVATE_CHAT,
+    (data: { userId: string; user: string; message: string }) => {
+      console.log(data);
+      if (data.userId !== userId) {
+        callback(data);
+      }
+    }
+  );
 }
