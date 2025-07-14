@@ -1,5 +1,6 @@
 import "./home.css";
 import H6502 from "~/components/H6502";
+import React from "react";
 
 export default function Home() {
   return (

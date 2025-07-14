@@ -1,33 +1,21 @@
 import { useEffect, useRef, useState } from "react";
-import {
-  connect,
-  disconnect,
-  onRecive,
-  send,
-  onRegister,
-} from "../services/rtc.service";
+import { connect, disconnect, onRecive, send, onRegister } from "../services/rtc.service";
 import "./chat.css";
 import Constants from "~/constants/constants";
 
 export default function Chat() {
-  const [messages, setMessages] = useState<
-    { userId: string; user: string; message: string }[]
-  >([]);
+  const [messages, setMessages] = useState<{ userId: string; user: string; message: string }[]>([]);
   const [input, setInput] = useState("");
   const [username, setUsername] = useState("");
   const [joined, setJoined] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const onReciveCallback = (message: {
-    user: string;
-    userId: string;
-    message: string;
-  }) => {
-    setMessages((prevMessages) => [...prevMessages, message]);
+  const onReciveCallback = (message: { user: string; userId: string; message: string }) => {
+    setMessages(prevMessages => [...prevMessages, message]);
   };
 
   const onRegisterCallback = (data: { user: string }) => {
-    setMessages((prevMessages) => [
+    setMessages(prevMessages => [
       ...prevMessages,
       { user: data.user, message: "has Joined", userId: "" },
     ]);
@@ -66,10 +54,8 @@ export default function Chat() {
             className="chat-join-input"
             placeholder="Enter your name"
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            onKeyDown={(e) =>
-              e.key === "Enter" && username.trim() && setJoined(true)
-            }
+            onChange={e => setUsername(e.target.value)}
+            onKeyDown={e => e.key === "Enter" && username.trim() && setJoined(true)}
             autoFocus
             aria-label="Enter your name"
           />
@@ -105,15 +91,11 @@ export default function Chat() {
           className="chat-input"
           placeholder="Type a message..."
           value={input}
-          onChange={(e) => setInput(e.target.value)}
+          onChange={e => setInput(e.target.value)}
           autoFocus
           aria-label="Type a message"
         />
-        <button
-          className="chat-send-btn"
-          type="submit"
-          disabled={!input.trim()}
-        >
+        <button className="chat-send-btn" type="submit" disabled={!input.trim()}>
           Send
         </button>
       </form>
