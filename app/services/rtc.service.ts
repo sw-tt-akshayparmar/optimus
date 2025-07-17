@@ -16,10 +16,7 @@ export function disconnect() {
   socket?.disconnect();
 }
 export function register() {
-  socket?.emit(
-    Constants.REGISTER_EVENT,
-    localStorage.getItem(Constants.USER_ID)
-  );
+  socket?.emit(Constants.REGISTER_EVENT, localStorage.getItem(Constants.USER_ID));
 }
 export function send(message: string) {
   socket?.emit(Constants.PRIVATE_CHAT, {
@@ -35,15 +32,10 @@ export function onRecive(
   socket?.on(Constants.PRIVATE_CHAT, callback);
 }
 
-export function onRegister(
-  callback: (data: { user: string; userId: string }) => void
-) {
-  socket?.on(
-    Constants.REGISTER_EVENT,
-    (data: { user: string; userId: string }) => {
-      if (data.userId !== userId) {
-        callback(data);
-      }
+export function onRegister(callback: (data: { user: string; userId: string }) => void) {
+  socket?.on(Constants.REGISTER_EVENT, (data: { user: string; userId: string }) => {
+    if (data.userId !== userId) {
+      callback(data);
     }
-  );
+  });
 }
