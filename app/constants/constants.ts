@@ -1,5 +1,7 @@
 const Constants = {
+  SERVER_HELLO: "server-hello",
   REGISTER_EVENT: "register",
+  UNREGISTER_EVENT: "unregister",
   MESSAGE_EVENT: "message",
   PRIVATE_CHAT: "private_chat",
   USER_ID: "userId",
