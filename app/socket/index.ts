@@ -1,29 +1,17 @@
 import { io, Socket } from "socket.io-client";
 import Constants from "~/constants/constants";
 import * as envService from "~/services/env.service";
-
-// const socket: Socket = io(envService.getSocketioUrl());
-
-// export function disconnect() {
-//   socket?.disconnect();
-// }
-
-// socket.on("connection", () => {
-//   console.log("Socket connected:", socket.id);
-// });
-
-// export default socket;
+import { saveConnectionId } from "~/services/storage.service";
 
 class SocketIO {
   private socket!: Socket;
   private serverUrl: string;
   static s: SocketIO;
   constructor(url?: string) {
-    this.serverUrl = url || envService.getServerUrl();
+    this.serverUrl = url || envService.getSocketioUrl();
     this.socket = io(this.serverUrl);
-    this.socket.on(Constants.SERVER_HELLO, (data: any) => {
-      console.log(data);
-      localStorage.setItem("connectionId", data);
+    this.socket.on(Constants.SERVER_HELLO, (data: { connectionId: string }) => {
+      saveConnectionId(data.connectionId);
     });
   }
   connect(url?: string) {
