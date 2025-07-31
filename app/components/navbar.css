@@ -57,29 +57,76 @@ li.nav-item:hover {
 }
 
 .nav-signin-btn {
-  background: #2563eb;
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(90deg, #2563eb, #60a5fa, #38bdf8, #818cf8, #2563eb);
+  background-size: 300% 300%;
   color: #fff;
   border: none;
-  border-radius: 6px;
-  padding: 8px 20px;
+  border-radius: 10px; /* slightly more rounded for effect */
+  padding: 8px 24px;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   margin-left: 16px;
-  height: 40px;
-  transition: background 0.15s, color 0.15s;
+  height: 44px;
+  box-shadow: 0 4px 24px #2563eb44, 0 1.5px 6px #0002;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+  transition: box-shadow 0.2s, color 0.15s;
+  animation: gradient-move 3s ease-in-out infinite;
+}
+
+.nav-signin-btn::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -2px; /* border thickness */
+  border-radius: 12px;
+  padding: 0;
+  background: linear-gradient(120deg, #f472b6, #38bdf8, #a21caf, #fbbf24, #38bdf8, #f472b6);
+  background-size: 400% 400%;
+  animation: border-gradient-move 6s linear infinite;
+  transition: filter 0.2s;
+}
+
+@keyframes border-gradient-move {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.nav-signin-btn:disabled::before {
+  background: #334155;
+  animation: none;
+}
+
+.nav-signin-btn:hover:not(:disabled)::before,
+.nav-signin-btn:focus-visible:not(:disabled)::before {
+  filter: brightness(1.2) blur(1px);
+}
+
+@keyframes gradient-move {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .nav-signin-btn:disabled {
   background: #334155;
   color: #7b8499;
   cursor: not-allowed;
+  box-shadow: none;
+  animation: none;
 }
 
-.nav-signin-btn:hover:not(:disabled) {
-  background: #60a5fa;
+.nav-signin-btn:hover:not(:disabled),
+.nav-signin-btn:focus-visible:not(:disabled) {
   color: #181c24;
+  box-shadow: 0 6px 32px #60a5fa55, 0 2px 8px #0003;
+  background: linear-gradient(90deg, #60a5fa, #818cf8, #38bdf8, #2563eb, #60a5fa);
+  background-size: 300% 300%;
+  animation: gradient-move 1.5s linear infinite;
 }

@@ -1,9 +1,8 @@
 import * as envService from "./env.service";
-import APIConfig from "~/config/api.config";
-import { getAuthorazation } from "./storage.service";
+import { getAuthorazation } from "../services/user.service";
 
 export async function get(
-  api: string,
+  api: { path: string; auth?: boolean },
   params?: { [key: string]: string },
   headers?: { [key: string]: string }
 ) {
@@ -11,7 +10,7 @@ export async function get(
 }
 
 export async function post(
-  api: string,
+  api: { path: string; auth?: boolean },
   data?: any,
   params?: { [key: string]: string },
   headers?: { [key: string]: string }
@@ -20,7 +19,7 @@ export async function post(
 }
 
 export async function put(
-  api: string,
+  api: { path: string; auth?: boolean },
   data?: any,
   params?: { [key: string]: string },
   headers?: { [key: string]: string }
@@ -29,7 +28,7 @@ export async function put(
 }
 
 export async function doDelete(
-  api: string,
+  api: { path: string; auth?: boolean },
   params?: { [key: string]: string },
   headers?: { [key: string]: string }
 ) {
@@ -38,18 +37,20 @@ export async function doDelete(
 
 async function request(
   method: "GET" | "POST" | "PUT" | "DELETE",
-  api: string,
+  api: { path: string; auth?: boolean },
   data?: any,
-  params?: { [key: string]: string },
-  headers?: { [key: string]: string }
+  params: { [key: string]: string } = {},
+  headers: { [key: string]: string } = {}
 ) {
-  const url: string = getAPIURL(api, params);
+  const url: string = getAPIURL(api.path, params);
+  if (api.auth) {
+    headers.Authorization = "Bearer " + getAuthorazation();
+  }
   const res = await fetch(url, {
     method,
     body: data ? JSON.stringify(data) : undefined,
     headers: {
       "Content-Type": "application/json",
-      Authorization: "Bearer " + getAuthorazation(),
       ...headers,
     },
   });
@@ -64,5 +65,5 @@ function getAPIURL(api: string, params?: { [key: string]: string }) {
       .join("&");
     query = `?${queryParams}`;
   }
-  return `${envService.getServerUrl()}${APIConfig.API_ROOT}${api}${query}`;
+  return `${envService.getAPIBaseUrl()}${api}${query}`;
 }

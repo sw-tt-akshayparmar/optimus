@@ -12,3 +12,6 @@ export function getServerPort(): number {
 export function getSocketioUrl(): string {
   return environment.SERVER_SOCKETIO_URL;
 }
+export function getAPIBaseUrl(): string {
+  return environment.API_BASE_URL;
+}
