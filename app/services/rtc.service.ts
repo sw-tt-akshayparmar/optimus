@@ -4,7 +4,7 @@ import socket from "~/socket";
 import * as userService from "./user.service";
 
 export function connect() {
-  const user: User = userService.getUserdata();
+  const user: User = userService.getUserData();
   socket.send(Constants.REGISTER_EVENT, user);
 }
 export function disconnect() {
@@ -14,7 +14,7 @@ export function register() {
   socket.send(Constants.REGISTER_EVENT, localStorage.getItem(Constants.USER_ID));
 }
 export function send(message: string) {
-  const user: User = userService.getUserdata();
+  const user: User = userService.getUserData();
   socket.send(Constants.PRIVATE_CHAT, {
     user,
     message,
@@ -28,7 +28,7 @@ export function onRecive(
 }
 
 export function onRegister(callback: (user: User) => void) {
-  const currUser: User = userService.getUserdata();
+  const currUser: User = userService.getUserData();
   socket.on(Constants.REGISTER_EVENT, (user: User) => {
     if (currUser.id !== user.id) {
       callback(user);

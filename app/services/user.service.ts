@@ -1,14 +1,15 @@
 import storageConstants from "~/constants/storage.constants";
-import type { LoginModel } from "~/models/Auth.model";
+import type { AuthToken, LoginModel } from "~/models/Auth.model";
 import { User } from "~/models/User.model";
 import * as apiService from "./api.service";
 import APIConfig from "~/config/api.config";
+import type { SuccessResponse } from "~/models/Response.model";
 
 export function saveAuthorization(token: string) {
   localStorage.setItem(storageConstants.AUTHORIZATION_TOKEN, token);
 }
 
-export function saveRefreshTone(token: string) {
+export function saveRefreshToken(token: string) {
   localStorage.setItem(storageConstants.REFRESH_TOKEN, token);
 }
 
@@ -20,7 +21,11 @@ export function getRefreshToken(): string {
   return localStorage.getItem(storageConstants.REFRESH_TOKEN) || "";
 }
 
-export function getUserdata(): User {
+export function saveUserData(user: User) {
+  localStorage.setItem(storageConstants.USER_DATA, JSON.stringify(user));
+}
+
+export function getUserData(): User {
   return User.from(JSON.parse(localStorage.getItem(storageConstants.USER_DATA)!));
 }
 
@@ -36,7 +41,12 @@ export async function register(user: User) {
   apiService.post(APIConfig.REGISTER, user);
 }
 
-export async function login(loginModel: LoginModel): Promise<User> {
-  const data = await apiService.post(APIConfig.LOGIN, loginModel);
-  return User.from(data);
+export async function login(loginModel: LoginModel): Promise<User | undefined> {
+  const success: SuccessResponse = await apiService.post(APIConfig.LOGIN, loginModel);
+  const auth: AuthToken = success.data as AuthToken;
+  saveAuthorization(auth.accessToken);
+  saveRefreshToken(auth.refreshToken);
+  saveUserData(auth.user!);
+  console.log(success);
+  return auth.user!;
 }

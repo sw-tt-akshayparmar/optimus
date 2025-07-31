@@ -1,6 +1,6 @@
 import { redirect, type ClientLoaderFunctionArgs } from "react-router";
 import { Outlet, useLoaderData, useOutletContext } from "react-router";
-import { getAuthorazation, getUserdata } from "~/services/user.service";
+import { getAuthorazation, getUserData } from "~/services/user.service";
 import { User } from "~/models/User.model";
 
 export const clientLoader = async ({ request }: ClientLoaderFunctionArgs) => {
@@ -10,7 +10,7 @@ export const clientLoader = async ({ request }: ClientLoaderFunctionArgs) => {
     params.set("from", new URL(request.url).pathname);
     return redirect("/login?" + params.toString());
   }
-  const user = getUserdata();
+  const user = getUserData();
   return { user: User.from(user) };
 };
 
