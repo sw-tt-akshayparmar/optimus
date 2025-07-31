@@ -7,7 +7,7 @@ export const clientLoader = async ({ request }: ClientLoaderFunctionArgs) => {
   const token = getAuthorazation();
   if (!token) {
     const params = new URLSearchParams();
-    params.set("from", new URL(request.url).pathname);
+    params.set("redirection", new URL(request.url).pathname);
     return redirect("/login?" + params.toString());
   }
   const user = getUserData();

@@ -1,19 +1,13 @@
-import {
-  Form,
-  Link,
-  redirect,
-  useActionData,
-  useNavigation,
-  type ActionFunctionArgs,
-} from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { login } from "~/services/user.service";
 import "./login.css";
 import { useState } from "react";
+import type { User } from "~/models/User.model";
+import { useNavigate, useParams } from "react-router";
 
 export default function LoginPage() {
-  const actionData = useActionData() as { error?: string } | undefined;
-  const navigation = useNavigation();
-
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setSubmitting] = useState(false);
 
@@ -34,9 +28,13 @@ export default function LoginPage() {
       return;
     }
     try {
-      const res = await login({ username: username.toString(), password: password.toString() });
+      const user: User = await login({
+        username: username.toString(),
+        password: password.toString(),
+      });
+      navigate(searchParams.get("redirection")!);
     } catch (err: any) {
-      setError(err.message || "Login failed");
+      setError(err.error || "Login failed");
     } finally {
       setSubmitting(false);
     }
@@ -46,7 +44,7 @@ export default function LoginPage() {
     <div className="auth-container">
       <div className="auth-card">
         <h1>Login</h1>
-        {actionData?.error && <div className="error-message">{actionData.error}</div>}
+        {error && <div className="error-message">{error}</div>}
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">
             <label htmlFor="username">Username</label>
@@ -67,7 +65,7 @@ export default function LoginPage() {
           </button>
         </form>
         <p className="auth-link">
-          Don&apost have an account? <Link to="/register">Register</Link>
+          Don&apos;t have an account? <Link to="/register">Register</Link>
         </p>
       </div>
     </div>
