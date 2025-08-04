@@ -6,19 +6,16 @@ import type { User } from "~/models/User.model";
 
 export default function Chat() {
   const { user } = useUser();
-  const [messages, setMessages] = useState<{ userId: string; user: string; message: string }[]>([]);
+  const [messages, setMessages] = useState<{ message: string; user: User }[]>([]);
   const [input, setInput] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const onReciveCallback = (message: { user: string; userId: string; message: string }) => {
+  const onReciveCallback = (message: any) => {
     setMessages(prevMessages => [...prevMessages, message]);
   };
 
   const onRegisterCallback = (user: User) => {
-    setMessages(prevMessages => [
-      ...prevMessages,
-      { user: user.name, message: "has Joined", userId: "" },
-    ]);
+    setMessages(prevMessages => [...prevMessages, { user: user, message: "has Joined" }]);
   };
 
   useEffect(() => {
@@ -45,8 +42,8 @@ export default function Chat() {
       <div className="chat-header">💬 Optimus Chat</div>
       <div className="chat-messages">
         {messages.map((msg, i) => (
-          <div key={i} className={`chat-message${msg.userId === user.id ? " self" : ""}`}>
-            <span className="chat-user">{msg.user}:</span> {msg.message}
+          <div key={i} className={`chat-message${msg.user.id === user.id ? " self" : ""}`}>
+            <span className="chat-user">{msg.user.name}:</span> {msg.message}
           </div>
         ))}
         <div ref={messagesEndRef} />

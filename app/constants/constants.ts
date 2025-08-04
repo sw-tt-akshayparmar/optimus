@@ -6,6 +6,7 @@ const Constants = {
   PRIVATE_CHAT: "private_chat",
   USER_ID: "userId",
   TO_USER_ID: "toUserId",
+  MATCH_FOUND: "match-found",
 };
 
 export default Constants;

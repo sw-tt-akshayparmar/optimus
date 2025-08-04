@@ -9,8 +9,6 @@ import {
 
 import type { Route } from "./+types/root";
 import Navbar from "./components/Navbar";
-import { useEffect } from "react";
-import socket from "./socket";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -52,11 +50,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  useEffect(() => {
-    if (!socket.isConnected()) {
-      socket.connect();
-    }
-  }, []);
   return (
     <>
       <Navbar />

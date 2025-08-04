@@ -3,14 +3,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(120deg, #ffd8ee 0%, #d0dbff 100%);
+  background: #181c24; /* Consistent dark background */
   padding: 32px 0;
 }
 
 .home-hero {
-  background: #232837;
-  border-radius: 16px;
-  box-shadow: 0 4px 24px #000a;
+  background: #232837; /* Consistent dark card background */
+  border-radius: 12px; /* Consistent rounded corners */
+  box-shadow: 0 4px 24px #000a; /* Consistent shadow */
   padding: 48px 36px;
   max-width: 480px;
   text-align: center;
@@ -20,19 +20,25 @@
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 18px;
-  color: #60a5fa;
+  color: #60a5fa; /* Consistent accent color */
 }
 
 .home-subtitle {
   font-size: 1.15rem;
-  color: #e5e7ef;
+  color: #e5e7ef; /* Consistent light text color */
   margin-bottom: 32px;
   line-height: 1.6;
 }
 
+.home-cta-container {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
 .home-cta {
   display: inline-block;
-  background: #2563eb;
+  background: #2563eb; /* Consistent primary button color */
   color: #fff;
   font-weight: 600;
   padding: 12px 32px;
@@ -40,9 +46,32 @@
   text-decoration: none;
   font-size: 1.1rem;
   box-shadow: 0 2px 8px #2563eb22;
-  transition: background 0.18s, color 0.18s;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
 }
 
 .home-cta:hover {
-  background: #1e40af;
+  background-color: #60a5fa; /* Consistent hover effect */
+  color: #181c24;
+}
+
+.home-cta-secondary {
+  display: inline-block;
+  background: transparent;
+  color: #60a5fa;
+  font-weight: 600;
+  padding: 12px 32px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 1.1rem;
+  border: 2px solid #2563eb;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+
+.home-cta-secondary:hover {
+  background-color: #2563eb;
+  color: #fff;
 }

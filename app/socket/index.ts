@@ -9,6 +9,7 @@ class SocketIO {
   private serverUrl: string;
   constructor(url?: string) {
     this.serverUrl = url || envService.getSocketioUrl();
+    this.connect();
   }
   connect(url?: string) {
     this.socket = io(this.serverUrl);
