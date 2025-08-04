@@ -12,7 +12,6 @@ export default function Home() {
   };
 
   useEffect(() => {
-    console.log("this is socket registartion useeffect from game");
     gameService.registerCallback(setMatch);
   }, []);
 
