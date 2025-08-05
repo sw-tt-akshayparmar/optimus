@@ -7,31 +7,30 @@ import {
   type ActionFunctionArgs,
 } from "react-router-dom";
 import { register } from "~/services/user.service";
-import "~/styles/auth.css";
 import { User } from "~/models/User.model";
 
-export const action = async ({ request }: ActionFunctionArgs) => {
-  const formData = await request.formData();
-  const name = formData.get("name") as string;
-  const username = formData.get("username") as string;
-  const password = formData.get("password") as string;
+// export const action = async ({ request }: ActionFunctionArgs) => {
+//   const formData = await request.formData();
+//   const name = formData.get("name") as string;
+//   const username = formData.get("username") as string;
+//   const password = formData.get("password") as string;
 
-  if (!name || !username || !password) {
-    return { error: "All fields are required." };
-  }
+//   if (!name || !username || !password) {
+//     return { error: "All fields are required." };
+//   }
 
-  if (password.length < 6) {
-    return { error: "Password must be at least 6 characters long." };
-  }
+//   if (password.length < 6) {
+//     return { error: "Password must be at least 6 characters long." };
+//   }
 
-  try {
-    await register(User.from({ name, username, password }));
-    // Redirect to login page after successful registration
-    return redirect("/login");
-  } catch (error) {
-    return { error: error instanceof Error ? error.message : "Registration failed" };
-  }
-};
+//   try {
+//     await register(User.from({ name, username, password }));
+//     // Redirect to login page after successful registration
+//     return redirect("/login");
+//   } catch (error) {
+//     return { error: error instanceof Error ? error.message : "Registration failed" };
+//   }
+// };
 
 export default function RegisterPage() {
   const actionData = useActionData() as { error?: string } | undefined;

@@ -4,7 +4,7 @@ import * as envService from "~/services/env.service";
 import { saveConnectionId } from "~/services/user.service";
 
 // TODO make it better
-class SocketIO {
+export class SocketIO {
   private socket!: Socket;
   private serverUrl: string;
   constructor(url?: string) {
@@ -22,6 +22,9 @@ class SocketIO {
   }
   on(event: string, callback: (data: any) => void) {
     this.socket?.on(event, callback);
+  }
+  off(event: string, callback?: (data: any) => void) {
+    this.socket?.off(event, callback);
   }
   disconnect() {
     this.socket?.disconnect();

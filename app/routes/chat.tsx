@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { connect, disconnect, onRecive, send, onRegister } from "../services/rtc.service";
+import rtClient from "../services/rtc.service";
 import "./chat.css";
 import { useUser } from "./_authenticated";
 import type { User } from "~/models/User.model";
@@ -10,8 +10,8 @@ export default function Chat() {
   const [input, setInput] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const onReciveCallback = (message: any) => {
-    setMessages(prevMessages => [...prevMessages, message]);
+  const onReceiveCallback = (data: { user: User; message: string }) => {
+    setMessages(prevMessages => [...prevMessages, data]);
   };
 
   const onRegisterCallback = (user: User) => {
@@ -19,11 +19,12 @@ export default function Chat() {
   };
 
   useEffect(() => {
-    connect();
-    onRecive(onReciveCallback);
-    onRegister(onRegisterCallback);
-    return disconnect;
-  }, [user.name]);
+    rtClient.register();
+    rtClient.onReceive(onReceiveCallback);
+    rtClient.onRegister(onRegisterCallback);
+
+    return () => rtClient.unregister();
+  }, []);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -32,7 +33,7 @@ export default function Chat() {
   function handleSend(e: React.FormEvent) {
     e.preventDefault();
     if (input.trim()) {
-      send(input);
+      rtClient.send(input);
       setInput("");
     }
   }
