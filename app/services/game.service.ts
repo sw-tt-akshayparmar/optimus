@@ -4,6 +4,7 @@ import APIConfig from "~/config/api.config";
 import Constants from "~/constants/constants";
 import type { GameMatch } from "~/models/game/GameMatch.model";
 import socket from "~/socket";
+
 export async function startMatch(): Promise<GameMatch> {
   const payload = {
     connectionId: userService.getConnectionId(),
