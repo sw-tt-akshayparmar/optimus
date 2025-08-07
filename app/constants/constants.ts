@@ -4,9 +4,8 @@ const Constants = {
   UNREGISTER_EVENT: "unregister",
   MESSAGE_EVENT: "message",
   PRIVATE_CHAT: "private_chat",
-  USER_ID: "userId",
-  TO_USER_ID: "toUserId",
   MATCH_FOUND: "match-found",
+  OPPONENT_DISCONNECTED: "opponent-disconnected",
 };
 
 export default Constants;

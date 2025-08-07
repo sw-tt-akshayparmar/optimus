@@ -1,21 +1,44 @@
 import "./home.css";
-import * as gameService from "../services/game.service";
 import { useEffect, useState } from "react";
 import type { GameMatch } from "~/models/game/GameMatch.model";
+import gameClient from "../services/game.service";
 
 export default function Home() {
   const [match, setMatch] = useState<GameMatch>();
+  const [opponentDisconnected, setOpponentDisconnected] = useState(false);
 
   const handleStartMatch = async () => {
-    const newMatch = await gameService.startMatch();
+    setOpponentDisconnected(false);
+    const newMatch = await gameClient.startMatch();
     setMatch(newMatch);
   };
 
   useEffect(() => {
-    gameService.registerCallback(setMatch);
+    gameClient.onMatchFound(setMatch);
+    gameClient.onOpponetDisconnect(() => {
+      setOpponentDisconnected(true);
+    });
   }, []);
 
   const renderContent = () => {
+    if (opponentDisconnected) {
+      return (
+        <div className="opponent-disconnected">
+          <h2>Opponent Disconnected</h2>
+          <p>Your opponent has left the game.</p>
+          <button
+            className="start-button"
+            onClick={() => {
+              setMatch(undefined);
+              setOpponentDisconnected(false);
+              handleStartMatch();
+            }}
+          >
+            Find New Game
+          </button>
+        </div>
+      );
+    }
     if (!match) {
       return (
         <>
@@ -64,7 +87,13 @@ export default function Home() {
               <p>-- Basic Game UI --</p>
               <p>Your move!</p>
             </div>
-            <button className="start-button" onClick={() => setMatch(undefined)}>
+            <button
+              className="start-button"
+              onClick={() => {
+                setMatch(undefined);
+                setOpponentDisconnected(false);
+              }}
+            >
               End Game
             </button>
           </div>

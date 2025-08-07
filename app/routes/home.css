@@ -75,3 +75,18 @@
   background-color: #2563eb;
   color: #fff;
 }
+.opponent-disconnected {
+  text-align: center;
+  color: #e5e7ef;
+}
+
+.opponent-disconnected h2 {
+  font-size: 2rem;
+  color: #f87171;
+  margin-bottom: 16px;
+}
+
+.opponent-disconnected p {
+  font-size: 1.15rem;
+  margin-bottom: 24px;
+}
