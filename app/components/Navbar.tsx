@@ -49,10 +49,8 @@ export default function Navbar() {
             Chat
           </NavLink>
         </li>
-      </ul> 
-      <button className="nav-signin-btn">
-        SIGN IN
-      </button>
+      </ul>
+      <button className="nav-signin-btn">SIGN IN</button>
     </nav>
   );
 }
