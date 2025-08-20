@@ -11,6 +11,7 @@ export default [
   route("register", "routes/register.tsx"),
   layout("routes/_authenticated.tsx", [
     route("chat", "routes/chat.tsx"),
+    route("h6502", "components/H6502.tsx"),
     index("routes/home.tsx", {}),
   ]),
 ] satisfies RouteConfig;

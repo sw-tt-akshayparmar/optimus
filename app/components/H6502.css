@@ -13,6 +13,7 @@ path {
   width: 100%;
   justify-content: center;
   display: flex;
+  background: #ffff;
 }
 
 .abstract {
