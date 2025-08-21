@@ -28,6 +28,7 @@ export class H6502 {
   };
   constructor(public memory: Memory) {
     this.memory = memory;
+    this.reset();
   }
   reset(): void {
     this.A = 0;
@@ -184,6 +185,316 @@ export class H6502 {
     this.flags.N = (value & 0x80) !== 0;
     this.write(addr, value);
     this.cycles += 2;
+  }
+
+  //BIT
+  BIT() {
+    const addr = this.imm();
+    const value = this.read(addr);
+    this.flags.Z = (this.A & value) === 0;
+    this.flags.N = (value & 0x80) !== 0;
+    this.flags.V = (value & 0x40) !== 0;
+    this.cycles += 2;
+  }
+  //CMP
+  CMP() {
+    const addr = this.imm();
+    const value = this.read(addr);
+    this.flags.C = this.A >= value;
+    this.flags.Z = (this.A & 0xff) === (value & 0xff);
+    this.flags.N = (this.A & 0x80) !== 0;
+    this.cycles += 2;
+  }
+  //CPX
+  CPX() {
+    const addr = this.imm();
+    const value = this.read(addr);
+    this.flags.C = this.X >= value;
+    this.flags.Z = (this.X & 0xff) === (value & 0xff);
+    this.flags.N = (this.X & 0x80) !== 0;
+    this.cycles += 2;
+  }
+  //CPY
+  CPY() {
+    const addr = this.imm();
+    const value = this.read(addr);
+    this.flags.C = this.Y >= value;
+    this.flags.Z = (this.Y & 0xff) === (value & 0xff);
+    this.flags.N = (this.Y & 0x80) !== 0;
+    this.cycles += 2;
+  }
+  //DEC
+  DEC() {
+    const addr = this.imm();
+    let value = this.read(addr);
+    value = (value - 1) & 0xff;
+    this.flags.Z = value === 0;
+    this.flags.N = (value & 0x80) !== 0;
+    this.write(addr, value);
+    this.cycles += 2;
+  }
+  //EOR
+  EOR() {
+    const addr = this.imm();
+    const value = this.read(addr);
+    this.A ^= value;
+    this.flags.Z = this.A === 0;
+    this.flags.N = (this.A & 0x80) !== 0;
+    this.cycles += 2;
+  }
+  //INC
+  INC() {
+    const addr = this.imm();
+    let value = this.read(addr);
+    value = (value + 1) & 0xff;
+    this.flags.Z = value === 0;
+    this.flags.N = (value & 0x80) !== 0;
+    this.write(addr, value);
+    this.cycles += 2;
+  }
+  //JMP
+  JMP() {
+    const addr = this.abs();
+    this.PC = addr & 0xffff;
+    this.cycles += 3;
+  }
+  //JSR
+  JSR() {
+    const addr = this.abs();
+    this.push((this.PC >> 8) & 0xff);
+    this.push(this.PC & 0xff);
+    this.PC = addr & 0xffff;
+    this.cycles += 6;
+  }
+  //LDA
+  LDA() {
+    const addr = this.imm();
+    const value = this.read(addr);
+    this.A = value & 0xff;
+    this.flags.Z = this.A === 0;
+    this.flags.N = (this.A & 0x80) !== 0;
+    this.cycles += 2;
+  }
+  //LDX
+  LDX() {
+    const addr = this.imm();
+    const value = this.read(addr);
+    this.X = value & 0xff;
+    this.flags.Z = this.X === 0;
+    this.flags.N = (this.X & 0x80) !== 0;
+    this.cycles += 2;
+  }
+  //LDY
+  LDY() {
+    const addr = this.imm();
+    const value = this.read(addr);
+    this.Y = value & 0xff;
+    this.flags.Z = this.Y === 0;
+    this.flags.N = (this.Y & 0x80) !== 0;
+    this.cycles += 2;
+  }
+  //LSR
+  LSR() {
+    const addr = this.imm();
+    let value = this.read(addr);
+    this.flags.C = (value & 0x01) !== 0;
+    value = (value >> 1) & 0xff;
+    this.flags.Z = value === 0;
+    this.flags.N = (value & 0x80) !== 0;
+    this.write(addr, value);
+    this.cycles += 2;
+  }
+
+  //ORA
+  ORA() {
+    const addr = this.imm();
+    const value = this.read(addr);
+    this.A |= value;
+    this.flags.Z = this.A === 0;
+    this.flags.N = (this.A & 0x80) !== 0;
+    this.cycles += 2;
+  }
+  //PHA
+  PHA() {
+    this.push(this.A);
+    this.cycles += 3;
+  }
+  //PHP
+  PHP() {
+    let status = 0;
+    if (this.flags.N) status |= 0x80;
+    if (this.flags.V) status |= 0x40;
+    if (this.flags.U) status |= 0x20;
+    if (this.flags.B) status |= 0x10;
+    if (this.flags.D) status |= 0x08;
+    if (this.flags.I) status |= 0x04;
+    if (this.flags.Z) status |= 0x02;
+    if (this.flags.C) status |= 0x01;
+    this.push(status);
+    this.cycles += 3;
+  }
+  //PLA
+  PLA() {
+    this.A = this.pull();
+    this.flags.Z = this.A === 0;
+    this.flags.N = (this.A & 0x80) !== 0;
+    this.cycles += 4;
+  }
+  //PLP
+  PLP() {
+    const status = this.pull();
+    this.flags.N = (status & 0x80) !== 0;
+    this.flags.V = (status & 0x40) !== 0;
+    this.flags.U = (status & 0x20) !== 0;
+    this.flags.B = (status & 0x10) !== 0;
+    this.flags.D = (status & 0x08) !== 0;
+    this.flags.I = (status & 0x04) !== 0;
+    this.flags.Z = (status & 0x02) !== 0;
+    this.flags.C = (status & 0x01) !== 0;
+    this.cycles += 4;
+  }
+  //ROL
+  ROL() {
+    const addr = this.imm();
+    let value = this.read(addr);
+    const carry = this.flags.C ? 1 : 0;
+    this.flags.C = (value & 0x80) !== 0;
+    value = ((value << 1) | carry) & 0xff;
+    this.flags.Z = value === 0;
+    this.flags.N = (value & 0x80) !== 0;
+    this.write(addr, value);
+    this.cycles += 2;
+  }
+  //ROR
+  ROR() {
+    const addr = this.imm();
+    let value = this.read(addr);
+    const carry = this.flags.C ? 1 : 0;
+    this.flags.C = (value & 0x01) !== 0;
+    value = ((value >> 1) | (carry << 7)) & 0xff;
+    this.flags.Z = value === 0;
+    this.flags.N = (value & 0x80) !== 0;
+    this.write(addr, value);
+    this.cycles += 2;
+  }
+  //RTI
+  RTI() {
+    this.PC = (this.pull() | (this.pull() << 8)) & 0xffff;
+    this.flags.N = (this.A & 0x80) !== 0;
+    this.flags.V = (this.A & 0x40) !== 0;
+    this.flags.U = (this.A & 0x20) !== 0;
+    this.flags.B = (this.A & 0x10) !== 0;
+    this.flags.D = (this.A & 0x08) !== 0;
+    this.flags.I = (this.A & 0x04) !== 0;
+    this.flags.Z = (this.A & 0x02) !== 0;
+    this.flags.C = (this.A & 0x01) !== 0;
+    this.cycles += 6;
+  }
+  //RTS
+  RTS() {
+    this.PC = (this.pull() | (this.pull() << 8)) & 0xffff;
+    this.PC = (this.PC + 1) & 0xffff;
+    this.cycles += 6;
+  }
+
+  //SBC
+  SBC() {
+    const addr = this.imm();
+    const value = this.read(addr);
+    const carry = this.flags.C ? 1 : 0;
+    const result = this.A - value - (1 - carry);
+    this.flags.C = result >= 0;
+    this.flags.Z = (result & 0xff) === 0;
+    this.flags.N = (result & 0x80) !== 0;
+    this.flags.V = ((this.A ^ value) & 0x80) !== ((this.A ^ result) & 0x80);
+    this.A = result & 0xff;
+    this.cycles += 2;
+  }
+
+  //SEC
+  SEC() {
+    this.flags.C = true;
+    this.cycles += 2;
+  }
+  //SED
+  SED() {
+    this.flags.D = true;
+    this.cycles += 2;
+  }
+  //SEI
+  SEI() {
+    this.flags.I = true;
+    this.cycles += 2;
+  }
+
+  //TAX
+  TAX() {
+    this.X = this.A;
+    this.flags.Z = this.X === 0;
+    this.flags.N = (this.X & 0x80) !== 0;
+    this.cycles += 2;
+  }
+  //TAY
+  TAY() {
+    this.Y = this.A;
+    this.flags.Z = this.Y === 0;
+    this.flags.N = (this.Y & 0x80) !== 0;
+    this.cycles += 2;
+  }
+  //TSX
+  TSX() {
+    this.X = this.SP;
+    this.flags.Z = this.X === 0;
+    this.flags.N = (this.X & 0x80) !== 0;
+    this.cycles += 2;
+  }
+  //TXA
+  TXA() {
+    this.A = this.X;
+    this.flags.Z = this.A === 0;
+    this.flags.N = (this.A & 0x80) !== 0;
+    this.cycles += 2;
+  }
+
+  //TXS
+  TXS() {
+    this.SP = this.X;
+    this.cycles += 2;
+  }
+  //TYA
+  TYA() {
+    this.A = this.Y;
+    this.flags.Z = this.A === 0;
+    this.flags.N = (this.A & 0x80) !== 0;
+    this.cycles += 2;
+  }
+  //NOP
+  NOP() {
+    this.cycles += 2;
+  }
+  //BRK
+  BRK() {
+    this.push((this.PC >> 8) & 0xff);
+    this.push(this.PC & 0xff);
+    let status = 0;
+    if (this.flags.N) status |= 0x80;
+    if (this.flags.V) status |= 0x40;
+    if (this.flags.U) status |= 0x20;
+    if (this.flags.B) status |= 0x10;
+    if (this.flags.D) status |= 0x08;
+    if (this.flags.I) status |= 0x04;
+    if (this.flags.Z) status |= 0x02;
+    if (this.flags.C) status |= 0x01;
+    this.push(status);
+    this.flags.B = true;
+    this.PC = (this.memory.read(0xfffe) | (this.memory.read(0xffff) << 8)) & 0xffff;
+    this.flags.I = true;
+    this.cycles += 7;
+  }
+
+  // handle illegal opcodes
+  illegal() {
+    throw new Error(`Illegal opcode: ${this.IR.toString(16).toUpperCase()}`);
   }
 }
 
