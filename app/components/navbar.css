@@ -21,7 +21,9 @@ ul.nav-list {
 
 li.nav-item {
   border-radius: 6px;
-  transition: background 0.15s, box-shadow 0.15s;
+  transition:
+    background 0.15s,
+    box-shadow 0.15s;
 }
 
 li.nav-item:hover {
@@ -35,7 +37,9 @@ li.nav-item:hover {
   font-size: 1.05rem;
   padding: 8px 14px;
   border-radius: 6px;
-  transition: background 0.15s, color 0.15s;
+  transition:
+    background 0.15s,
+    color 0.15s;
   display: inline-block;
   text-decoration: none;
 }
@@ -70,12 +74,16 @@ li.nav-item:hover {
   cursor: pointer;
   margin-left: 16px;
   height: 44px;
-  box-shadow: 0 4px 24px #2563eb44, 0 1.5px 6px #0002;
+  box-shadow:
+    0 4px 24px #2563eb44,
+    0 1.5px 6px #0002;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  transition: box-shadow 0.2s, color 0.15s;
+  transition:
+    box-shadow 0.2s,
+    color 0.15s;
   animation: gradient-move 3s ease-in-out infinite;
 }
 
@@ -93,9 +101,15 @@ li.nav-item:hover {
 }
 
 @keyframes border-gradient-move {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .nav-signin-btn:disabled::before {
@@ -109,9 +123,15 @@ li.nav-item:hover {
 }
 
 @keyframes gradient-move {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .nav-signin-btn:disabled {
@@ -125,7 +145,9 @@ li.nav-item:hover {
 .nav-signin-btn:hover:not(:disabled),
 .nav-signin-btn:focus-visible:not(:disabled) {
   color: #181c24;
-  box-shadow: 0 6px 32px #60a5fa55, 0 2px 8px #0003;
+  box-shadow:
+    0 6px 32px #60a5fa55,
+    0 2px 8px #0003;
   background: linear-gradient(90deg, #60a5fa, #818cf8, #38bdf8, #2563eb, #60a5fa);
   background-size: 300% 300%;
   animation: gradient-move 1.5s linear infinite;
