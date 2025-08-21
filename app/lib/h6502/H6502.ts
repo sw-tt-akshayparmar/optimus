@@ -6,6 +6,47 @@ export class H6502 {
   SP: number = 0xff;
   IR: number = 0;
   cycles: number = 0;
+  instruction: (() => void) | null = null;
+
+  isa: { [key: number]: () => void } = {
+    0x69: this.ADC,
+    0x29: this.AND,
+    0x0a: this.ASL,
+    0x24: this.BIT,
+    0xc9: this.CMP,
+    0xe0: this.CPX,
+    0xc0: this.CPY,
+    0xc6: this.DEC,
+    0x49: this.EOR,
+    0xe6: this.INC,
+    0x4c: this.JMP,
+    0x20: this.JSR,
+    0xa9: this.LDA,
+    0xa2: this.LDX,
+    0xa0: this.LDY,
+    0x4a: this.LSR,
+    0x09: this.ORA,
+    0x48: this.PHA,
+    0x08: this.PHP,
+    0x68: this.PLA,
+    0x28: this.PLP,
+    0x2a: this.ROL,
+    0x6a: this.ROR,
+    0x40: this.RTI,
+    0x60: this.RTS,
+    0xe9: this.SBC,
+    0x38: this.SEC,
+    0xf8: this.SED,
+    0x78: this.SEI,
+    0xaa: this.TAX,
+    0xa8: this.TAY,
+    0xba: this.TSX,
+    0x8a: this.TXA,
+    0x9a: this.TXS,
+    0x98: this.TYA,
+    0xea: this.NOP,
+    0x00: this.BRK,
+  };
 
   flags: {
     N: boolean;
@@ -46,6 +87,28 @@ export class H6502 {
     this.flags.Z = false;
     this.flags.C = false;
     this.flags.B = false;
+  }
+
+  fertch(): number {
+    this.IR = this.memory.read(this.PC++);
+    this.cycles++;
+    return this.IR;
+  }
+  // decodes the instruction
+  decode(): void {
+    this.instruction = this.isa[this.IR];
+    if (!this.instruction) {
+      this.instruction = this.illegal.bind(this);
+    }
+  }
+  // executes the instruction
+  execute(): void {
+    if (this.instruction) {
+      this.instruction();
+      this.instruction = null;
+    } else {
+      throw new Error(`No instruction found for opcode: ${this.IR.toString(16).toUpperCase()}`);
+    }
   }
 
   //addressing modes
