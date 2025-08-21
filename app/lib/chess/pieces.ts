@@ -1,6 +1,6 @@
 import { Chessboard } from "./chessboard";
 import { Player } from "./players";
-import type { PiecePosition, PieceType, PieceValue } from "../types/chess.types";
+import type { PiecePosition, PieceType, PieceValue } from "./chess.types";
 import Config from "../config/chess.config";
 import { Move } from "./move";
 import { MoveType } from "./games.enum";
