@@ -10,7 +10,7 @@ export class Chessboard {
     for (let i = 0; i < Config.SQUARE_SIZE; i++) {
       this.board.push([]);
       for (let j = 0; j < Config.SQUARE_SIZE; j++) {
-        this.board[i]!.push(new Tile());
+        this.board[i].push(new Tile());
       }
     }
     this.update();
