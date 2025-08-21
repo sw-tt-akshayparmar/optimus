@@ -1,5 +1,3 @@
-import { af } from "node_modules/react-router/dist/development/context-DohQKLID.mjs";
-
 export class H6502 {
   A: number = 0;
   X: number = 0;
