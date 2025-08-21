@@ -1,0 +1,31 @@
+.balls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px;
+  width: 170px;
+}
+
+.ball {
+  background: #60a5fa;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  animation: spin 0.8s infinite ease-in-out;
+}
+
+.ball-2 {
+  animation-delay: 0.4s;
+}
+
+@keyframes spin {
+  0% {
+    scale: 0.7;
+  }
+  50% {
+    scale: 1.2;
+  }
+  100% {
+    scale: 0.7;
+  }
+}

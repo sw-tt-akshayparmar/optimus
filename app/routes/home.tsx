@@ -2,6 +2,7 @@ import "./home.css";
 import { useEffect, useState } from "react";
 import type { GameMatch } from "~/models/game/GameMatch.model";
 import gameClient from "../services/game.service";
+import Loader from "~/components/Loader";
 
 export default function Home() {
   const [match, setMatch] = useState<GameMatch>();
@@ -66,6 +67,7 @@ export default function Home() {
                 <strong>User:</strong> {match.userId}
               </p>
             </div>
+            <Loader />
           </div>
         );
       case "ACTIVE":
