@@ -136,3 +136,7 @@
 .btn:hover {
   background-color: #1f2937;
 }
+.terminal-lines .line {
+  white-space: pre-wrap;
+  font-family: 'Jetbrains mono';
+}
