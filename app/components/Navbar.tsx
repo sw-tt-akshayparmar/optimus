@@ -21,6 +21,11 @@ export default function Navbar() {
             H6502
           </NavLink>
         </li>
+        <li className="nav-item">
+          <NavLink className="nav-link" to={"/workspace"}>
+            Workspace
+          </NavLink>
+        </li>
       </ul>
       <button className="nav-signin-btn">SIGN IN</button>
     </nav>

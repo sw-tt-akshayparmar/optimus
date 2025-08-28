@@ -12,6 +12,10 @@ const APIConfig = {
     path: "/game/match",
     auth: true,
   },
+  SHELL: {
+    path: "/shell",
+    auth: true,
+  },
 };
 
 export default APIConfig;

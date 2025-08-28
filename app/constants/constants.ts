@@ -6,6 +6,9 @@ const Constants = {
   PRIVATE_CHAT: "private_chat",
   MATCH_FOUND: "match-found",
   OPPONENT_DISCONNECTED: "opponent-disconnected",
+
+  SHELL_IN: "shell-in",
+  SHELL_OUT: "shell-out",
 };
 
 export default Constants;
