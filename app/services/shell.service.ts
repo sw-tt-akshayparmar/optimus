@@ -16,7 +16,6 @@ export class ShellClient {
   terminate() {}
   onData(callback: (data: { timestamp: number; data: string }) => void) {
     socket.on(Constants.SHELL_OUT, (data: { timestamp: number; data: string }) => {
-      console.log(data);
       callback(data);
     });
   }
