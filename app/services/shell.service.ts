@@ -7,17 +7,23 @@ import APIConfig from "~/config/api.config";
 export class ShellClient {
   connectionId: string;
   socket: SocketIO = socket;
+  isStarted: boolean = false;
+  isOnDataSet: boolean = false;
   constructor() {
     this.connectionId = userService.getConnectionId();
   }
   startShell() {
-    apiService.post(APIConfig.SHELL, null, { connectionId: userService.getConnectionId() });
+    if (!this.isStarted) {
+      apiService.post(APIConfig.SHELL, null, { connectionId: userService.getConnectionId() });
+      this.isStarted = true;
+    }
   }
   terminate() {}
   onData(callback: (data: { timestamp: number; data: string }) => void) {
-    socket.on(Constants.SHELL_OUT, (data: { timestamp: number; data: string }) => {
-      callback(data);
-    });
+    if (!this.isOnDataSet) {
+      socket.on(Constants.SHELL_OUT, callback);
+      this.isOnDataSet = true;
+    }
   }
   send(message: string) {
     socket.send(Constants.SHELL_IN, { timestamp: Date.now(), data: message });
