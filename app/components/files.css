@@ -1,0 +1,28 @@
+.files-area {
+  background: #232837;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px #0008;
+  padding: 24px;
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
+  width: 50vw;
+  height: 50vh;
+  gap: 18px;
+}
+
+.files-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.files-list > div,
+.files-list > li {
+  background: #181c24;
+  color: #e0e6f0;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 0.98rem;
+  box-shadow: 0 1px 4px #0002;
+}
