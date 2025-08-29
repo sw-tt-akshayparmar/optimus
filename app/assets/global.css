@@ -1,5 +1,157 @@
+:root {
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 0.98rem;
+  --font-size-base: 1.05rem;
+  --font-size-lg: 1.15rem;
+  --font-size-xl: 1.8rem;
+  --font-size-xxl: 2.5rem;
+
+  --color-bg: #f8fafc;
+  --color-bg-muted: #334155;
+  --color-bg-transparent: rgba(0, 0, 0, 0.2);
+  --color-primary: #60a5fa;
+  --color-secondary: #64748b;
+  --color-accent: #2563eb;
+  --color-error: #ef4444;
+  --color-success: #22c55e;
+  --color-warning: #f59e42;
+
+  --border-radius: 0.25rem;
+  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  --transition-fast: 0.15s;
+  --transition-medium: 0.2s;
+  --gap-xs: 0.5rem;
+  --gap-sm: 0.75rem;
+  --gap-md: 1rem;
+  --gap-lg: 1.5rem;
+  --padding-xs: 0.5rem;
+  --padding-sm: 0.75rem;
+  --padding-md: 1rem;
+  --padding-lg: 2rem;
+}
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
+}
+body {
+  background: var(--color-bg);
+  font-size: var(--font-size-base);
+  color: var(--color-secondary);
+  margin: 0;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--color-accent);
+  font-weight: bold;
+}
+
+button,
+input,
+select,
+textarea {
+  border-radius: var(--border-radius);
+  transition:
+    background var(--transition-medium),
+    color var(--transition-medium),
+    border var(--transition-fast);
+  font-size: var(--font-size-base);
+}
+
+button:disabled,
+.btn:disabled {
+  background-color: var(--color-bg-muted);
+  color: var(--color-secondary);
+  opacity: 0.6;
+}
+
+.card,
+.auth-card,
+.project-area,
+.terminal {
+  box-shadow: var(--box-shadow);
+  border-radius: var(--border-radius);
+  background: var(--color-bg);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+/* Utility classes */
+.p-xs {
+  padding: var(--padding-xs);
+}
+.p-sm {
+  padding: var(--padding-sm);
+}
+.p-md {
+  padding: var(--padding-md);
+}
+.p-lg {
+  padding: var(--padding-lg);
+}
+.m-xs {
+  margin: var(--gap-xs);
+}
+.m-sm {
+  margin: var(--gap-sm);
+}
+.m-md {
+  margin: var(--gap-md);
+}
+.m-lg {
+  margin: var(--gap-lg);
+}
+.gap-xs {
+  gap: var(--gap-xs);
+}
+.gap-sm {
+  gap: var(--gap-sm);
+}
+.gap-md {
+  gap: var(--gap-md);
+}
+.gap-lg {
+  gap: var(--gap-lg);
+}
+
+/* Animations */
+@keyframes gradient-move {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes spin1 {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.6);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
