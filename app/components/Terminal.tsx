@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./terminal.css";
 import shellClient from "~/services/shell.service";
+import * as userService from "~/services/user.service";
 
 type Line = {
   id: string;
@@ -13,7 +14,7 @@ function uid(prefix = "id") {
 }
 
 export default function TerminalEmulator({
-  prompt = "user@web:~$",
+  prompt = `${userService.getUserData().username}@optimus:~$`,
   welcome = "Welcome to the simple terminal emulator. Type 'help' to start.",
   maxLines = 1000,
 }: {
@@ -22,7 +23,7 @@ export default function TerminalEmulator({
   maxLines?: number;
 }) {
   const [lines, setLines] = useState<Line[]>(() => [
-    { id: uid("sys"), text: welcome, type: "system", timetamp: new Date().getMilliseconds() },
+    { id: uid("sys"), text: welcome, type: "system", timetamp: Date.now() },
   ]);
   const [input, setInput] = useState("");
   const [history, setHistory] = useState<string[]>([]);
