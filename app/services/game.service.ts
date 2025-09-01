@@ -15,10 +15,9 @@ export class GameClient {
     this.socket.on(Constants.OPPONENT_DISCONNECTED, callback);
   }
   async startMatch(): Promise<GameMatch> {
-    const payload = {
+    const res = await apiService.post(APIConfig.GAME_MATCH, null, {
       connectionId: userService.getConnectionId(),
-    };
-    const res = await apiService.post(APIConfig.GAME_MATCH, payload);
+    });
     return res.data as GameMatch;
   }
 }

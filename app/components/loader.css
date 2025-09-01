@@ -1,5 +1,5 @@
 .balls {
-  position: relative;
+  position: absolute;
   left: 0;
   top: 0;
   display: flex;
@@ -8,6 +8,9 @@
   height: 100%;
   width: 100%;
   backdrop-filter: blur(5px);
+  box-shadow: 0 0 20px #fff2;
+  border-radius: 10px;
+
   background: rgba(0, 0, 0, 0.2);
   overflow: hidden;
   z-index: 10;

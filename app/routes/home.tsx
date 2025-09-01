@@ -54,7 +54,7 @@ export default function Home() {
     switch (match.status) {
       case "PENDING":
         return (
-          <div className="finding-match">
+          <div className="finding-match" style={{ position: "relative" }}>
             <h2>Finding Match...</h2>
             <div className="progress-bar-container">
               <div className="progress-bar"></div>

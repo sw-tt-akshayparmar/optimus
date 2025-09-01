@@ -11,6 +11,11 @@ nav.nav {
   min-height: 56px;
 }
 
+.nav-list-wrapper {
+  position: relative;
+  flex: 1;
+}
+
 ul.nav-list {
   gap: 16px;
   list-style: none;
@@ -44,10 +49,28 @@ li.nav-item:hover {
   text-decoration: none;
 }
 
+.nav-link-active {
+  color: #2563eb;
+}
+
 .nav-link:hover {
   background: #60a5fa;
   color: #181c24;
   text-decoration: none;
+}
+
+.nav-underline {
+  position: absolute;
+  bottom: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #2563eb, #60a5fa, #38bdf8, #818cf8);
+  border-radius: 2px;
+  transition:
+    left 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55),
+    width 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55),
+    background 0.3s;
+  z-index: 2;
+  will-change: left, width;
 }
 
 .nav-logo {
