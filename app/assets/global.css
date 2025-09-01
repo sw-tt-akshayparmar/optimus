@@ -75,7 +75,6 @@ button:disabled,
 
 .card,
 .auth-card,
-.project-area,
 .terminal {
   box-shadow: var(--box-shadow);
   border-radius: var(--border-radius);
