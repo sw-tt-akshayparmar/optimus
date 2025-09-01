@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import "./terminal.css";
 import shellClient from "~/services/shell.service";
 import * as userService from "~/services/user.service";
@@ -6,14 +6,11 @@ import * as userService from "~/services/user.service";
 type Line = {
   id: string;
   text: string;
-  type?: "input" | "output" | "system";
+  type: "input" | "output" | "system";
+  timestamp?: number;
 };
 
-function uid(prefix = "id") {
-  return `${prefix}_${Math.random().toString(36).slice(2, 9)}`;
-}
-
-export default function TerminalEmulator({
+export default function Terminal({
   prompt = `${userService.getUserData().username}@optimus:~$`,
   welcome = "Welcome to the simple terminal emulator. Type 'help' to start.",
   maxLines = 1000,
@@ -23,121 +20,87 @@ export default function TerminalEmulator({
   maxLines?: number;
 }) {
   const [lines, setLines] = useState<Line[]>(() => [
-    { id: uid("sys"), text: welcome, type: "system", timetamp: Date.now() },
+    { id: crypto.randomUUID(), text: welcome, type: "system", timestamp: Date.now() },
   ]);
   const [input, setInput] = useState("");
   const [history, setHistory] = useState<string[]>([]);
-  const [histIndex, setHistIndex] = useState<number | null>(null);
-  const [isFocused, setIsFocused] = useState(true);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
-    scrollToBottom();
+    requestAnimationFrame(() => {
+      if (containerRef.current) {
+        containerRef.current.scrollTop = containerRef.current.scrollHeight;
+      }
+    });
   }, [lines]);
 
   useEffect(() => {
     inputRef.current?.focus();
     shellClient.startShell();
-    shellClient.onData((data: { timestamp: number; data: string }) => {
-      data.data.split("\n").map(line => appendLine(line));
-    });
+    const handleShellData = (data: { timestamp: number; data: string }) => {
+      data.data.split("\n").forEach(line => {
+        if (line.trim()) {
+          appendLine(line, "output", data.timestamp);
+        }
+      });
+    };
+    shellClient.onData(handleShellData);
   }, []);
 
-  function scrollToBottom() {
-    requestAnimationFrame(() => {
-      if (!containerRef.current) return;
-      containerRef.current.scrollTop = containerRef.current.scrollHeight;
-    });
-  }
-
-  function appendLine(text: string, type: Line["type"] = "output") {
-    setLines(prev => {
-      const next = [...prev, { id: uid("ln"), text, type }];
-      if (next.length > maxLines) next.splice(0, next.length - maxLines);
-      return next;
-    });
-  }
-
-  function runCommand(raw: string) {
-    const cmd = raw.trim();
-    if (!cmd) return;
-    shellClient.send(cmd);
-
-    // appendLine(`${prompt} ${cmd}`, "input");
-
-    // const [name, ...args] = cmd.split(/\s+/);
-
-    // switch (name.toLowerCase()) {
-    //   case "help":
-    //     appendLine("Built-in commands: help, clear, echo, date, about, history");
-    //     break;
-    //   case "clear":
-    //     setLines([]);
-    //     break;
-    //   case "echo":
-    //     appendLine(args.join(" ") || "");
-    //     break;
-    //   case "date":
-    //     appendLine(new Date().toString());
-    //     break;
-    //   case "about":
-    //     appendLine("Simple React terminal emulator — demo only.");
-    //     break;
-    //   case "history":
-    //     appendLine(history.join("\n") || "(no history yet)");
-    //     break;
-    //   default:
-    //     appendLine(`command not found: ${name}`);
-    //     break;
-    // }
-
-    setHistory(h => [cmd, ...h].slice(0, 200));
-    setHistIndex(null);
-  }
-
-  function handleSubmit(e?: React.FormEvent) {
-    e?.preventDefault();
-    const trimmed = input;
-    if (!trimmed) return setInput("");
-    runCommand(trimmed);
-    setInput("");
-  }
-
-  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      handleSubmit();
-      return;
-    }
-
-    if (e.key === "ArrowUp") {
-      e.preventDefault();
-      setHistIndex(idx => {
-        const next = idx === null ? 0 : Math.min(idx + 1, history.length - 1);
-        const cmd = history[next] ?? "";
-        setInput(cmd);
+  const appendLine = useCallback(
+    (text: string, type: Line["type"] = "output", timestamp?: number) => {
+      setLines(prev => {
+        const next = [...prev, { id: crypto.randomUUID(), text, type, timestamp }];
+        if (next.length > maxLines) next.splice(0, next.length - maxLines);
         return next;
       });
-    }
+    },
+    [maxLines]
+  );
 
-    if (e.key === "ArrowDown") {
-      e.preventDefault();
-      setHistIndex(idx => {
-        if (idx === null) return null;
-        const next = idx - 1;
-        const cmd = next >= 0 ? history[next] : "";
-        setInput(cmd);
-        return next >= 0 ? next : null;
-      });
-    }
+  const runCommand = useCallback(
+    (raw: string) => {
+      const cmd = raw.trim();
+      if (!cmd) return;
+      appendLine(`${prompt} ${cmd}`, "input", Date.now());
+      shellClient.send(cmd);
+      setHistory(h => [cmd, ...h].slice(0, 200));
+    },
+    [appendLine, prompt]
+  );
 
-    if (e.ctrlKey && e.key.toLowerCase() === "c") {
-      e.preventDefault();
-      appendLine("^C", "system");
+  const handleSubmit = useCallback(
+    (e?: React.FormEvent) => {
+      e?.preventDefault();
+      if (!input.trim()) return setInput("");
+      runCommand(input);
       setInput("");
-    }
-  }
+    },
+    [input, runCommand]
+  );
+
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        handleSubmit();
+        return;
+      }
+      if (e.key === "ArrowUp") {
+        e.preventDefault();
+      }
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+      }
+      if (e.ctrlKey && e.key.toLowerCase() === "c") {
+        e.preventDefault();
+        appendLine("^C", "system", Date.now());
+        setInput("");
+      }
+    },
+    [handleSubmit, history, appendLine]
+  );
 
   return (
     <div className="terminal">
@@ -154,7 +117,6 @@ export default function TerminalEmulator({
       <div className="terminal-body" ref={containerRef}>
         <div className="terminal-lines">
           {lines.length === 0 && <div className="cleared">(cleared)</div>}
-
           {lines.map(ln => (
             <div key={ln.id} className={`line ${ln.type}`}>
               {ln.text}
@@ -166,41 +128,16 @@ export default function TerminalEmulator({
       <form onSubmit={handleSubmit} className="terminal-input-form">
         <div className="input-wrapper">
           <div className="prompt">{prompt}</div>
-
           <input
             ref={inputRef}
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
             placeholder="type a command..."
             className="input-field"
             autoComplete="off"
             spellCheck={false}
           />
-
-          <div className="buttons">
-            <button
-              type="button"
-              onClick={() => {
-                appendLine(prompt + " help", "input");
-                appendLine("Built-in commands: help, clear, echo, date, about, history");
-              }}
-              className="btn"
-            >
-              Help
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                navigator.clipboard?.writeText(lines.map(l => l.text).join("\n")).catch(() => {});
-              }}
-              className="btn"
-            >
-              Copy
-            </button>
-          </div>
         </div>
       </form>
     </div>
