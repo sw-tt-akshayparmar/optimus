@@ -3,14 +3,22 @@ import socket, { SocketIO } from "~/socket";
 import * as userService from "./user.service";
 import * as apiService from "./api.service";
 import APIConfig from "~/config/api.config";
+import storageConstants from "~/constants/storage.constants";
 
 export class ShellClient {
-  connectionId: string;
   socket: SocketIO = socket;
   isStarted: boolean = false;
-  isOnDataSet: boolean = false;
+  onDataCB: ((data: { timestamp: number; data: string }) => void) | undefined = undefined;
   constructor() {
-    this.connectionId = userService.getConnectionId();
+    this.socket.on(Constants.DISCONNECT, () => {
+      this.onDataCB = undefined;
+      this.isStarted = false;
+      this.socket.off(Constants.SHELL_OUT);
+    });
+    socket.onConnect(() => {
+      this.isStarted = false;
+      this.startShell();
+    });
   }
   startShell() {
     if (!this.isStarted) {
@@ -20,9 +28,9 @@ export class ShellClient {
   }
   terminate() {}
   onData(callback: (data: { timestamp: number; data: string }) => void) {
-    if (!this.isOnDataSet) {
+    if (!this.onDataCB) {
+      this.onDataCB = callback;
       socket.on(Constants.SHELL_OUT, callback);
-      this.isOnDataSet = true;
     }
   }
   send(message: string) {
