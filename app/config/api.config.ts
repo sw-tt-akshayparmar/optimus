@@ -16,6 +16,10 @@ const APIConfig = {
     path: "/shell",
     auth: true,
   },
+  PROJECTS: {
+    path: "/projects",
+    auth: true,
+  },
 };
 
 export default APIConfig;

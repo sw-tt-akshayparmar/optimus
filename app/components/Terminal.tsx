@@ -37,7 +37,6 @@ export default function Terminal({
 
   useEffect(() => {
     inputRef.current?.focus();
-    shellClient.startShell();
     const handleShellData = (data: { timestamp: number; data: string }) => {
       data.data.split("\n").forEach(line => {
         if (line.trim()) {

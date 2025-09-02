@@ -1,8 +1,8 @@
-export interface SuccessResponse {
+export interface SuccessResponse<Data extends any> {
   isSuccessFull: true;
   status: number;
   success: string;
-  data: any;
+  data: Data;
 }
 interface ErrorDescription {
   message: string;

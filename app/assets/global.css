@@ -154,3 +154,5 @@ select:focus {
     transform: scale(1);
   }
 }
+
+@import "tailwindcss";
