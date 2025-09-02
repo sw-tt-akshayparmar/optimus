@@ -42,7 +42,7 @@ export async function register(user: User) {
 }
 
 export async function login(loginModel: LoginModel): Promise<User> {
-  const success: SuccessResponse | ErrorResponse = await apiService.post(
+  const success: SuccessResponse<AuthToken> | ErrorResponse = await apiService.post(
     APIConfig.LOGIN,
     loginModel
   );

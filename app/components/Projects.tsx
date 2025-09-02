@@ -2,34 +2,35 @@ import { useEffect, useState } from "react";
 import { DataView } from "primereact/dataview";
 import { Project as ProjectModel } from "../models/Project.model";
 import * as userService from "../services/user.service";
-import * as projectService from "../services/project.service";
+import * as workspaceService from "../services/workspace.service";
 import "./projects.css";
 
 export default function Projects() {
   const [projects, setProjects] = useState<Array<ProjectModel>>([]);
   const [loading, setLoading] = useState(false);
   const [newProject, setNewProject] = useState("");
+  const [projectDescription, setProjectDescription] = useState("");
 
   useEffect(() => {
     async function fetchProjects() {
       setLoading(true);
-      const data = await projectService.getAllProjects();
+      const data = await workspaceService.getAllProjects();
       setProjects(data);
     }
     fetchProjects();
   }, []);
 
-  const createProject = () => {
+  const createProject = async () => {
     if (!newProject.trim()) return;
-    const newItem = ProjectModel.from({
-      id: crypto.randomUUID(),
+    const project = ProjectModel.from({
       name: newProject,
-      description: "No description yet",
+      description: projectDescription,
       userId: userService.getUserData().id!,
     });
-    setProjects([newItem, ...projects]);
     setNewProject("");
-    // TODO: POST to API
+    setProjectDescription("");
+    const saved: ProjectModel = await workspaceService.createProject(project);
+    setProjects([saved, ...projects]);
   };
 
   const projectTemplate = (project: ProjectModel) => {
@@ -50,6 +51,13 @@ export default function Projects() {
           placeholder="New project name..."
           value={newProject}
           onChange={e => setNewProject(e.target.value)}
+        />
+        <input
+          type="text"
+          className="project-input"
+          placeholder="Project Descrition (optional)"
+          value={projectDescription}
+          onChange={e => setProjectDescription(e.target.value)}
         />
         <button
           className="project-create-btn p-sm"
