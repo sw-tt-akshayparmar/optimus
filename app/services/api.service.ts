@@ -2,37 +2,37 @@ import * as envService from "./env.service";
 import { getAuthorazation } from "../services/user.service";
 import type { ErrorResponse, SuccessResponse } from "~/models/Response.model";
 
-export async function get(
+export async function get<Data>(
   api: { path: string; auth?: boolean },
   params?: { [key: string]: string },
   headers?: { [key: string]: string }
-): Promise<SuccessResponse | ErrorResponse> {
+): Promise<SuccessResponse<Data> | ErrorResponse> {
   return request("GET", api, null, params, headers);
 }
 
-export async function post(
+export async function post<Data>(
   api: { path: string; auth?: boolean },
   data?: any,
   params?: { [key: string]: string },
   headers?: { [key: string]: string }
-): Promise<SuccessResponse | ErrorResponse> {
+): Promise<SuccessResponse<Data> | ErrorResponse> {
   return request("POST", api, data, params, headers);
 }
 
-export async function put(
+export async function put<Data>(
   api: { path: string; auth?: boolean },
   data?: any,
   params?: { [key: string]: string },
   headers?: { [key: string]: string }
-): Promise<SuccessResponse | ErrorResponse> {
+): Promise<SuccessResponse<Data> | ErrorResponse> {
   return request("PUT", api, data, params, headers);
 }
 
-export async function doDelete(
+export async function doDelete<Data>(
   api: { path: string; auth?: boolean },
   params?: { [key: string]: string },
   headers?: { [key: string]: string }
-): Promise<SuccessResponse | ErrorResponse> {
+): Promise<SuccessResponse<Data> | ErrorResponse> {
   return request("DELETE", api, null, params, headers);
 }
 
