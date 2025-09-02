@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Skeleton } from "primereact/skeleton";
 import { Paginator } from "primereact/paginator";
+import { Button } from "primereact/button";
 import { Project as ProjectModel } from "../models/Project.model";
 import * as userService from "../services/user.service";
 import * as workspaceService from "../services/workspace.service";
@@ -12,19 +13,34 @@ export default function Projects() {
   const [projectDescription, setProjectDescription] = useState("");
   const [page, setPage] = useState({
     first: 0,
-    page: 0,
-    rows: 0,
+    page: 1,
+    rows: 3,
     totalPages: 0,
   });
+  async function fetchProjects(page: {
+    first: number;
+    page: number;
+    rows: number;
+    totalPages: number;
+  }) {
+    console.log(page);
+    setLoading(true);
+    const data = await workspaceService.getAllProjects({
+      page: page.page + 1,
+      size: page.rows,
+    });
+    setLoading(false);
+    setProjects(data.records);
+    setPage({
+      first: (data.page - 1) * data.size,
+      page: data.page - 1,
+      rows: data.size,
+      totalPages: data.total,
+    });
+  }
 
   useEffect(() => {
-    async function fetchProjects() {
-      setLoading(true);
-      const data = await workspaceService.getAllProjects();
-      setLoading(false);
-      setProjects(data);
-    }
-    fetchProjects();
+    fetchProjects(page);
   }, []);
 
   const createProject = async () => {
@@ -39,7 +55,7 @@ export default function Projects() {
     setLoading(true);
     const saved: ProjectModel = await workspaceService.createProject(project);
     setLoading(false);
-    setProjects([saved, ...projects]);
+    fetchProjects(page);
   };
 
   const projectTemplate = (project: ProjectModel) => {
@@ -104,13 +120,12 @@ export default function Projects() {
           value={projectDescription}
           onChange={e => setProjectDescription(e.target.value)}
         />
-        <button
+        <Button
           className="bg-primary text-white border-none cursor-pointer px-4 py-3 rounded font-semibold transition-colors hover:bg-accent disabled:bg-secondary disabled:cursor-not-allowed"
           onClick={createProject}
           disabled={!newProject.trim()}
-        >
-          Create Project
-        </button>
+          label="Create Project"
+        />
       </div>
       <div className="max-h-[480px] overflow-y-scroll scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
         <div>
@@ -121,13 +136,11 @@ export default function Projects() {
               })}
         </div>
         <Paginator
-          first={0}
-          rows={20}
-          totalRecords={46}
+          first={page.first}
+          rows={page.rows}
+          totalRecords={page.totalPages}
           rowsPerPageOptions={[2, 3, 5]}
-          onPageChange={e => {
-            console.log(e);
-          }}
+          onPageChange={fetchProjects as any}
         />
       </div>
     </div>
