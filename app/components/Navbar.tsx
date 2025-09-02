@@ -1,6 +1,6 @@
 import { NavLink, useLocation } from "react-router";
 import { useRef, useEffect, useState } from "react";
-import "./navbar.css";
+
 export default function Navbar() {
   const navLinks = [
     { to: "/", label: "Home" },
@@ -29,14 +29,16 @@ export default function Navbar() {
   }, [location.pathname]);
 
   return (
-    <nav className="nav">
-      <div className="nav-logo"></div>
-      <div className="nav-list-wrapper" style={{ position: "relative", flex: 1 }}>
-        <ul className="nav-list">
+    <nav className="bg-card shadow-nav rounded-lg mx-auto max-w-[900px] px-8 flex items-center justify-between min-h-[56px] my-4">
+      <div className="h-8 w-8 mr-3 rounded-lg shadow-cardDark object-cover bg-cardDark" />
+      <div className="relative flex-1">
+        <ul className="flex gap-4 list-none m-0 p-0">
           {navLinks.map((link, idx) => (
-            <li className="nav-item" key={link.to}>
+            <li className="rounded transition hover:bg-cardDark hover:shadow-md" key={link.to}>
               <NavLink
-                className={({ isActive }) => "nav-link" + (isActive ? " nav-link-active" : "")}
+                className={({ isActive }) =>
+                  `inline-block text-primary font-medium text-base px-3.5 py-2 rounded transition-colors ${isActive ? 'text-accent' : ''} hover:bg-primary hover:text-cardDark no-underline`
+                }
                 to={link.to}
                 ref={el => {
                   linkRefs.current[idx] = el;
@@ -47,9 +49,16 @@ export default function Navbar() {
             </li>
           ))}
         </ul>
-        <div className="nav-underline" style={underlineStyle}></div>
+        <div
+          className="absolute bottom-0 h-1 rounded bg-gradient-to-r from-accent via-primary to-indigo-400 transition-all z-10"
+          style={{ left: underlineStyle.left, width: underlineStyle.width }}
+        ></div>
       </div>
-      <button className="nav-signin-btn">SIGN IN</button>
+      <button
+        className="relative z-10 bg-gradient-to-r from-accent via-primary to-indigo-400 bg-[length:300%_300%] text-white border-none rounded-xl px-6 py-2 text-base font-semibold cursor-pointer ml-4 h-11 shadow-btn flex items-center justify-center overflow-hidden transition-shadow animate-gradient-move disabled:bg-bg-muted disabled:text-chatBtnDisabledText disabled:cursor-not-allowed"
+      >
+        SIGN IN
+      </button>
     </nav>
   );
 }

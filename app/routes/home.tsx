@@ -1,4 +1,4 @@
-import "./home.css";
+// import "./home.css"; // Removed CSS import for TailwindCSS
 import { useEffect, useState } from "react";
 import type { GameMatch } from "~/models/game/GameMatch.model";
 import gameClient from "../services/game.service";
@@ -112,5 +112,5 @@ export default function Home() {
     }
   };
 
-  return <div className="home-container">{renderContent()}</div>;
+    return <div className="min-h-[70vh] flex items-center justify-center bg-cardDark py-8">{renderContent()}</div>;
 }

@@ -1,7 +1,7 @@
-import "./H6502.css";
+
 export default function H6502() {
   return (
-    <div className="H6502">
+    <div className="w-full flex justify-center bg-white">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"

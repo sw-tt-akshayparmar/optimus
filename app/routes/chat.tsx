@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import rtClient from "../services/rtc.service";
-import "./chat.css";
+
 import { useUser } from "./_authenticated";
 import type { User } from "~/models/User.model";
 
@@ -39,26 +39,33 @@ export default function Chat() {
   }
 
   return (
-    <div className="chat-container">
-      <div className="chat-header">💬 Optimus Chat</div>
-      <div className="chat-messages">
+    <div className="max-w-[480px] mx-auto bg-card rounded-xl shadow-nav p-6 flex flex-col min-h-[60vh]">
+      <div className="text-xl font-bold text-primary text-center mb-4 tracking-wide">💬 Optimus Chat</div>
+      <div className="flex-1 overflow-y-auto mb-4 bg-cardDark rounded-lg p-4 min-h-[220px]">
         {messages.map((msg, i) => (
-          <div key={i} className={`chat-message${msg.user.id === user.id ? " self" : ""}`}>
-            <span className="chat-user">{msg.user.name}:</span> {msg.message}
+          <div
+            key={i}
+            className={`mb-2 text-base ${msg.user.id === user.id ? 'text-chatSelf text-right' : 'text-chatMsg'} `}
+          >
+            <span className="font-semibold text-primary mr-1">{msg.user.name}:</span> {msg.message}
           </div>
         ))}
         <div ref={messagesEndRef} />
       </div>
-      <form className="chat-input-row" onSubmit={handleSend}>
+      <form className="flex gap-2" onSubmit={handleSend}>
         <input
-          className="chat-input"
+          className="flex-1 p-3 rounded border border-chatInputBorder text-base bg-chatInput text-chatMsg outline-none transition-colors focus:border-primary"
           placeholder="Type a message..."
           value={input}
           onChange={e => setInput(e.target.value)}
           autoFocus
           aria-label="Type a message"
         />
-        <button className="chat-send-btn" type="submit" disabled={!input.trim()}>
+        <button
+          className="bg-accent text-white border-none rounded px-4 py-3 text-base font-medium cursor-pointer transition-colors hover:bg-primary hover:text-cardDark disabled:bg-chatBtnDisabled disabled:text-chatBtnDisabledText disabled:cursor-not-allowed"
+          type="submit"
+          disabled={!input.trim()}
+        >
           Send
         </button>
       </form>

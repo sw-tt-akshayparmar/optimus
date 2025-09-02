@@ -38,58 +38,52 @@ export default function RegisterPage() {
   const isSubmitting = navigation.state === "submitting";
 
   return (
-    <div className="auth">
-      <h2 className="auth-title">Register</h2>
-      <Form method="post" className="auth-form">
-        <label htmlFor="name" className="auth-label">
-          Name
-        </label>
-        <input
-          id="name"
-          name="name"
-          type="text"
-          className="auth-input"
-          required
-          disabled={isSubmitting}
-          autoFocus
-        />
+    <div className="flex justify-center items-center min-h-[80vh] py-8">
+      <div className="bg-card p-10 rounded-xl shadow-nav w-full max-w-[400px] text-center">
+        <h2 className="mb-6 text-primary text-xl font-bold">Register</h2>
+        <Form method="post" className="text-left">
+          <label htmlFor="name" className="block mb-2 font-medium text-chatMsg">Name</label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            required
+            disabled={isSubmitting}
+            autoFocus
+            className="w-full p-3 border border-chatInputBorder rounded bg-chatInput text-chatMsg text-base outline-none transition-colors focus:border-primary mb-5"
+          />
 
-        <label htmlFor="username" className="auth-label">
-          Username
-        </label>
-        <input
-          id="username"
-          name="username"
-          type="text"
-          className="auth-input"
-          required
-          disabled={isSubmitting}
-        />
+          <label htmlFor="username" className="block mb-2 font-medium text-chatMsg">Username</label>
+          <input
+            id="username"
+            name="username"
+            type="text"
+            required
+            disabled={isSubmitting}
+            className="w-full p-3 border border-chatInputBorder rounded bg-chatInput text-chatMsg text-base outline-none transition-colors focus:border-primary mb-5"
+          />
 
-        <label htmlFor="password" className="auth-label">
-          Password
-        </label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          className="auth-input"
-          required
-          minLength={6}
-          disabled={isSubmitting}
-        />
+          <label htmlFor="password" className="block mb-2 font-medium text-chatMsg">Password</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            required
+            minLength={6}
+            disabled={isSubmitting}
+            className="w-full p-3 border border-chatInputBorder rounded bg-chatInput text-chatMsg text-base outline-none transition-colors focus:border-primary mb-5"
+          />
 
-        {actionData?.error && <div className="auth-error">{actionData.error}</div>}
+          {actionData?.error && <div className="text-error bg-red-900 border border-error p-3 rounded mb-6 text-left">{actionData.error}</div>}
 
-        <button type="submit" className="auth-button" disabled={isSubmitting}>
-          {isSubmitting ? "Registering..." : "Register"}
-        </button>
-      </Form>
-      <div className="auth-footer">
-        Already have an account?{" "}
-        <Link to="/login" className="auth-link">
-          Login
-        </Link>
+          <button type="submit" className="w-full p-3 rounded bg-accent text-white text-base font-semibold transition-colors hover:bg-primary hover:text-cardDark disabled:bg-bg-muted disabled:text-chatBtnDisabledText disabled:cursor-not-allowed" disabled={isSubmitting}>
+            {isSubmitting ? "Registering..." : "Register"}
+          </button>
+        </Form>
+        <div className="mt-6 text-sm text-indigo-300">
+          Already have an account?{' '}
+          <Link to="/login" className="text-primary font-medium hover:underline">Login</Link>
+        </div>
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
-import "./terminal.css";
+
 import shellClient from "~/services/shell.service";
 import * as userService from "~/services/user.service";
 
@@ -102,38 +102,49 @@ export default function Terminal({
   );
 
   return (
-    <div className="terminal">
-      <div className="terminal-header">
-        <div className="terminal-header-left">
-          <span className="dot red" />
-          <span className="dot amber" />
-          <span className="dot green" />
-          <div className="terminal-title">terminal</div>
+    <div className="flex flex-col h-full min-h-[320px] max-h-[720px] w-full rounded-xl border border-gray-900 bg-gray-900 text-gray-100 shadow-lg">
+      <div className="flex items-center justify-between gap-2 border-b border-gray-900 px-3 py-2">
+        <div className="flex items-center gap-3">
+          <span className="h-3 w-3 rounded-full inline-block bg-error" />
+          <span className="h-3 w-3 rounded-full inline-block bg-warning" />
+          <span className="h-3 w-3 rounded-full inline-block bg-success" />
+          <div className="ml-2 text-sm font-medium opacity-90">terminal</div>
         </div>
-        <div className="terminal-subtitle">/ web • demo</div>
+        <div className="text-xs opacity-70">/ web • demo</div>
       </div>
 
-      <div className="terminal-body" ref={containerRef}>
-        <div className="terminal-lines">
-          {lines.length === 0 && <div className="cleared">(cleared)</div>}
+      <div className="flex-1 overflow-y-auto px-4 py-3" ref={containerRef}>
+        <div className="flex flex-col gap-2 font-mono text-sm">
+          {lines.length === 0 && <div className="text-gray-400 italic">(cleared)</div>}
           {lines.map(ln => (
-            <div key={ln.id} className={`line ${ln.type}`}>
+            <div
+              key={ln.id}
+              className={
+                ln.type === "input"
+                  ? "text-teal-300"
+                  : ln.type === "output"
+                  ? "text-gray-200"
+                  : ln.type === "system"
+                  ? "text-amber-300 italic"
+                  : ""
+              }
+            >
               {ln.text}
             </div>
           ))}
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="terminal-input-form">
-        <div className="input-wrapper">
-          <div className="prompt">{prompt}</div>
+      <form onSubmit={handleSubmit} className="border-t border-gray-900 px-3 py-2">
+        <div className="flex items-center gap-3">
+          <div className="font-mono text-sm text-teal-300">{prompt}</div>
           <input
             ref={inputRef}
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="type a command..."
-            className="input-field"
+            className="flex-1 bg-transparent outline-none font-mono text-sm text-inherit border-none placeholder:opacity-50"
             autoComplete="off"
             spellCheck={false}
           />

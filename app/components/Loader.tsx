@@ -1,10 +1,10 @@
-import "./loader.css";
+
 export default function Loader() {
   return (
-    <div className="balls">
-      <div className="ball ball-1"></div>
-      <div className="ball ball-2"></div>
-      <div className="ball ball-3"></div>
+    <div className="absolute left-0 top-0 flex justify-center items-center h-full w-full backdrop-blur-sm shadow-lg rounded-lg bg-bg-transparent overflow-hidden z-10">
+      <div className="bg-primary rounded-full w-[50px] h-[50px] animate-spin1" />
+      <div className="bg-primary rounded-full w-[50px] h-[50px] animate-spin mx-2" />
+      <div className="bg-primary rounded-full w-[50px] h-[50px] animate-spin1" />
     </div>
   );
 }

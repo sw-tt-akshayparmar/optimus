@@ -1,0 +1,96 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./app/**/*.{js,ts,jsx,tsx}",
+    "./app/*.{js,ts,jsx,tsx}",
+    "./app/components/*.{js,ts,jsx,tsx}",
+    "./app/routes/*.{js,ts,jsx,tsx}",
+    "./node_modules/primereact/**/*.{js,ts,jsx,tsx}", // include PrimeReact
+  ],
+  theme: {
+    extend: {
+      colors: {
+        bg: "#f8fafc",
+        "bg-muted": "#334155",
+        "bg-transparent": "rgba(0,0,0,0.2)",
+        primary: "#60a5fa",
+        secondary: "#64748b",
+        accent: "#2563eb",
+        error: "#ef4444",
+        success: "#22c55e",
+        warning: "#f59e42",
+        card: "#232837",
+        cardDark: "#181c24",
+        chatMsg: "#e5e7ef",
+        chatSelf: "#38bdf8",
+        chatInput: "#181c24",
+        chatInputBorder: "#334155",
+        chatBtn: "#2563eb",
+        chatBtnHover: "#60a5fa",
+        chatBtnDisabled: "#334155",
+        chatBtnDisabledText: "#7b8499",
+      },
+      fontSize: {
+        xs: "0.75rem",
+        sm: "0.875rem",
+        md: "0.98rem",
+        base: "1.05rem",
+        lg: "1.15rem",
+        xl: "1.8rem",
+        xxl: "2.5rem",
+      },
+      borderRadius: {
+        DEFAULT: "0.25rem",
+        sm: "6px",
+        md: "10px",
+        lg: "12px",
+        xl: "16px",
+        full: "9999px",
+      },
+      boxShadow: {
+        DEFAULT: "0 4px 8px rgba(0,0,0,0.5)",
+        card: "0 2px 12px #0008",
+        cardDark: "0 1px 4px #0002",
+        nav: "0 2px 12px #000a",
+        btn: "0 4px 24px #2563eb44, 0 1.5px 6px #0002",
+      },
+      spacing: {
+        xs: "0.5rem",
+        sm: "0.75rem",
+        md: "1rem",
+        lg: "1.5rem",
+        xl: "2rem",
+        "2xl": "2.5rem",
+        "3xl": "3rem",
+        "4xl": "4rem",
+      },
+      keyframes: {
+        "gradient-move": {
+          "0%": { backgroundPosition: "0% 50%" },
+          "100%": { backgroundPosition: "100% 50%" },
+        },
+        spin: {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
+        spin1: {
+          "0%": { transform: "scale(1)" },
+          "50%": { transform: "scale(0.6)" },
+          "100%": { transform: "scale(1)" },
+        },
+        "border-gradient-move": {
+          "0%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+          "100%": { backgroundPosition: "0% 50%" },
+        },
+      },
+      animation: {
+        "gradient-move": "gradient-move 3s ease-in-out infinite",
+        spin: "spin 0.6s infinite ease-in-out",
+        spin1: "spin1 0.6s infinite ease-in-out",
+        "border-gradient-move": "border-gradient-move 6s linear infinite",
+      },
+    },
+  },
+  plugins: [],
+};
