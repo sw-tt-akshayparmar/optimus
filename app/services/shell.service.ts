@@ -3,7 +3,6 @@ import socket, { SocketIO } from "~/socket";
 import * as userService from "./user.service";
 import * as apiService from "./api.service";
 import APIConfig from "~/config/api.config";
-import storageConstants from "~/constants/storage.constants";
 
 export class ShellClient {
   socket: SocketIO = socket;

@@ -1,6 +1,5 @@
 import { io, Socket } from "socket.io-client";
 import Constants from "~/constants/constants";
-import storageConstants from "~/constants/storage.constants";
 import * as envService from "~/services/env.service";
 import { saveConnectionId } from "~/services/user.service";
 
