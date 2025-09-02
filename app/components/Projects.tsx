@@ -10,7 +10,12 @@ export default function Projects() {
   const [loading, setLoading] = useState(false);
   const [newProject, setNewProject] = useState("");
   const [projectDescription, setProjectDescription] = useState("");
-  const [page, setPage] = useState({});
+  const [page, setPage] = useState({
+    first: 0,
+    page: 0,
+    rows: 0,
+    totalPages: 0,
+  });
 
   useEffect(() => {
     async function fetchProjects() {

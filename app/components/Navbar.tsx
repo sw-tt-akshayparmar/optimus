@@ -5,7 +5,7 @@ export default function Navbar() {
   const navLinks = [
     { to: "/", label: "Home" },
     { to: "/chat", label: "Chat" },
-    { to: "/h6502", label: "H6502" },
+    // { to: "/h6502", label: "H6502" },
     { to: "/workspace", label: "Workspace" },
   ];
 
@@ -37,7 +37,7 @@ export default function Navbar() {
             <li className="rounded transition hover:bg-cardDark hover:shadow-md" key={link.to}>
               <NavLink
                 className={({ isActive }) =>
-                  `inline-block text-primary font-medium text-base px-3.5 py-2 rounded transition-colors ${isActive ? 'text-accent' : ''} hover:bg-primary hover:text-cardDark no-underline`
+                  `inline-block text-primary font-medium text-base px-3.5 py-2 rounded transition-colors ${isActive ? "text-accent" : ""} hover:bg-primary hover:text-cardDark no-underline`
                 }
                 to={link.to}
                 ref={el => {
@@ -54,9 +54,7 @@ export default function Navbar() {
           style={{ left: underlineStyle.left, width: underlineStyle.width }}
         ></div>
       </div>
-      <button
-        className="relative z-10 bg-gradient-to-r from-accent via-primary to-indigo-400 bg-[length:300%_300%] text-white border-none rounded-xl px-6 py-2 text-base font-semibold cursor-pointer ml-4 h-11 shadow-btn flex items-center justify-center overflow-hidden transition-shadow animate-gradient-move disabled:bg-bg-muted disabled:text-chatBtnDisabledText disabled:cursor-not-allowed"
-      >
+      <button className="relative z-10 bg-gradient-to-r from-accent via-primary to-indigo-400 bg-[length:300%_300%] text-white border-none rounded-xl px-6 py-2 text-base font-semibold cursor-pointer ml-4 h-11 shadow-btn flex items-center justify-center overflow-hidden transition-shadow animate-gradient-move disabled:bg-bg-muted disabled:text-chatBtnDisabledText disabled:cursor-not-allowed">
         SIGN IN
       </button>
     </nav>

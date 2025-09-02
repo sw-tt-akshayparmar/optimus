@@ -10,25 +10,31 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        bg: "#f8fafc",
-        "bg-muted": "#334155",
-        "bg-transparent": "rgba(0,0,0,0.2)",
-        primary: "#60a5fa",
-        secondary: "#64748b",
-        accent: "#2563eb",
-        error: "#ef4444",
-        success: "#22c55e",
-        warning: "#f59e42",
-        card: "#232837",
-        cardDark: "#181c24",
-        chatMsg: "#e5e7ef",
-        chatSelf: "#38bdf8",
-        chatInput: "#181c24",
-        chatInputBorder: "#334155",
-        chatBtn: "#2563eb",
-        chatBtnHover: "#60a5fa",
-        chatBtnDisabled: "#334155",
-        chatBtnDisabledText: "#7b8499",
+        // bind to PrimeReact md-dark-indigo CSS vars
+        primary: "var(--primary-color)", // main accent
+        "primary-hover": "var(--primary-color-hover)",
+        "primary-contrast": "var(--primary-color-text)",
+
+        surface: "var(--surface-0)", // main surface background
+        "surface-100": "var(--surface-100)",
+        "surface-200": "var(--surface-200)",
+        "surface-300": "var(--surface-300)",
+        "surface-400": "var(--surface-400)",
+        "surface-500": "var(--surface-500)",
+        "surface-600": "var(--surface-600)",
+        "surface-700": "var(--surface-700)",
+        "surface-800": "var(--surface-800)",
+        "surface-900": "var(--surface-900)",
+
+        text: "var(--text-color)", // default text
+        "text-secondary": "var(--text-color-secondary)",
+        border: "var(--surface-border)",
+
+        // optional: keep your custom aliases
+        card: "var(--surface-800)",
+        cardDark: "var(--surface-900)",
+        chatInput: "var(--surface-900)",
+        chatInputBorder: "var(--surface-border)",
       },
       fontSize: {
         xs: "0.75rem",

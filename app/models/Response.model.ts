@@ -1,4 +1,4 @@
-export interface SuccessResponse<Data extends any> {
+export interface SuccessResponse<Data = any> {
   isSuccessFull: true;
   status: number;
   success: string;

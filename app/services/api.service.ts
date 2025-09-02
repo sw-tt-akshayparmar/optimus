@@ -56,12 +56,8 @@ async function request(
         ...headers,
       },
     });
-    const resBody: SuccessResponse | ErrorResponse = await res.json();
-    if (resBody.isSuccessFull) {
-      return resBody;
-    } else {
-      throw resBody;
-    }
+    const resBody: SuccessResponse = await res.json();
+    return resBody;
   } catch (err: Error | any) {
     throw err;
   }
