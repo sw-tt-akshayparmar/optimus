@@ -1,5 +1,6 @@
 import { NavLink, useLocation } from "react-router";
 import { useRef, useEffect, useState } from "react";
+import { Button } from "primereact/button";
 
 export default function Navbar() {
   const navLinks = [
@@ -54,9 +55,7 @@ export default function Navbar() {
           style={{ left: underlineStyle.left, width: underlineStyle.width }}
         ></div>
       </div>
-      <button className="relative z-10 bg-gradient-to-r from-accent via-primary to-indigo-400 bg-[length:300%_300%] text-white border-none rounded-xl px-6 py-2 text-base font-semibold cursor-pointer ml-4 h-11 shadow-btn flex items-center justify-center overflow-hidden transition-shadow animate-gradient-move disabled:bg-bg-muted disabled:text-chatBtnDisabledText disabled:cursor-not-allowed">
-        SIGN IN
-      </button>
+      <Button>SIGN IN</Button>
     </nav>
   );
 }

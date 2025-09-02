@@ -6,10 +6,16 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
-
+import { PrimeReactProvider } from "primereact/api";
 import type { Route } from "./+types/root";
 import Navbar from "./components/Navbar";
 import "./assets/global.css";
+
+const ptConfig = {
+  button: {
+    root: { className: "rounded-full" },
+  },
+};
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -42,7 +48,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           minHeight: "100vh",
         }}
       >
-        {children}
+        <PrimeReactProvider value={{ pt: ptConfig }}>{children}</PrimeReactProvider>
         <ScrollRestoration />
         <Scripts />
       </body>

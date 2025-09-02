@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import type { GameMatch } from "~/models/game/GameMatch.model";
 import gameClient from "../services/game.service";
 import Loader from "~/components/Loader";
+import { Button } from "primereact/button";
 
 export default function Home() {
   const [match, setMatch] = useState<GameMatch>();
@@ -27,16 +28,14 @@ export default function Home() {
         <div className="opponent-disconnected">
           <h2>Opponent Disconnected</h2>
           <p>Your opponent has left the game.</p>
-          <button
-            className="start-button"
+          <Button
+            label="Find New Game"
             onClick={() => {
               setMatch(undefined);
               setOpponentDisconnected(false);
               handleStartMatch();
             }}
-          >
-            Find New Game
-          </button>
+          />
         </div>
       );
     }
@@ -44,9 +43,7 @@ export default function Home() {
       return (
         <>
           <h1>Welcome to Optimus </h1>
-          <button className="start-button" onClick={handleStartMatch}>
-            Start
-          </button>
+          <Button label="Start" onClick={handleStartMatch} />
         </>
       );
     }
@@ -89,28 +86,28 @@ export default function Home() {
               <p>-- Basic Game UI --</p>
               <p>Your move!</p>
             </div>
-            <button
-              className="start-button"
+            <Button
+              label="End Game"
               onClick={() => {
                 setMatch(undefined);
                 setOpponentDisconnected(false);
               }}
-            >
-              End Game
-            </button>
+            />
           </div>
         );
       default:
         return (
           <>
             <h1>Welcome to Optimus Games</h1>
-            <button className="start-button" onClick={handleStartMatch}>
-              Start New Game
-            </button>
+            <Button label="Start New Game" onClick={handleStartMatch} />
           </>
         );
     }
   };
 
-    return <div className="min-h-[70vh] flex items-center justify-center bg-cardDark py-8">{renderContent()}</div>;
+  return (
+    <div className="min-h-[70vh] flex items-center justify-center bg-cardDark py-8">
+      {renderContent()}
+    </div>
+  );
 }
