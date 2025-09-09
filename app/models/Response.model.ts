@@ -1,3 +1,4 @@
+import ErrorCode from "~/enums/error.enum";
 export interface SuccessResponse<Data = any> {
   isSuccessFull: true;
   status: number;
@@ -16,4 +17,5 @@ export interface ErrorResponse {
   description: ErrorDescription;
   trace: string[];
   data?: any;
+  code: ErrorCode;
 }

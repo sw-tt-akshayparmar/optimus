@@ -5,41 +5,22 @@ import { Button } from "primereact/button";
 import { Project as ProjectModel } from "../models/Project.model";
 import * as userService from "../services/user.service";
 import * as workspaceService from "../services/workspace.service";
+import type { ProjectStore } from "~/store/project.slice";
+import { useSelector } from "react-redux";
+import LoaderActions from "~/enums/loader.enum";
 
 export default function Projects() {
-  const [projects, setProjects] = useState<Array<ProjectModel>>([]);
-  const [loading, setLoading] = useState(false);
+  const projects = useSelector<{ projects: ProjectStore }, ProjectStore>(state => state.projects);
+  const loaders = useSelector<{ loaders: any }, any>(state => state.loaders.loaders);
   const [newProject, setNewProject] = useState("");
   const [projectDescription, setProjectDescription] = useState("");
-  const [page, setPage] = useState({
-    first: 0,
+  const page = {
+    size: 3,
     page: 1,
-    rows: 3,
-    totalPages: 0,
-  });
-  async function fetchProjects(page: {
-    first: number;
-    page: number;
-    rows: number;
-    totalPages: number;
-  }) {
-    setLoading(true);
-    const data = await workspaceService.getAllProjects({
-      page: page.page + 1,
-      size: page.rows,
-    });
-    setLoading(false);
-    setProjects(data.records);
-    setPage({
-      first: (data.page - 1) * data.size,
-      page: data.page - 1,
-      rows: data.size,
-      totalPages: data.total,
-    });
-  }
+  };
 
   useEffect(() => {
-    fetchProjects(page);
+    workspaceService.fetchAllProjects(page);
   }, []);
 
   const createProject = async () => {
@@ -51,10 +32,8 @@ export default function Projects() {
     });
     setNewProject("");
     setProjectDescription("");
-    setLoading(true);
-    const saved: ProjectModel = await workspaceService.createProject(project);
-    setLoading(false);
-    fetchProjects(page);
+    await workspaceService.createProject(project);
+    await workspaceService.fetchAllProjects(page);
   };
 
   const projectTemplate = (project: ProjectModel) => {
@@ -63,11 +42,7 @@ export default function Projects() {
         key={crypto.randomUUID()}
         className="flex justify-between items-center rounded shadow-card bg-bg p-md mb-sm"
       >
-        <img
-          src="https://cdn-icons-png.flaticon.com/256/4599/4599840.png"
-          alt="Project"
-          className="ml-6 w-[50px] h-[50px] rounded-full"
-        />
+        <img src={project.icon} alt="Project" className="ml-6 w-[50px] h-[50px] rounded-full" />
         <div className="flex flex-col gap-2 w-[calc(100%-80px)] p-4 m-2">
           <h3 className="text-accent text-lg font-semibold">
             <a
@@ -81,6 +56,18 @@ export default function Projects() {
             </a>
           </h3>
           <p className="text-secondary text-sm opacity-80">{project.description}</p>
+        </div>
+        <div>
+          <Button
+            label="Delete"
+            severity="danger"
+            icon="pi pi-trash"
+            loading={loaders[LoaderActions.DELETE_PROJECT + project.id]}
+            onClick={async () => {
+              await workspaceService.deleteProject(project.id!);
+              await workspaceService.fetchAllProjects(page);
+            }}
+          />
         </div>
       </div>
     );
@@ -125,26 +112,33 @@ export default function Projects() {
           onChange={e => setProjectDescription(e.target.value)}
         />
         <Button
-          className="bg-primary text-white border-none cursor-pointer px-4 py-3 rounded font-semibold transition-colors hover:bg-accent disabled:bg-secondary disabled:cursor-not-allowed"
+          icon="pi pi-trash"
           onClick={createProject}
           disabled={!newProject.trim()}
+          loading={loaders[LoaderActions.CREATE_PROJECT]}
           label="Create Project"
         />
       </div>
       <div className="max-h-[480px] overflow-y-scroll scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
         <div>
-          {loading
+          {loaders[LoaderActions.FETCH_PROJECTS]
             ? skeltonTemplate()
-            : projects.map((project, i) => {
+            : projects.projectList.records.map((project: ProjectModel) => {
                 return projectTemplate(project);
               })}
         </div>
         <Paginator
-          first={page.first}
-          rows={page.rows}
-          totalRecords={page.totalPages}
+          first={(projects.projectList.page - 1) * projects.projectList.size}
+          rows={projects.projectList.size}
+          totalRecords={projects.projectList.total}
           rowsPerPageOptions={[2, 3, 5]}
-          onPageChange={fetchProjects as any}
+          onPageChange={page => {
+            console.log(page);
+            workspaceService.fetchAllProjects({
+              page: page.page + 1,
+              size: page.rows,
+            });
+          }}
         />
       </div>
     </div>

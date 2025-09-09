@@ -10,6 +10,8 @@ import { PrimeReactProvider } from "primereact/api";
 import type { Route } from "./+types/root";
 import Navbar from "./components/Navbar";
 import "./assets/global.css";
+import { store } from "~/store/store";
+import { Provider } from "react-redux";
 
 const ptConfig = {
   button: {
@@ -58,10 +60,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   return (
-    <>
+    <Provider store={store}>
       <Navbar />
       <Outlet />
-    </>
+    </Provider>
   );
 }
 

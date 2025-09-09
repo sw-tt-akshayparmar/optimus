@@ -21,7 +21,9 @@ export class ShellClient {
   }
   startShell() {
     if (!this.isStarted) {
-      apiService.post(APIConfig.SHELL, null, { connectionId: userService.getConnectionId() });
+      apiService.post(APIConfig.SHELL, null, undefined, {
+        connectionId: userService.getConnectionId(),
+      });
       this.isStarted = true;
     }
   }
