@@ -45,6 +45,9 @@ export default function Terminal({
       });
     };
     shellClient.onData(handleShellData);
+    return () => {
+      shellClient.offData();
+    };
   }, []);
 
   const appendLine = useCallback(
@@ -123,10 +126,10 @@ export default function Terminal({
                 ln.type === "input"
                   ? "text-teal-300"
                   : ln.type === "output"
-                  ? "text-gray-200"
-                  : ln.type === "system"
-                  ? "text-amber-300 italic"
-                  : ""
+                    ? "text-gray-200"
+                    : ln.type === "system"
+                      ? "text-amber-300 italic"
+                      : ""
               }
             >
               {ln.text}

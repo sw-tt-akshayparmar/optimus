@@ -34,6 +34,10 @@ export class ShellClient {
       socket.on(Constants.SHELL_OUT, callback);
     }
   }
+  offData() {
+    this.onDataCB = undefined;
+    this.socket.off(Constants.SHELL_OUT);
+  }
   send(message: string) {
     socket.send(Constants.SHELL_IN, { timestamp: Date.now(), data: message });
   }
