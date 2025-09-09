@@ -50,6 +50,5 @@ export async function login(loginModel: LoginModel): Promise<User> {
   saveAuthorization(auth.accessToken);
   saveRefreshToken(auth.refreshToken);
   saveUserData(auth.user!);
-  console.log(success);
   return auth.user!;
 }

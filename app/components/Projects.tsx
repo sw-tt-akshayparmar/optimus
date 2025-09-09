@@ -23,7 +23,6 @@ export default function Projects() {
     rows: number;
     totalPages: number;
   }) {
-    console.log(page);
     setLoading(true);
     const data = await workspaceService.getAllProjects({
       page: page.page + 1,
@@ -60,7 +59,10 @@ export default function Projects() {
 
   const projectTemplate = (project: ProjectModel) => {
     return (
-      <div className="flex justify-between items-center rounded shadow-card bg-bg p-md mb-sm">
+      <div
+        key={crypto.randomUUID()}
+        className="flex justify-between items-center rounded shadow-card bg-bg p-md mb-sm"
+      >
         <img
           src="https://cdn-icons-png.flaticon.com/256/4599/4599840.png"
           alt="Project"
@@ -72,7 +74,6 @@ export default function Projects() {
               href="#"
               onClick={e => {
                 e.preventDefault();
-                console.log("this");
               }}
               className="hover:underline"
             >
@@ -90,7 +91,10 @@ export default function Projects() {
       .split("")
       .map(() => {
         return (
-          <div className="flex justify-between items-center rounded shadow-card bg-bg p-md mb-sm">
+          <div
+            key={crypto.randomUUID()}
+            className="flex justify-between items-center rounded shadow-card bg-bg p-md mb-sm"
+          >
             <Skeleton shape="circle" size="50px" className="ml-6 w-[50px] h-[50px] rounded-full" />
             <div className="flex flex-col gap-2 w-[calc(100%-80px)] p-4 m-2">
               <Skeleton className="text-accent text-lg font-semibold" />
@@ -131,7 +135,7 @@ export default function Projects() {
         <div>
           {loading
             ? skeltonTemplate()
-            : projects.map(project => {
+            : projects.map((project, i) => {
                 return projectTemplate(project);
               })}
         </div>
