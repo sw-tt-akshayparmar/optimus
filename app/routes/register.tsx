@@ -1,13 +1,7 @@
-import {
-  Form,
-  Link,
-  redirect,
-  useActionData,
-  useNavigation,
-  type ActionFunctionArgs,
-} from "react-router-dom";
+import { Form, Link, useActionData, useNavigation } from "react-router-dom";
 import { register } from "~/services/user.service";
 import { User } from "~/models/User.model";
+import { Button } from "primereact/button";
 
 // export const action = async ({ request }: ActionFunctionArgs) => {
 //   const formData = await request.formData();
@@ -42,7 +36,9 @@ export default function RegisterPage() {
       <div className="bg-card p-10 rounded-xl shadow-nav w-full max-w-[400px] text-center">
         <h2 className="mb-6 text-primary text-xl font-bold">Register</h2>
         <Form method="post" className="text-left">
-          <label htmlFor="name" className="block mb-2 font-medium text-chatMsg">Name</label>
+          <label htmlFor="name" className="block mb-2 font-medium text-chatMsg">
+            Name
+          </label>
           <input
             id="name"
             name="name"
@@ -53,7 +49,9 @@ export default function RegisterPage() {
             className="w-full p-3 border border-chatInputBorder rounded bg-chatInput text-chatMsg text-base outline-none transition-colors focus:border-primary mb-5"
           />
 
-          <label htmlFor="username" className="block mb-2 font-medium text-chatMsg">Username</label>
+          <label htmlFor="username" className="block mb-2 font-medium text-chatMsg">
+            Username
+          </label>
           <input
             id="username"
             name="username"
@@ -63,7 +61,9 @@ export default function RegisterPage() {
             className="w-full p-3 border border-chatInputBorder rounded bg-chatInput text-chatMsg text-base outline-none transition-colors focus:border-primary mb-5"
           />
 
-          <label htmlFor="password" className="block mb-2 font-medium text-chatMsg">Password</label>
+          <label htmlFor="password" className="block mb-2 font-medium text-chatMsg">
+            Password
+          </label>
           <input
             id="password"
             name="password"
@@ -74,15 +74,19 @@ export default function RegisterPage() {
             className="w-full p-3 border border-chatInputBorder rounded bg-chatInput text-chatMsg text-base outline-none transition-colors focus:border-primary mb-5"
           />
 
-          {actionData?.error && <div className="text-error bg-red-900 border border-error p-3 rounded mb-6 text-left">{actionData.error}</div>}
+          {actionData?.error && (
+            <div className="text-error bg-red-900 border border-error p-3 rounded mb-6 text-left">
+              {actionData.error}
+            </div>
+          )}
 
-          <button type="submit" className="w-full p-3 rounded bg-accent text-white text-base font-semibold transition-colors hover:bg-primary hover:text-cardDark disabled:bg-bg-muted disabled:text-chatBtnDisabledText disabled:cursor-not-allowed" disabled={isSubmitting}>
-            {isSubmitting ? "Registering..." : "Register"}
-          </button>
+          <Button icon="pi pi-user-plus" label="Sign in" />
         </Form>
         <div className="mt-6 text-sm text-indigo-300">
-          Already have an account?{' '}
-          <Link to="/login" className="text-primary font-medium hover:underline">Login</Link>
+          Already have an account?{" "}
+          <Link to="/login" className="text-primary font-medium hover:underline">
+            Login
+          </Link>
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@ import rtClient from "../services/rtc.service";
 
 import { useUser } from "./_authenticated";
 import type { User } from "~/models/User.model";
+import { Button } from "primereact/button";
 
 export default function Chat() {
   const { user } = useUser();
@@ -40,12 +41,14 @@ export default function Chat() {
 
   return (
     <div className="max-w-[480px] mx-auto bg-card rounded-xl shadow-nav p-6 flex flex-col min-h-[60vh]">
-      <div className="text-xl font-bold text-primary text-center mb-4 tracking-wide">💬 Optimus Chat</div>
+      <div className="text-xl font-bold text-primary text-center mb-4 tracking-wide">
+        💬 Optimus Chat
+      </div>
       <div className="flex-1 overflow-y-auto mb-4 bg-cardDark rounded-lg p-4 min-h-[220px]">
         {messages.map((msg, i) => (
           <div
             key={i}
-            className={`mb-2 text-base ${msg.user.id === user.id ? 'text-chatSelf text-right' : 'text-chatMsg'} `}
+            className={`mb-2 text-base ${msg.user.id === user.id ? "text-chatSelf text-right" : "text-chatMsg"} `}
           >
             <span className="font-semibold text-primary mr-1">{msg.user.name}:</span> {msg.message}
           </div>
@@ -61,13 +64,7 @@ export default function Chat() {
           autoFocus
           aria-label="Type a message"
         />
-        <button
-          className="bg-accent text-white border-none rounded px-4 py-3 text-base font-medium cursor-pointer transition-colors hover:bg-primary hover:text-cardDark disabled:bg-chatBtnDisabled disabled:text-chatBtnDisabledText disabled:cursor-not-allowed"
-          type="submit"
-          disabled={!input.trim()}
-        >
-          Send
-        </button>
+        <Button icon="pi pi-send" disabled={!input.trim()} />
       </form>
     </div>
   );

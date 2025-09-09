@@ -55,7 +55,7 @@ export default function Navbar() {
           style={{ left: underlineStyle.left, width: underlineStyle.width }}
         ></div>
       </div>
-      <Button>SIGN IN</Button>
+      <Button icon="pi pi-user-plus" label="Sign in" />
     </nav>
   );
 }
