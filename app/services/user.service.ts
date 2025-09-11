@@ -3,7 +3,7 @@ import type { AuthToken, LoginModel } from "~/models/Auth.model";
 import { User } from "~/models/User.model";
 import * as apiService from "./api.service";
 import APIConfig from "~/config/api.config";
-import type { ErrorResponse, SuccessResponse } from "~/models/Response.model";
+import type { SuccessResponse } from "~/models/Response.model";
 
 export function saveAuthorization(token: string) {
   localStorage.setItem(storageConstants.AUTHORIZATION_TOKEN, token);
@@ -41,14 +41,15 @@ export async function register(user: User) {
   apiService.post(APIConfig.REGISTER, user);
 }
 
-export async function login(loginModel: LoginModel): Promise<User> {
-  const success: SuccessResponse<AuthToken> | ErrorResponse = await apiService.post(
-    APIConfig.LOGIN,
-    loginModel
-  );
-  const auth: AuthToken = success.data as AuthToken;
-  saveAuthorization(auth.accessToken);
-  saveRefreshToken(auth.refreshToken);
-  saveUserData(auth.user!);
-  return auth.user!;
+export async function login(loginModel: LoginModel): Promise<AuthToken> {
+  let auth!: AuthToken;
+  await apiService
+    .post<AuthToken>(APIConfig.LOGIN, loginModel)
+    .then((res: SuccessResponse<AuthToken>) => {
+      auth = res.data as AuthToken;
+      saveAuthorization(auth.accessToken);
+      saveRefreshToken(auth.refreshToken);
+      saveUserData(auth.user!);
+    });
+  return auth;
 }

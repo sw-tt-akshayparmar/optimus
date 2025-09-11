@@ -1,4 +1,6 @@
 enum ErrorCode {
+  API_FAILURE = "common.api.failed",
+
   VALIDATION_FAILED = "common.validation.failed",
 
   USERNAME_ALREADY_PRESENT = "auth.username.exists",

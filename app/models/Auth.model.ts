@@ -8,5 +8,5 @@ export interface LoginModel {
 export interface AuthToken {
   accessToken: string;
   refreshToken: string;
-  user?: User;
+  user: User;
 }

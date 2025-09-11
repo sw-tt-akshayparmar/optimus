@@ -112,7 +112,7 @@ export default function Projects() {
           onChange={e => setProjectDescription(e.target.value)}
         />
         <Button
-          icon="pi pi-trash"
+          icon="pi pi-plus"
           onClick={createProject}
           disabled={!newProject.trim()}
           loading={loaders[LoaderActions.CREATE_PROJECT]}
