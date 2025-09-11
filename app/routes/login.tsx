@@ -10,6 +10,7 @@ import LoaderActions from "~/enums/loader.enum";
 import { enable, disable } from "~/services/loader.service";
 import type { AuthToken } from "~/models/Auth.model";
 import type { Exception } from "~/exception/app.exception";
+import { useToast } from "~/components/ToastContext";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -19,12 +20,14 @@ export default function LoginPage() {
     username: "",
     password: "",
   });
+  const toast = useToast();
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
     enable(LoaderActions.LOG_IN);
     login(userData)
       .then((token: AuthToken) => {
+        toast.success(`Welcome back, ${token.user.name}!`, "Login Successful");
         navigate(searchParams.get("redirection")!);
       })
       .catch((err: Exception) => {})

@@ -6,18 +6,12 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
-import { PrimeReactProvider } from "primereact/api";
 import type { Route } from "./+types/root";
 import Navbar from "./components/Navbar";
 import "./assets/global.css";
 import { store } from "~/store/store";
 import { Provider } from "react-redux";
-
-const ptConfig = {
-  button: {
-    root: { className: "rounded-full" },
-  },
-};
+import { ToastProvider } from "./components/ToastContext";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -41,16 +35,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body
-        style={{
-          margin: 0,
-          background: "#181c24",
-          color: "#e5e7ef",
-          fontFamily: "'Inter', system-ui, sans-serif",
-          minHeight: "100vh",
-        }}
-      >
-        <PrimeReactProvider value={{ pt: ptConfig }}>{children}</PrimeReactProvider>
+      <body>
+        {children}
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -61,8 +47,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
 export default function App() {
   return (
     <Provider store={store}>
-      <Navbar />
-      <Outlet />
+      <ToastProvider>
+        <Navbar />
+        <Outlet />
+      </ToastProvider>
     </Provider>
   );
 }
