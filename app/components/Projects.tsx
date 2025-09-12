@@ -26,7 +26,7 @@ export default function Projects() {
   const fetchProjectList = async (page: { page: number; size: number }) => {
     enable(LoaderActions.FETCH_PROJECTS);
     await workspaceService
-      .fetchAllProjects(page)
+      .fetchAllProjects({ page: page.page, size: page.size })
       .catch(err => {
         toast.error(err.message, "Error Fetching Projects");
       })
@@ -53,7 +53,7 @@ export default function Projects() {
       .createProject(project)
       .then(async res => {
         toast.success(`${project.name}`, res.success || "Project Cretaed Successfully");
-        fetchProjectList(pageInit);
+        fetchProjectList(projects.projectList);
       })
       .catch((err: Exception) => {
         toast.error(`${project.name}`, err.message || "Project Creation Failed");
