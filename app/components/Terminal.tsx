@@ -102,12 +102,12 @@ export default function Terminal({
   );
 
   return (
-    <div className="flex flex-col h-full min-h-[320px] max-h-[720px] w-full rounded-xl border border-surface-d bg-surface-b shadow-lg">
-      <div className="flex items-center justify-between gap-2 border-b border-surface-d px-3 py-2">
-        <div className="flex items-center gap-3">
-          <span className="h-3 w-3 rounded-full inline-block bg-error" />
-          <span className="h-3 w-3 rounded-full inline-block bg-warning" />
-          <span className="h-3 w-3 rounded-full inline-block bg-success" />
+    <div className="flex flex-col h-full min-h-[320px] max-h-[720px] w-full rounded-t-xl border-t shadow-lg">
+      <div className="flex items-center justify-between gap-2 px-3 py-2">
+        <div className="flex items-center gap-2">
+          <span className="h-3 w-3 rounded-full inline-block bg-[red]" />
+          <span className="h-3 w-3 rounded-full inline-block bg-[orange]" />
+          <span className="h-3 w-3 rounded-full inline-block bg-[green]" />
           <div className="ml-2 text-sm font-medium opacity-90">terminal</div>
         </div>
         <div className="text-xs opacity-70">/ web • demo</div>
@@ -135,7 +135,7 @@ export default function Terminal({
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="border-t border-surface-d px-3 py-2">
+      <form onSubmit={handleSubmit} className="px-3 py-2">
         <div className="flex items-center gap-3">
           <div className="font-mono text-sm text-teal-300">{prompt}</div>
           <input
@@ -144,7 +144,7 @@ export default function Terminal({
             onChange={e => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="type a command..."
-            className="flex-1 bg-transparent outline-none font-mono text-sm text-inherit border-none placeholder:opacity-50"
+            className="flex-1 bg-grey outline-none font-mono text-sm text-inherit border-none placeholder:opacity-50"
             autoComplete="off"
             spellCheck={false}
             aria-label="Terminal input"
