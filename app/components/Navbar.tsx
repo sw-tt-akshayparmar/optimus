@@ -30,20 +30,22 @@ export default function Navbar() {
   }, [location.pathname]);
 
   return (
-    <nav className="bg-card shadow-nav rounded-lg mx-auto max-w-[900px] px-8 flex items-center justify-between min-h-[56px] my-4">
-      <div className="h-8 w-8 mr-3 rounded-lg shadow-cardDark object-cover bg-cardDark" />
+    <nav className="bg-surface-card shadow-md rounded-md mx-auto max-w-3xl px-content flex items-center justify-between min-h-[56px] my-4">
+      <div className="h-8 w-8 mr-inline rounded-md shadow-md object-cover bg-surface-d" />
       <div className="relative flex-1">
         <ul className="flex gap-4 list-none m-0 p-0">
           {navLinks.map((link, idx) => (
-            <li className="rounded transition hover:bg-cardDark hover:shadow-md" key={link.to}>
+            <li className="rounded-md transition-colors hover:bg-surface-d" key={link.to}>
               <NavLink
                 className={({ isActive }) =>
-                  `inline-block text-primary font-medium text-base px-3.5 py-2 rounded transition-colors ${isActive ? "text-accent" : ""} hover:bg-primary hover:text-cardDark no-underline`
+                  `inline-block font-inter font-medium text-base px-3.5 py-2 rounded-md transition-colors text-text ${isActive ? "text-primary" : "text-text-secondary"} hover:bg-primary hover:text-primary-color-text focus:outline-none focus:ring-2 focus:ring-primary`
                 }
                 to={link.to}
                 ref={el => {
                   linkRefs.current[idx] = el;
                 }}
+                tabIndex={0}
+                aria-current={location.pathname === link.to ? "page" : undefined}
               >
                 {link.label}
               </NavLink>
@@ -51,11 +53,11 @@ export default function Navbar() {
           ))}
         </ul>
         <div
-          className="absolute bottom-0 h-1 rounded bg-gradient-to-r from-accent via-primary to-indigo-400 transition-all z-10"
+          className="absolute bottom-0 h-1 rounded-md bg-gradient-to-r from-accent via-primary to-indigo-400 transition-all z-10"
           style={{ left: underlineStyle.left, width: underlineStyle.width }}
         ></div>
       </div>
-      <Button icon="pi pi-user-plus" label="Sign in" />
+      <Button icon="pi pi-user-plus" label="Sign in" className="font-inter bg-primary text-primary-color-text px-4 py-2 rounded-md border-none shadow focus:ring-2 focus:ring-primary" />
     </nav>
   );
 }
