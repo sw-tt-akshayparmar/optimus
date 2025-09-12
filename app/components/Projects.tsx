@@ -28,7 +28,7 @@ export default function Projects() {
     await workspaceService
       .fetchAllProjects({ page: page.page, size: page.size })
       .catch(err => {
-        toast.error(err.message, "Error Fetching Projects");
+        toast.error(err.message || err.error, "Error Fetching Projects");
       })
       .finally(() => {
         disable(LoaderActions.FETCH_PROJECTS);
@@ -46,14 +46,15 @@ export default function Projects() {
       description: projectDescription,
       userId: userService.getUserData().id!,
     });
-    setNewProject("");
-    setProjectDescription("");
+
     enable(LoaderActions.CREATE_PROJECT);
     await workspaceService
       .createProject(project)
       .then(async res => {
-        toast.success(`${project.name}`, res.success || "Project Cretaed Successfully");
-        fetchProjectList(projects.projectList);
+        toast.success(`${project.name}`, res.success || "Project Created Successfully");
+        setNewProject("");
+        setProjectDescription("");
+        fetchProjectList({ page: projects.projectList.page, size: projects.projectList.size });
       })
       .catch((err: Exception) => {
         toast.error(`${project.name}`, err.message || "Project Creation Failed");
@@ -63,10 +64,10 @@ export default function Projects() {
       });
   };
 
-  const projectTemplate = (project: ProjectModel) => {
+  const projectTemplate = (project: ProjectModel, idx: number) => {
     return (
       <div
-        key={crypto.randomUUID()}
+        key={idx}
         className="flex justify-between items-center rounded shadow-card bg-bg p-md mb-sm"
       >
         <img src={project.icon} alt="Project" className="ml-6 w-[50px] h-[50px] rounded-full" />
@@ -95,9 +96,15 @@ export default function Projects() {
                 enable(LoaderActions.DELETE_PROJECT + project.id);
                 const res = await workspaceService.deleteProject(project.id!);
                 toast.success(`${project.name}`, res.success || "Project Deleted");
-                fetchProjectList(projects.projectList);
+                fetchProjectList({
+                  page: projects.projectList.page,
+                  size: projects.projectList.size,
+                });
               } catch (err: Exception | Error | any) {
-                toast.error(`${project.name}`, err.message || "Project Deletion Failed");
+                toast.error(
+                  `${project.name}`,
+                  err.message || err.error || "Project Deletion Failed"
+                );
               } finally {
                 disable(LoaderActions.DELETE_PROJECT + project.id);
               }
@@ -108,23 +115,20 @@ export default function Projects() {
     );
   };
   const skeltonTemplate = (count = 3) => {
-    return "_"
-      .repeat(count)
-      .split("")
-      .map(() => {
-        return (
-          <div
-            key={crypto.randomUUID()}
-            className="flex justify-between items-center rounded shadow-card bg-bg p-md mb-sm"
-          >
-            <Skeleton shape="circle" size="50px" className="ml-6 w-[50px] h-[50px] rounded-full" />
-            <div className="flex flex-col gap-2 w-[calc(100%-80px)] p-4 m-2">
-              <Skeleton className="text-accent text-lg font-semibold" />
-              <Skeleton className="text-secondary text-sm opacity-80" />
-            </div>
+    return Array.from({ length: count }).map((_, idx) => {
+      return (
+        <div
+          key={idx}
+          className="flex justify-between items-center rounded shadow-card bg-bg p-md mb-sm"
+        >
+          <Skeleton shape="circle" size="50px" className="ml-6 w-[50px] h-[50px] rounded-full" />
+          <div className="flex flex-col gap-2 w-[calc(100%-80px)] p-4 m-2">
+            <Skeleton className="text-accent text-lg font-semibold" />
+            <Skeleton className="text-secondary text-sm opacity-80" />
           </div>
-        );
-      });
+        </div>
+      );
+    });
   };
 
   return (
@@ -135,11 +139,13 @@ export default function Projects() {
           id="projectName"
           placeholder="New project name..."
           value={newProject}
+          disabled={loaders[LoaderActions.CREATE_PROJECT]}
           onChange={e => setNewProject(e.target.value)}
         />
         <InputText
           type="text"
           id="projectDescription"
+          disabled={loaders[LoaderActions.CREATE_PROJECT]}
           placeholder="Project Description (optional)"
           value={projectDescription}
           onChange={e => setProjectDescription(e.target.value)}
@@ -156,9 +162,7 @@ export default function Projects() {
         <div>
           {loaders[LoaderActions.FETCH_PROJECTS]
             ? skeltonTemplate()
-            : projects.projectList.records.map((project: ProjectModel) => {
-                return projectTemplate(project);
-              })}
+            : projects.projectList.records.map(projectTemplate)}
         </div>
         <Paginator
           first={(projects.projectList.page - 1) * projects.projectList.size}
