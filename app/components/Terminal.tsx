@@ -12,16 +12,13 @@ type Line = {
 
 export default function Terminal({
   prompt = `${userService.getUserData().username}@optimus:~$`,
-  welcome = "Welcome to the simple terminal emulator. Type 'help' to start.",
   maxLines = 1000,
 }: {
   prompt?: string;
   welcome?: string;
   maxLines?: number;
 }) {
-  const [lines, setLines] = useState<Line[]>(() => [
-    { id: crypto.randomUUID(), text: welcome, type: "system", timestamp: Date.now() },
-  ]);
+  const [lines, setLines] = useState<Line[]>(() => []);
   const [input, setInput] = useState("");
   const [history, setHistory] = useState<string[]>([]);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -105,18 +102,18 @@ export default function Terminal({
   );
 
   return (
-    <div className="flex flex-col h-full min-h-[320px] max-h-[720px] w-full rounded-md border border-surface-d bg-surface-b text-text shadow-lg">
-      <div className="flex items-center justify-between gap-inline border-b border-surface-d px-content py-2">
-        <div className="flex items-center gap-inline">
+    <div className="flex flex-col h-full min-h-[320px] max-h-[720px] w-full rounded-xl border border-surface-d bg-surface-b shadow-lg">
+      <div className="flex items-center justify-between gap-2 border-b border-surface-d px-3 py-2">
+        <div className="flex items-center gap-3">
           <span className="h-3 w-3 rounded-full inline-block bg-error" />
           <span className="h-3 w-3 rounded-full inline-block bg-warning" />
           <span className="h-3 w-3 rounded-full inline-block bg-success" />
-          <div className="ml-inline text-sm font-medium opacity-90 font-inter">terminal</div>
+          <div className="ml-2 text-sm font-medium opacity-90">terminal</div>
         </div>
-        <div className="text-xs opacity-70 font-inter">/ web • demo</div>
+        <div className="text-xs opacity-70">/ web • demo</div>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-content py-3" ref={containerRef}>
+      <div className="flex-1 overflow-y-auto px-4 py-3" ref={containerRef}>
         <div className="flex flex-col gap-2 font-mono text-sm">
           {lines.length === 0 && <div className="text-gray-400 italic">(cleared)</div>}
           {lines.map(ln => (
@@ -124,11 +121,11 @@ export default function Terminal({
               key={ln.id}
               className={
                 ln.type === "input"
-                  ? "text-primary"
+                  ? "text-teal-300"
                   : ln.type === "output"
-                    ? "text-text"
+                    ? "text-gray-200"
                     : ln.type === "system"
-                      ? "text-warning italic"
+                      ? "text-amber-300 italic"
                       : ""
               }
             >
@@ -138,16 +135,16 @@ export default function Terminal({
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="border-t border-surface-d px-content py-2">
-        <div className="flex items-center gap-inline">
-          <div className="font-mono text-sm text-primary">{prompt}</div>
+      <form onSubmit={handleSubmit} className="border-t border-surface-d px-3 py-2">
+        <div className="flex items-center gap-3">
+          <div className="font-mono text-sm text-teal-300">{prompt}</div>
           <input
             ref={inputRef}
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="type a command..."
-            className="flex-1 bg-transparent outline-none font-mono text-sm text-text border-none placeholder:opacity-50 font-inter"
+            className="flex-1 bg-transparent outline-none font-mono text-sm text-inherit border-none placeholder:opacity-50"
             autoComplete="off"
             spellCheck={false}
             aria-label="Terminal input"

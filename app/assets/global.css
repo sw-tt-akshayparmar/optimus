@@ -1,13 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "tailwindcss";
 
-/* Use only one PrimeReact theme for consistency */
 @import "primereact/resources/themes/md-dark-indigo/theme.css";
 @import "primereact/resources/primereact.min.css";
 @import "primeicons/primeicons.css";
 
-/* Import custom toast styles if needed */
 @import "./toast.css";
 
-/* Remove redundant custom CSS if Tailwind/PrimeReact covers it */
+button {
+  border-radius: calc(infinity * 1px);
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}

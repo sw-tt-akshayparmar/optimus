@@ -132,7 +132,7 @@ export default function Projects() {
   };
 
   return (
-    <div className="w-full max-w-[800px] mx-auto flex flex-col gap-4">
+    <div className="w-full max-w-[900px] mx-auto flex flex-col">
       <div className="flex gap-3 items-center">
         <InputText
           type="text"
@@ -160,11 +160,11 @@ export default function Projects() {
           disabled={!newProject.trim()}
           loading={loaders[LoaderActions.CREATE_PROJECT]}
           label="Create Project"
-          className="font-inter bg-primary text-primary-color-text px-4 py-2 rounded-md border-none shadow focus:ring-2 focus:ring-primary"
+          className="font-inter bg-primary h-[42px] text-primary-color-text px-4 py-2 border-none shadow focus:ring-2 focus:ring-primary"
         />
       </div>
       <div className="max-h-[480px] overflow-y-scroll scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
-        <div>
+        <div className="mt-4 h-[400px]">
           {loaders[LoaderActions.FETCH_PROJECTS]
             ? skeltonTemplate()
             : projects.projectList.records.map(projectTemplate)}

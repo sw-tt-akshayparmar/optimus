@@ -57,7 +57,7 @@ export default function Navbar() {
           style={{ left: underlineStyle.left, width: underlineStyle.width }}
         ></div>
       </div>
-      <Button icon="pi pi-user-plus" label="Sign in" className="font-inter bg-primary text-primary-color-text px-4 py-2 rounded-md border-none shadow focus:ring-2 focus:ring-primary" />
+      <Button icon="pi pi-user-plus" label="Sign in" className="font-inter bg-primary text-primary-color-text px-4 py-2 border-none shadow focus:ring-2 focus:ring-primary" />
     </nav>
   );
 }
