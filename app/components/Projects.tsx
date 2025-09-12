@@ -141,6 +141,8 @@ export default function Projects() {
           value={newProject}
           disabled={loaders[LoaderActions.CREATE_PROJECT]}
           onChange={e => setNewProject(e.target.value)}
+          className="font-inter rounded-md border border-surface-d bg-surface-b text-text px-content py-2 focus:ring-2 focus:ring-primary"
+          aria-label="Project name"
         />
         <InputText
           type="text"
@@ -149,6 +151,8 @@ export default function Projects() {
           placeholder="Project Description (optional)"
           value={projectDescription}
           onChange={e => setProjectDescription(e.target.value)}
+          className="font-inter rounded-md border border-surface-d bg-surface-b text-text px-content py-2 focus:ring-2 focus:ring-primary"
+          aria-label="Project description"
         />
         <Button
           icon="pi pi-plus"
@@ -156,6 +160,7 @@ export default function Projects() {
           disabled={!newProject.trim()}
           loading={loaders[LoaderActions.CREATE_PROJECT]}
           label="Create Project"
+          className="font-inter bg-primary text-primary-color-text px-4 py-2 rounded-md border-none shadow focus:ring-2 focus:ring-primary"
         />
       </div>
       <div className="max-h-[480px] overflow-y-scroll scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
