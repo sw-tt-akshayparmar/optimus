@@ -8,19 +8,35 @@ import * as workspaceService from "../services/workspace.service";
 import type { ProjectStore } from "~/store/project.slice";
 import { useSelector } from "react-redux";
 import LoaderActions from "~/enums/loader.enum";
+import { Exception } from "~/exception/app.exception";
+import { disable, enable } from "~/services/loader.service";
+import { useToast } from "./ToastContext";
+import { InputText } from "primereact/inputtext";
 
 export default function Projects() {
   const projects = useSelector<{ projects: ProjectStore }, ProjectStore>(state => state.projects);
   const loaders = useSelector<{ loaders: any }, any>(state => state.loaders.loaders);
   const [newProject, setNewProject] = useState("");
   const [projectDescription, setProjectDescription] = useState("");
-  const page = {
+  const toast = useToast();
+  const pageInit = {
     size: 3,
     page: 1,
   };
+  const fetchProjectList = async (page: { page: number; size: number }) => {
+    enable(LoaderActions.FETCH_PROJECTS);
+    await workspaceService
+      .fetchAllProjects(page)
+      .catch(err => {
+        toast.error(err.message, "Error Fetching Projects");
+      })
+      .finally(() => {
+        disable(LoaderActions.FETCH_PROJECTS);
+      });
+  };
 
   useEffect(() => {
-    workspaceService.fetchAllProjects(page);
+    fetchProjectList(pageInit);
   }, []);
 
   const createProject = async () => {
@@ -32,8 +48,19 @@ export default function Projects() {
     });
     setNewProject("");
     setProjectDescription("");
-    await workspaceService.createProject(project);
-    await workspaceService.fetchAllProjects(page);
+    enable(LoaderActions.CREATE_PROJECT);
+    await workspaceService
+      .createProject(project)
+      .then(async res => {
+        toast.success(`${project.name}`, res.success || "Project Cretaed Successfully");
+        fetchProjectList(pageInit);
+      })
+      .catch((err: Exception) => {
+        toast.error(`${project.name}`, err.message || "Project Creation Failed");
+      })
+      .finally(() => {
+        disable(LoaderActions.CREATE_PROJECT);
+      });
   };
 
   const projectTemplate = (project: ProjectModel) => {
@@ -64,8 +91,16 @@ export default function Projects() {
             icon="pi pi-trash"
             loading={loaders[LoaderActions.DELETE_PROJECT + project.id]}
             onClick={async () => {
-              await workspaceService.deleteProject(project.id!);
-              await workspaceService.fetchAllProjects(page);
+              try {
+                enable(LoaderActions.DELETE_PROJECT + project.id);
+                const res = await workspaceService.deleteProject(project.id!);
+                toast.success(`${project.name}`, res.success || "Project Deleted");
+                fetchProjectList(projects.projectList);
+              } catch (err: Exception | Error | any) {
+                toast.error(`${project.name}`, err.message || "Project Deletion Failed");
+              } finally {
+                disable(LoaderActions.DELETE_PROJECT + project.id);
+              }
             }}
           />
         </div>
@@ -95,18 +130,16 @@ export default function Projects() {
   return (
     <div className="w-full max-w-[800px] mx-auto flex flex-col gap-4">
       <div className="flex gap-3 items-center">
-        <input
+        <InputText
           type="text"
           id="projectName"
-          className="flex-1 border border-secondary p-3 rounded focus:border-primary transition-colors"
           placeholder="New project name..."
           value={newProject}
           onChange={e => setNewProject(e.target.value)}
         />
-        <input
+        <InputText
           type="text"
           id="projectDescription"
-          className="flex-1 border border-secondary p-3 rounded focus:border-primary transition-colors"
           placeholder="Project Description (optional)"
           value={projectDescription}
           onChange={e => setProjectDescription(e.target.value)}
@@ -133,8 +166,7 @@ export default function Projects() {
           totalRecords={projects.projectList.total}
           rowsPerPageOptions={[2, 3, 5]}
           onPageChange={page => {
-            console.log(page);
-            workspaceService.fetchAllProjects({
+            fetchProjectList({
               page: page.page + 1,
               size: page.rows,
             });

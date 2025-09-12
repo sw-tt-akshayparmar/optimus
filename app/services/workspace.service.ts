@@ -3,15 +3,8 @@ import * as apiService from "./api.service";
 import APIConfig from "~/config/api.config";
 import { store } from "~/store/store";
 import { setProjectList } from "~/store/project.slice";
-import { enable, disable } from "~/services/loader.service";
-import LoaderActions from "~/enums/loader.enum";
-import type { SuccessResponse } from "~/models/Response.model";
-
 export async function createProject(project: ProjectModel) {
-  enable(LoaderActions.CREATE_PROJECT);
-  await apiService.post(APIConfig.PROJECTS, project).finally(() => {
-    disable(LoaderActions.CREATE_PROJECT);
-  });
+  return apiService.post(APIConfig.PROJECTS, project).finally(() => {});
 }
 
 export async function fetchAllProjects(options?: { page: number; size: number }) {
@@ -37,11 +30,5 @@ export async function fetchAllProjects(options?: { page: number; size: number })
 }
 
 export async function deleteProject(projectId: string) {
-  enable(LoaderActions.DELETE_PROJECT + projectId);
-  await apiService
-    .doDelete(APIConfig.PROJECTS, projectId)
-    .then((res: SuccessResponse) => {})
-    .finally(() => {
-      disable(LoaderActions.DELETE_PROJECT + projectId);
-    });
+  return apiService.doDelete<ProjectModel>(APIConfig.PROJECTS, projectId);
 }
