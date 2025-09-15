@@ -4,6 +4,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@tailwind variants;
+@tailwind screens;
+
 
 button {
   border-radius: calc(infinity * 1px) !important;
