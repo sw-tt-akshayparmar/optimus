@@ -1,1 +1,18 @@
-/* You can add global styles to this file, and also import other style files */
+@import "primeicons/primeicons.css";
+@import "./assets/toast.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+button {
+  border-radius: calc(infinity * 1px) !important;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+*, ::before, ::after {
+  box-sizing: border-box;
+}

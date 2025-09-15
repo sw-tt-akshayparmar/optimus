@@ -1,7 +1,7 @@
+/** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    "./src/**/*.{html,ts}",      // Angular components + templates
-    "./projects/**/*.{html,ts}"  // if you use Angular workspace with libs
+    "./src/**/*.{html,ts}",
   ],
   theme: {
     extend: {},
