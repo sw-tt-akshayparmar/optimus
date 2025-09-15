@@ -1,0 +1,41 @@
+<nav
+        class="bg-surface-card shadow-md rounded-md mx-auto max-w-3xl px-content flex items-center justify-between min-h-[56px] my-4"
+>
+    <div class="h-8 w-8 mr-inline rounded-md shadow-md object-cover bg-surface-d"></div>
+
+    <div class="relative flex-1">
+        <ul class="flex gap-4 list-none m-0 p-0">
+            @for (link of navLinks; track link.to; let i = $index) {
+                <li
+                        class="rounded-md transition-colors hover:bg-surface-d"
+                >
+                    <a
+                        #linkRef
+                        [routerLink]="link.to"
+                        routerLinkActive="text-primary"
+                        [ngClass]="{
+              'inline-block font-inter font-medium text-base px-3.5 py-2 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-primary': true,
+              'text-text-secondary': currentUrl() !== link.to,
+              'text-primary': currentUrl() === link.to,
+              'hover:bg-primary hover:text-primary-color-text': currentUrl() !== link.to
+            }"
+                        [attr.aria-current]="currentUrl() === link.to ? 'page' : null"
+                    >
+                        {{ link.label }}
+                    </a>
+                </li>
+            }
+        </ul>
+
+        <div
+                class="absolute bottom-0 h-1 rounded-md bg-gradient-to-r from-accent via-primary to-indigo-400 transition-all z-10"
+                [ngStyle]="underlineStyle()"
+        ></div>
+    </div>
+
+    <p-button
+            icon="pi pi-user-plus"
+            label="Sign in"
+            class="font-inter bg-primary text-primary-color-text px-4 py-2 border-none shadow focus:ring-2 focus:ring-primary"
+    ></p-button>
+</nav>
