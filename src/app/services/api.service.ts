@@ -5,14 +5,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { SuccessResponse } from '../models/Response.model';
-import { getAuthorization } from '../../../../app/services/user.service';
+// import { getAuthorization } from '../../../../app/services/user.service';
 import environments from '../environments';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   get<Data = any>(
     api: { path: string; auth?: boolean },
@@ -71,9 +72,9 @@ export class ApiService {
       ...headers,
     });
     if (api.auth) {
-      httpHeaders.set('Authorization', 'Bearer ' + getAuthorization());
+      httpHeaders.set('Authorization', 'Bearer ' + /*getAuthorization()*/ 'fake-token');
     }
-    const url = `${environments.API_BASE_URL}${api}${params ? '/' + params : ''}`;
+    const url = `${ environments.API_BASE_URL }${ api }${ params ? '/' + params : '' }`;
     return { url, headers: httpHeaders, params: query };
   }
 }
