@@ -3,20 +3,27 @@
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
     "types": ["node", "vite/client"],
+
     "target": "ES2022",
     "module": "ES2022",
     "moduleResolution": "bundler",
+
     "jsx": "react-jsx",
+
     "rootDirs": [".", "./.react-router/types"],
     "baseUrl": ".",
     "paths": {
       "~/*": ["./app/*"]
     },
+
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true, // ensures smoother interop w/ CommonJS deps
     "verbatimModuleSyntax": true,
-    "noEmit": true,
+
     "resolveJsonModule": true,
     "skipLibCheck": true,
+
+    "noEmit": true,
     "strict": true
   }
 }
