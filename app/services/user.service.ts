@@ -13,7 +13,7 @@ export function saveRefreshToken(token: string) {
   localStorage.setItem(storageConstants.REFRESH_TOKEN, token);
 }
 
-export function getAuthorazation(): string {
+export function getAuthorization(): string {
   return localStorage.getItem(storageConstants.AUTHORIZATION_TOKEN) || "";
 }
 

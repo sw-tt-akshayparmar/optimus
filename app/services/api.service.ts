@@ -1,5 +1,5 @@
 import * as envService from "./env.service";
-import { getAuthorazation } from "../services/user.service";
+import { getAuthorization } from "~/services/user.service";
 import type { ErrorResponse, SuccessResponse } from "~/models/Response.model";
 import { Exception } from "~/exception/app.exception";
 import ErrorCode from "~/enums/error.enum";
@@ -52,7 +52,7 @@ async function request<Data = any>(
 ): Promise<SuccessResponse> {
   const url: string = getAPIURL(api.path, params, query);
   if (api.auth) {
-    headers.Authorization = "Bearer " + getAuthorazation();
+    headers.Authorization = "Bearer " + getAuthorization();
   }
   try {
     const res = await fetch(url, {

@@ -1,10 +1,10 @@
 import { redirect, type ClientLoaderFunctionArgs } from "react-router";
 import { Outlet, useLoaderData, useOutletContext } from "react-router";
-import { getAuthorazation, getUserData } from "~/services/user.service";
+import { getAuthorization, getUserData } from "~/services/user.service";
 import { User } from "~/models/User.model";
 
 export const clientLoader = async ({ request }: ClientLoaderFunctionArgs) => {
-  const token = getAuthorazation();
+  const token = getAuthorization();
   if (!token) {
     const params = new URLSearchParams();
     params.set("redirection", new URL(request.url).pathname);
