@@ -2,16 +2,15 @@
   <h1 class="text-2xl font-bold mb-4">Home</h1>
   @if (opponentDisconnected) {
     <p class="text-red-500 mb-4">Opponent Disconnected</p>
-    <button pButton type="button" label="Find New Game" (click)="handleStartMatch()"></button>
+    <p-button icon="pi pi-search" (click)="handleStartMatch()" label="Start Match" />
   }
 
   @if (match) {
     <div>
       <p>Game Match ID: {{ match.id }}</p>
-      <!-- More game details here -->
     </div>
   }
   @if (!match) {
-    <button pButton type="button" label="Start Match" (click)="handleStartMatch()"></button>
+    <p-button icon="pi pi-plus" label="Start" (click)="handleStartMatch()" />
   }
 </div>

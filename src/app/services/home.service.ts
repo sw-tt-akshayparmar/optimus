@@ -6,7 +6,6 @@ export class HomeService {
   constructor(private http: HttpClient) {}
 
   getHomeData(): string {
-    // return this.http.get('/api/home');
     return 'this is Home';
   }
 }
