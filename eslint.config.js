@@ -3,6 +3,8 @@ import angularPlugin from "@angular-eslint/eslint-plugin";
 import angularTemplatePlugin from "@angular-eslint/eslint-plugin-template";
 import angularTemplateParser from "@angular-eslint/template-parser";
 import prettierPlugin from "eslint-plugin-prettier";
+// Add this import to disable conflicting stylistic rules
+import eslintConfigPrettier from "eslint-config-prettier";
 
 export default [
   // TypeScript files
@@ -11,13 +13,13 @@ export default [
     languageOptions: {
       parser: tsParser,
       parserOptions: {
-        project: "./tsconfig.json",
+        project: "./tsconfig.eslint.json",
         tsconfigRootDir: process.cwd(),
       },
     },
     plugins: {
       "@angular-eslint": angularPlugin,
-      "prettier": prettierPlugin,
+      prettier: prettierPlugin,
     },
     rules: {
       "@angular-eslint/directive-selector": [
@@ -28,7 +30,7 @@ export default [
         "error",
         { type: "element", prefix: "app", style: "kebab-case" },
       ],
-      "prettier/prettier": "error",
+      "prettier/prettier": ["error", { endOfLine: "auto" }], // Prettier rule
     },
   },
 
@@ -40,10 +42,13 @@ export default [
     },
     plugins: {
       "@angular-eslint/template": angularTemplatePlugin,
-      "prettier": prettierPlugin,
+      prettier: prettierPlugin,
     },
     rules: {
-      "prettier/prettier": "error",
+      "prettier/prettier": ["error", { endOfLine: "auto" }],
     },
   },
+
+  // Make sure this is last so it turns off conflicting rules
+  eslintConfigPrettier,
 ];

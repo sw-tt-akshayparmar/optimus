@@ -1,6 +1,6 @@
-import { Piece } from "./pieces";
-import Config from "./chess.config";
-import { Move } from "./move";
+import { Piece } from './pieces';
+import Config from './chess.config';
+import { Move } from './move';
 
 export class Chessboard {
   board: Tile[][] = [];
@@ -25,8 +25,8 @@ export class Chessboard {
   }
 
   update(): boolean {
-    this.board.forEach(rank => {
-      rank.forEach(tile => {
+    this.board.forEach((rank) => {
+      rank.forEach((tile) => {
         tile.piece?.update();
       });
     });

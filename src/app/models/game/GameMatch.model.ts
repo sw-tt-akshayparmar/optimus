@@ -1,5 +1,5 @@
-import { GameStatus, Player } from "../../lib/chess/games.enum";
-import { Game as GameModel } from "../game/Game.model";
+import { GameStatus, Player } from '../../lib/chess/games.enum';
+import { Game as GameModel } from '../game/Game.model';
 
 export interface GameMatch {
   status: GameStatus;

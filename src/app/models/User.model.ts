@@ -7,8 +7,8 @@ export class User {
   public updatedAt: Date | null;
   public metaInfo?: any;
   constructor() {
-    this.username = "";
-    this.name = "";
+    this.username = '';
+    this.name = '';
     this.createdAt = null;
     this.updatedAt = null;
     this.metaInfo = undefined;
@@ -24,7 +24,7 @@ export class User {
       updatedAt?: Date | null;
       metaInfo?: any;
     },
-    password?: boolean
+    password?: boolean,
   ): User {
     const user = new User();
     user.id = userObj.id;

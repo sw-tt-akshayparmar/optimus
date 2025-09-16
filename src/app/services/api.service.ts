@@ -12,8 +12,7 @@ import environments from '../environments';
   providedIn: 'root',
 })
 export class ApiService {
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   get<Data = any>(
     api: { path: string; auth?: boolean },
@@ -74,7 +73,7 @@ export class ApiService {
     if (api.auth) {
       httpHeaders.set('Authorization', 'Bearer ' + /*getAuthorization()*/ 'fake-token');
     }
-    const url = `${ environments.API_BASE_URL }${ api }${ params ? '/' + params : '' }`;
+    const url = `${environments.API_BASE_URL}${api}${params ? '/' + params : ''}`;
     return { url, headers: httpHeaders, params: query };
   }
 }

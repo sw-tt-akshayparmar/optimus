@@ -1,9 +1,9 @@
-import { Chessboard } from "./chessboard";
-import { Player } from "./players";
-import { State } from "./state";
-import { Move } from "./move";
-import Config from "./chess.config";
-import { MoveType } from "./games.enum";
+import { Chessboard } from './chessboard';
+import { Player } from './players';
+import { State } from './state';
+import { Move } from './move';
+import Config from './chess.config';
+import { MoveType } from './games.enum';
 
 export class Game {
   board: Chessboard;

@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterModule, Router, RouterLinkActive } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
-import { NgClass } from "@angular/common";
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
@@ -24,7 +24,7 @@ export class NavbarComponent {
   updateUnderline(el: any) {
     if (!el) return;
     const rect = el.getBoundingClientRect();
-    this.underlineStyle.set({ left: `${ rect.left }px`, width: `${ rect.width }px` });
+    this.underlineStyle.set({ left: `${rect.left}px`, width: `${rect.width}px` });
   }
 
   isActive(link: string) {
@@ -32,7 +32,7 @@ export class NavbarComponent {
       paths: 'exact',
       queryParams: 'ignored',
       fragment: 'ignored',
-      matrixParams: 'ignored'
+      matrixParams: 'ignored',
     });
   }
 }

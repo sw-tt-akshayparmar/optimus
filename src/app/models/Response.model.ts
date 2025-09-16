@@ -1,4 +1,4 @@
-import ErrorCode from "../enums/error.enum";
+import ErrorCode from '../enums/error.enum';
 
 export interface SuccessResponse<Data = any> {
   isSuccessFull: true;

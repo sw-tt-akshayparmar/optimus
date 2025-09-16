@@ -1,9 +1,9 @@
-import { Chessboard } from "./chessboard";
-import { Player } from "./players";
-import type { PiecePosition, PieceType, PieceValue } from "./chess.types";
-import Config from "./chess.config";
-import { Move } from "./move";
-import { MoveType } from "./games.enum";
+import { Chessboard } from './chessboard';
+import { Player } from './players';
+import type { PiecePosition, PieceType, PieceValue } from './chess.types';
+import Config from './chess.config';
+import { Move } from './move';
+import { MoveType } from './games.enum';
 
 export abstract class Piece {
   protected x: PiecePosition = -1;
@@ -54,7 +54,7 @@ export abstract class Piece {
   abstract updateAttackMap(): boolean;
 
   resetMoveMap(): boolean {
-    this.moveMap.forEach(rank => {
+    this.moveMap.forEach((rank) => {
       for (let i = 0; i < Config.SQUARE_SIZE; i++) {
         rank[i] = false;
       }
@@ -63,7 +63,7 @@ export abstract class Piece {
   }
 
   resetAttackMap(): boolean {
-    this.attackMap.forEach(rank => {
+    this.attackMap.forEach((rank) => {
       for (let i = 0; i < Config.SQUARE_SIZE; i++) {
         rank[i] = false;
       }

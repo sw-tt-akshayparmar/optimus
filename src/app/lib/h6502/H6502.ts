@@ -193,14 +193,14 @@ export class H6502 {
   //stack push
   push(value: number): void {
     if (this.SP < 0) {
-      throw new Error("Stack overflow");
+      throw new Error('Stack overflow');
     }
     this.memory.write(this.stack(), value & 0xff);
   }
   //stack pull
   pull(): number {
     if (this.SP > 0xff) {
-      throw new Error("Stack underflow");
+      throw new Error('Stack underflow');
     }
     const value = this.memory.read(this.stack());
     this.SP = (this.SP + 1) & 0xff;
@@ -569,16 +569,16 @@ export class Memory {
 
   read(address: number): number {
     if (address < 0 || address >= this.size) {
-      throw new Error("Memory read out of bounds");
+      throw new Error('Memory read out of bounds');
     }
     return this.data[address];
   }
   write(address: number, value: number): void {
     if (address < 0 || address >= this.size) {
-      throw new Error("Memory write out of bounds");
+      throw new Error('Memory write out of bounds');
     }
     if (value < 0 || value > 255) {
-      throw new Error("Value must be between 0 and 255");
+      throw new Error('Value must be between 0 and 255');
     }
     this.data[address] = value;
   }
@@ -587,7 +587,7 @@ export class Memory {
   }
   load(data: Uint8Array, startAddress: number = 0): void {
     if (startAddress < 0 || startAddress + data.length > this.size) {
-      throw new Error("Data load out of bounds");
+      throw new Error('Data load out of bounds');
     }
     this.data.set(data, startAddress);
   }

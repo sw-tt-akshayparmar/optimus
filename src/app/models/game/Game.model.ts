@@ -1,4 +1,4 @@
-import { GameStatus, GameResult } from "../../lib/chess/games.enum";
+import { GameStatus, GameResult } from '../../lib/chess/games.enum';
 
 export class Game {
   id?: string;
