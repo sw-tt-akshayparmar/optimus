@@ -1,10 +1,18 @@
 import { HomeComponent } from './routes/home/home.component';
-import { HomeResolver } from './routes/home/home.resolver';
 import { Routes } from '@angular/router';
+import { ChatRoute } from './routes/chat/chat.route';
+import { WorkspaceComponent } from './routes/workspace/workspace.component';
 export const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
-    resolve: { homeData: HomeResolver },
+  },
+  {
+    path: 'chat',
+    component: ChatRoute,
+  },
+  {
+    path: 'workspace',
+    component: WorkspaceComponent,
   },
 ];

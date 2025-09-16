@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { GameService } from '../../services/game.service';
 import { ButtonModule } from 'primeng/button';
 import { ToastService } from '../../services/toast.service';
@@ -10,7 +10,6 @@ import { ToastService } from '../../services/toast.service';
   styleUrls: ['./home.component.css'],
   imports: [ButtonModule],
 })
-// ...existing code...
 export class HomeComponent {
   match: any = null;
   opponentDisconnected = false;
@@ -24,8 +23,5 @@ export class HomeComponent {
     this.opponentDisconnected = false;
     this.gameService.startMatch().subscribe((match) => (this.match = match));
     this.toastService.success('Match Started', 'Match started successfully');
-    this.toastService.error('Match Started', 'Match started successfully');
-    this.toastService.warn('Match Started', 'Match started successfully');
-    this.toastService.info('Match Started', 'Match started successfully');
   }
 }
