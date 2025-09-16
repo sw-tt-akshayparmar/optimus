@@ -1,19 +1,24 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable, signal, WritableSignal } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
-export class LoaderService {
-  private loading$ = new BehaviorSubject<boolean>(false);
+export class LoaderStore {
+  // key-value map of loader flags
+  private readonly loaders: WritableSignal<Record<string, boolean>> = signal<
+    Record<string, boolean>
+  >({});
 
-  enable() {
-    this.loading$.next(true);
+  // expose as readonly
+  readonly state = this.loaders.asReadonly();
+
+  enable(key: string) {
+    this.loaders.update((curr) => ({ ...curr, [key]: true }));
   }
 
-  disable() {
-    this.loading$.next(false);
+  disable(key: string) {
+    this.loaders.update((curr) => ({ ...curr, [key]: false }));
   }
 
-  isLoading() {
-    return this.loading$.asObservable();
+  isLoading(key: string) {
+    return this.loaders()[key] ?? false;
   }
 }

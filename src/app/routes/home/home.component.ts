@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, WritableSignal } from '@angular/core';
+import { Component } from '@angular/core';
 import { GameService } from '../../services/game.service';
 import { ButtonModule } from 'primeng/button';
 import { ToastService } from '../../services/toast.service';
