@@ -1,5 +1,19 @@
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="p-4">
-  <input formControlName="username" placeholder="Username" class="input" />
-  <input formControlName="password" type="password" placeholder="Password" class="input" />
-  <button type="submit" class="btn btn-primary">Login</button>
-</form>
+<div class="login w-full flex justify-center border-gray-700">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="p-4 max-w-[480px]">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username" placeholder="Enter username" />
+      <mat-icon matPrefix>person</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full mt-4">
+      <mat-label>Password</mat-label>
+      <input matInput formControlName="password" placeholder="Enter password" type="password" />
+      <mat-icon matPrefix>lock</mat-icon>
+    </mat-form-field>
+
+    <div class="flex w-full justify-center mt-4">
+      <button mat-raised-button color="primary" type="submit">Login</button>
+    </div>
+  </form>
+</div>

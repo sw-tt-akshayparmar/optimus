@@ -8,6 +8,9 @@
 @tailwind screens;
 
 
+html, body { height: 100%; }
+body { margin: 0; }
+
 button {
   border-radius: calc(infinity * 1px) !important;
 }
@@ -19,3 +22,4 @@ button {
 *, ::before, ::after {
   box-sizing: border-box;
 }
+

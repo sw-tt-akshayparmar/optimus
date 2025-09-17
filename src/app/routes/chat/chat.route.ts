@@ -1,7 +1,6 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ButtonModule } from 'primeng/button';
 import { RTCService } from '../../services/rtc.service';
 import { User } from '../../models/User.model';
 
@@ -13,7 +12,7 @@ interface ChatMessage {
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [CommonModule, FormsModule, ButtonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './chat.route.html',
 })
 export class ChatRoute implements OnInit, OnDestroy {
