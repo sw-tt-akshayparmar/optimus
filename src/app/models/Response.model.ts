@@ -12,12 +12,12 @@ interface ErrorDescription {
   stack: string[];
 }
 
-export interface ErrorResponse<Error = any> {
+export interface ErrorResponse<Data = any> {
   isSuccessFull: false;
   status: number;
   error: string;
   description: ErrorDescription;
   trace: string[];
-  data?: Error;
+  data?: Data;
   code: ErrorCode;
 }
