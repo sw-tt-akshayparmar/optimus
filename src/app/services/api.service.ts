@@ -1,12 +1,11 @@
-// src/app/services/api.service.ts
-
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
-import { SuccessResponse } from '../models/Response.model';
-// import { getAuthorization } from '../../../../app/services/user.service';
+import { Observable, throwError } from 'rxjs';
+import { ErrorResponse, SuccessResponse } from '../models/Response.model';
 import environments from '../environments';
+import storageConstants from '../constants/storage.constants';
+import { Exception } from '../exception/app.exception';
+import ErrorCode from '../enums/error.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +13,7 @@ import environments from '../environments';
 export class ApiService {
   constructor(private http: HttpClient) {}
 
-  get<Data = any>(
+  get<Data = any, Error = any>(
     api: { path: string; auth?: boolean },
     params?: string,
     query?: Record<string, string>,
@@ -24,36 +23,36 @@ export class ApiService {
     return this.http.get<SuccessResponse<Data>>(options.url, options);
   }
 
-  post<Data = any>(
+  post<Data = any, Error = any>(
     api: { path: string; auth?: boolean },
     data?: any,
     params?: string,
     query?: Record<string, string>,
     headers?: Record<string, string>,
-  ): Observable<SuccessResponse<Data>> {
+  ): Observable<SuccessResponse<Data> | ErrorResponse<Error>> {
     const options = this.prepareAPI(api, params, query, headers);
-    return this.http.post<SuccessResponse<Data>>(options.url, data, options);
+    return this.http.post<SuccessResponse<Data> | ErrorResponse<Error>>(options.url, data, options);
   }
 
-  put<Data = any>(
+  put<Data = any, Error = any>(
     api: { path: string; auth?: boolean },
     data?: any,
     params?: string,
     query?: Record<string, string>,
     headers?: Record<string, string>,
-  ): Observable<SuccessResponse<Data>> {
+  ): Observable<SuccessResponse<Data> | ErrorResponse<Error>> {
     const options = this.prepareAPI(api, params, query, headers);
-    return this.http.put<SuccessResponse<Data>>(options.url, data, options);
+    return this.http.put<SuccessResponse<Data> | ErrorResponse<Error>>(options.url, data, options);
   }
 
-  delete<Data = any>(
+  delete<Data = any, Error = any>(
     api: { path: string; auth?: boolean },
     params?: string,
     query?: Record<string, string>,
     headers?: Record<string, string>,
-  ): Observable<SuccessResponse<Data>> {
+  ): Observable<SuccessResponse<Data> | ErrorResponse<Error>> {
     const options = this.prepareAPI(api, params, query, headers);
-    return this.http.delete<SuccessResponse<Data>>(options.url, options);
+    return this.http.delete<SuccessResponse<Data> | ErrorResponse<Error>>(options.url, options);
   }
 
   private prepareAPI(
@@ -70,8 +69,13 @@ export class ApiService {
       'Content-Type': 'application/json',
       ...headers,
     });
-    if (api.auth) {
-      httpHeaders.set('Authorization', 'Bearer ' + /*getAuthorization()*/ 'fake-token');
+    if (api.auth && localStorage.getItem(storageConstants.AUTHORIZATION_TOKEN)) {
+      httpHeaders.set(
+        'Authorization',
+        'Bearer ' + localStorage.getItem(storageConstants.AUTHORIZATION_TOKEN),
+      );
+    } else {
+      throw throwError(() => new Exception(ErrorCode.AUTH_NOT_FOUND));
     }
     const url = `${environments.API_BASE_URL}${api}${params ? '/' + params : ''}`;
     return { url, headers: httpHeaders, params: query };

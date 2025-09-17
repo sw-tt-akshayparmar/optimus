@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { LoginService } from '../../services/login.service';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +14,7 @@ export class LoginComponent {
 
   constructor(
     private fb: FormBuilder,
-    private loginService: LoginService,
+    private userService: UserService,
   ) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
@@ -24,7 +24,7 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      this.loginService.login(this.loginForm.value).subscribe();
+      this.userService.login(this.loginForm.value);
     }
   }
 }

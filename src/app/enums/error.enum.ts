@@ -31,6 +31,8 @@ enum ErrorCode {
   ENV_ERROR = 'system.env.error',
   INTERNAL_SERVER_ERROR = 'system.internal_error',
   NOT_APPLICABLE = 'common.not_applicable',
+
+  AUTH_NOT_FOUND = 'client.auth.not_found',
 }
 
 export default ErrorCode;

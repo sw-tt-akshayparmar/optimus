@@ -1,13 +1,11 @@
 import { Injectable, signal, WritableSignal } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
-export class LoaderStore {
-  // key-value map of loader flags
+export class LoaderService {
   private readonly loaders: WritableSignal<Record<string, boolean>> = signal<
     Record<string, boolean>
   >({});
 
-  // expose as readonly
   readonly state = this.loaders.asReadonly();
 
   enable(key: string) {
