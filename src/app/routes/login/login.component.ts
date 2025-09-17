@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
-import { MatFormField, MatLabel, MatPrefix } from '@angular/material/form-field';
+import { MatFormField, MatPrefix } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { MatInput } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
@@ -9,7 +9,7 @@ import { MatButton } from '@angular/material/button';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, MatFormField, MatLabel, MatIcon, MatInput, MatPrefix, MatButton],
+  imports: [ReactiveFormsModule, MatFormField, MatIcon, MatInput, MatPrefix, MatButton],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
