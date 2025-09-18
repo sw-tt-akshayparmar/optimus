@@ -16,18 +16,23 @@ export class UserService {
   ) {}
   login(data: { username: string; password: string }) {
     this.loaderService.enable(LoaderActions.LOG_IN);
-    this.apiService.post<User>(APIConfig.LOGIN, data).subscribe({
-      next: (res) => {
-        console.log(res);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('API call completed');
-        this.loaderService.disable(LoaderActions.LOG_IN);
-      },
-    });
+    const apiCall$ = this.apiService.post<User>(APIConfig.LOGIN, data);
+    if (apiCall$) {
+      apiCall$.subscribe({
+        next: (res) => {
+          console.log(res);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => {
+          console.log('API call completed');
+          this.loaderService.disable(LoaderActions.LOG_IN);
+        },
+      });
+    } else {
+      console.log('API call failed');
+    }
   }
 
   register(name: string, username: string, password: string) {}

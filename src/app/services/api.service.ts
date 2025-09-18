@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, Observable, of, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ErrorResponse, SuccessResponse } from '../models/Response.model';
 import environments from '../environments';
 import storageConstants from '../constants/storage.constants';
@@ -16,9 +16,12 @@ export class ApiService {
     params?: string,
     query?: Record<string, string>,
     headers?: Record<string, string>,
-  ): Observable<SuccessResponse<Data>> {
+  ): Observable<SuccessResponse<Data>> | false {
     const options = this.prepareAPI(api, params, query, headers);
-    return this.http.get<SuccessResponse<Data>>(options.url, options);
+    if (options) {
+      return this.http.get<SuccessResponse<Data>>(options.url, options);
+    }
+    return false;
   }
 
   post<Data = any, Error = any>(
@@ -36,6 +39,7 @@ export class ApiService {
         options,
       );
     }
+    return false;
   }
 
   put<Data = any, Error = any>(
@@ -44,9 +48,16 @@ export class ApiService {
     params?: string,
     query?: Record<string, string>,
     headers?: Record<string, string>,
-  ): Observable<SuccessResponse<Data> | ErrorResponse<Error>> {
+  ): Observable<SuccessResponse<Data> | ErrorResponse<Error>> | false {
     const options = this.prepareAPI(api, params, query, headers);
-    return this.http.put<SuccessResponse<Data> | ErrorResponse<Error>>(options.url, data, options);
+    if (options) {
+      return this.http.put<SuccessResponse<Data> | ErrorResponse<Error>>(
+        options.url,
+        data,
+        options,
+      );
+    }
+    return false;
   }
 
   delete<Data = any, Error = any>(
@@ -54,9 +65,12 @@ export class ApiService {
     params?: string,
     query?: Record<string, string>,
     headers?: Record<string, string>,
-  ): Observable<SuccessResponse<Data> | ErrorResponse<Error>> {
+  ): Observable<SuccessResponse<Data> | ErrorResponse<Error>> | false {
     const options = this.prepareAPI(api, params, query, headers);
-    return this.http.delete<SuccessResponse<Data> | ErrorResponse<Error>>(options.url, options);
+    if (options) {
+      return this.http.delete<SuccessResponse<Data> | ErrorResponse<Error>>(options.url, options);
+    }
+    return false;
   }
 
   private prepareAPI(
