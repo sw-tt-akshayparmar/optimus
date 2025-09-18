@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ================================
+   Base tokens
+   ================================ */
+:root {
+  --glass-blur: 16px;
+  --glass-radius: 1rem;
+}
+
+/* ================================
+   Themes (no glass baked in)
+   ================================ */
+.theme-light {
+  --color-bg: #ffffff;
+  --color-fg: #111827; /* gray-900 */
+  --color-primary: #2563eb;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #9333ea;
+  --color-secondary-foreground: #ffffff;
+  --color-border: rgba(0, 0, 0, 0.1);
+  background: var(--color-bg);
+  color: var(--color-fg);
+}
+
+.theme-dark {
+  --color-bg: #0f172a; /* slate-900 */
+  --color-fg: #f8fafc; /* slate-50 */
+  --color-primary: #0ea5e9;
+  --color-primary-foreground: #000000;
+  --color-secondary: #f59e0b;
+  --color-secondary-foreground: #000000;
+  --color-border: rgba(255, 255, 255, 0.1);
+  background: var(--color-bg);
+  color: var(--color-fg);
+}
+
+.theme-cyan {
+  --color-bg: #ecfeff; /* cyan-50 */
+  --color-fg: #083344; /* cyan-950 */
+  --color-primary: #06b6d4;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #0891b2;
+  --color-secondary-foreground: #ffffff;
+  --color-border: rgba(0, 0, 0, 0.1);
+  background: var(--color-bg);
+  color: var(--color-fg);
+}
+
+/* ================================
+   Glassmorphism levels
+   ================================ */
+.glass-1 {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border-radius: var(--glass-radius);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.glass-2 {
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(calc(var(--glass-blur) / 1.5));
+  -webkit-backdrop-filter: blur(calc(var(--glass-blur) / 1.5));
+  border-radius: var(--glass-radius);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* Override glass for dark mode */
+.theme-dark.glass-1 {
+  background: rgba(15, 23, 42, 0.4);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.theme-dark.glass-2 {
+  background: rgba(15, 23, 42, 0.6);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Override glass for cyan mode */
+.theme-cyan.glass-1 {
+  background: rgba(236, 254, 255, 0.25);
+}
+
+.theme-cyan.glass-2 {
+  background: rgba(236, 254, 255, 0.45);
+}

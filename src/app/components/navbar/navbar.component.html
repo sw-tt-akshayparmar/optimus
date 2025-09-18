@@ -1,9 +1,7 @@
-<nav
-  class="bg-surface-card shadow-md rounded-md mx-auto max-w-3xl px-content flex items-center justify-between min-h-[56px] my-4"
->
+<nav class="shadow-md w-full flex items-center justify-between min-h-[60px]">
   <div class="h-8 w-8 mr-inline rounded-md shadow-md object-cover bg-surface-d"></div>
 
-  <div class="relative flex-1">
+  <div class="relative flex">
     <ul class="flex gap-4 list-none m-0 p-0">
       @for (link of navLinks; track link) {
         <li class="rounded-md transition-colors hover:bg-surface-d">
@@ -12,7 +10,6 @@
             routerLinkActive="text-primary"
             [routerLinkActiveOptions]="{ exact: link.to === '/' }"
             #rla="routerLinkActive"
-            (mouseenter)="updateUnderline($event.target)"
             class="inline-block font-inter font-medium text-base px-3.5 py-2 rounded-md transition-colors text-text hover:bg-primary hover:text-primary-color-text focus:outline-none focus:ring-2 focus:ring-primary"
             [ngClass]="{ 'text-text-secondary': !rla.isActive }"
             [attr.aria-current]="isActive(link.to) ? 'page' : null"
@@ -22,10 +19,6 @@
         </li>
       }
     </ul>
-    <div
-      class="absolute bottom-0 h-1 rounded-md bg-gradient-to-r from-accent via-primary to-indigo-400 transition-all z-10"
-      [style.left]="underlineStyle().left"
-      [style.width]="underlineStyle().width"
-    ></div>
   </div>
+  <button matButton="elevated">SIGN IN</button>
 </nav>

@@ -5,11 +5,20 @@ import { MatFormField, MatPrefix } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { MatInput } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, MatFormField, MatIcon, MatInput, MatPrefix, MatButton],
+  imports: [
+    ReactiveFormsModule,
+    MatFormField,
+    MatIcon,
+    MatInput,
+    MatPrefix,
+    MatButton,
+    MatProgressSpinner,
+  ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
