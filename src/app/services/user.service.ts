@@ -6,6 +6,8 @@ import APIConfig from '../config/api.config';
 import LoaderActions from '../enums/loader.enum';
 import { AuthToken } from '../models/Auth.model';
 import { Exception } from '../exception/app.exception';
+import { ToastService } from './toast.service';
+import { finalize } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -13,25 +15,25 @@ export class UserService {
   constructor(
     private apiService: ApiService,
     private loaderService: LoaderService,
+    private toast: ToastService,
   ) {}
   login(data: { username: string; password: string }) {
-    this.loaderService.enable(LoaderActions.LOG_IN);
     const apiCall$ = this.apiService.post<User>(APIConfig.LOGIN, data);
     if (apiCall$) {
-      apiCall$.subscribe({
+      this.loaderService.enable(LoaderActions.LOG_IN);
+      apiCall$.pipe(finalize(() => this.loaderService.disable(LoaderActions.LOG_IN))).subscribe({
         next: (res) => {
+          this.toast.success('Success', res.success);
           console.log(res);
         },
-        error: (err) => {
+        error: (err: Error) => {
           console.log(err);
-        },
-        complete: () => {
-          console.log('API call completed');
-          this.loaderService.disable(LoaderActions.LOG_IN);
+          this.toast.error('Error', err.message);
         },
       });
     } else {
       console.log('API call failed');
+      this.toast.error('Error', 'Error');
     }
   }
 

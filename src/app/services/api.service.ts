@@ -13,7 +13,7 @@ export class ApiService {
 
   get<Data = any, Error = any>(
     api: { path: string; auth?: boolean },
-    params?: string,
+    params?: Array<string>,
     query?: Record<string, string>,
     headers?: Record<string, string>,
   ): Observable<SuccessResponse<Data>> | false {
@@ -27,17 +27,13 @@ export class ApiService {
   post<Data = any, Error = any>(
     api: { path: string; auth?: boolean },
     data?: any,
-    params?: string,
+    params?: Array<string>,
     query?: Record<string, string>,
     headers?: Record<string, string>,
-  ): Observable<SuccessResponse<Data> | ErrorResponse<Error>> | false {
+  ): Observable<SuccessResponse<Data>> | false {
     const options = this.prepareAPI(api, params, query, headers);
     if (options) {
-      return this.http.post<SuccessResponse<Data> | ErrorResponse<Error>>(
-        options.url,
-        data,
-        options,
-      );
+      return this.http.post<SuccessResponse<Data>>(options.url, data, options);
     }
     return false;
   }
@@ -45,37 +41,33 @@ export class ApiService {
   put<Data = any, Error = any>(
     api: { path: string; auth?: boolean },
     data?: any,
-    params?: string,
+    params?: Array<string>,
     query?: Record<string, string>,
     headers?: Record<string, string>,
   ): Observable<SuccessResponse<Data> | ErrorResponse<Error>> | false {
     const options = this.prepareAPI(api, params, query, headers);
     if (options) {
-      return this.http.put<SuccessResponse<Data> | ErrorResponse<Error>>(
-        options.url,
-        data,
-        options,
-      );
+      return this.http.put<SuccessResponse<Data>>(options.url, data, options);
     }
     return false;
   }
 
   delete<Data = any, Error = any>(
     api: { path: string; auth?: boolean },
-    params?: string,
+    params?: Array<string>,
     query?: Record<string, string>,
     headers?: Record<string, string>,
   ): Observable<SuccessResponse<Data> | ErrorResponse<Error>> | false {
     const options = this.prepareAPI(api, params, query, headers);
     if (options) {
-      return this.http.delete<SuccessResponse<Data> | ErrorResponse<Error>>(options.url, options);
+      return this.http.delete<SuccessResponse<Data>>(options.url, options);
     }
     return false;
   }
 
   private prepareAPI(
     api: { path: string; auth?: boolean },
-    params?: string,
+    params?: Array<string>,
     query?: Record<string, string>,
     headers: Record<string, string> = {},
   ):
@@ -89,14 +81,16 @@ export class ApiService {
       'Content-Type': 'application/json',
       ...headers,
     });
+
     if (api.auth) {
       const auth_token = localStorage.getItem(storageConstants.AUTHORIZATION_TOKEN);
       if (!auth_token) return false;
-      if (auth_token) {
-        httpHeaders.set('Authorization', 'Bearer ' + auth_token);
-      }
+      httpHeaders = httpHeaders.set('Authorization', 'Bearer ' + auth_token);
     }
-    const url = `${environments.API_BASE_URL}${api}${params ? '/' + params : ''}`;
+
+    const paramPath = params && params.length ? '/' + params.join('/') : '';
+    const url = `${environments.API_BASE_URL}${api.path}${paramPath}`;
+
     return { url, headers: httpHeaders, params: query };
   }
 }
