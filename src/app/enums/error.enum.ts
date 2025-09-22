@@ -33,6 +33,7 @@ enum ErrorCode {
   NOT_APPLICABLE = 'common.not_applicable',
 
   AUTH_NOT_FOUND = 'client.auth.not_found',
+  NETWORK_ERROR = 'client.network.failed',
 }
 
 export default ErrorCode;

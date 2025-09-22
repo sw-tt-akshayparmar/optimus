@@ -1,6 +1,12 @@
 @import "primeicons/primeicons.css";
 /*@import "./assets/theme.css";*/
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
+@tailwind screens;
+
 html, body {
   height: 100%;
 }

@@ -1,24 +1,20 @@
 import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
-import { MatFormField, MatPrefix } from '@angular/material/form-field';
-import { MatIcon } from '@angular/material/icon';
-import { MatInput } from '@angular/material/input';
-import { MatButton } from '@angular/material/button';
-import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { InputText } from 'primeng/inputtext';
+import { InputGroup } from 'primeng/inputgroup';
+import { Button } from 'primeng/button';
+import { InputGroupAddon } from 'primeng/inputgroupaddon';
+import { LoaderService } from '../../services/loader.service';
+import LoaderActions from '../../enums/loader.enum';
+import { ToastService } from '../../services/toast.service';
+import { Exception } from '../../exception/app.exception';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    MatFormField,
-    MatIcon,
-    MatInput,
-    MatPrefix,
-    MatButton,
-    MatProgressSpinner,
-  ],
+  imports: [ReactiveFormsModule, InputText, InputGroup, Button, InputGroupAddon],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
@@ -28,6 +24,9 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
+    private toast: ToastService,
+    protected loaders: LoaderService,
+    private router: Router,
   ) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
@@ -37,7 +36,26 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      this.userService.login(this.loginForm.value);
+      try {
+        this.loaders.enable(LoaderActions.LOG_IN);
+        this.userService.login(this.loginForm.value).subscribe({
+          next: (user) => {
+            this.loaders.disable(LoaderActions.LOG_IN);
+            this.toast.success(`Login Successful`, `Welcome back ${user.name}`);
+            this.loginForm.reset();
+            this.router.navigate(['']);
+          },
+          error: (error: Exception) => {
+            this.loaders.disable(LoaderActions.LOG_IN);
+            this.toast.error(`Login Failed`, error.message);
+          },
+        });
+      } catch (error: Exception | Error | any) {
+        this.loaders.disable(LoaderActions.LOG_IN);
+        this.toast.error(`Login Failed`, error.message);
+      }
     }
   }
+
+  protected readonly LoaderActions = LoaderActions;
 }

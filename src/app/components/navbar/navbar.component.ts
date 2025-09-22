@@ -2,11 +2,12 @@ import { Component, inject, signal } from '@angular/core';
 import { RouterModule, Router, RouterLinkActive } from '@angular/router';
 import { NgClass } from '@angular/common';
 import { MatButton } from '@angular/material/button';
+import { Button } from 'primeng/button';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterModule, RouterLinkActive, NgClass, MatButton],
+  imports: [RouterModule, RouterLinkActive, NgClass, Button],
   templateUrl: './navbar.component.html',
 })
 export class NavbarComponent {

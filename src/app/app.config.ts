@@ -10,6 +10,8 @@ import { provideClientHydration, withEventReplay } from '@angular/platform-brows
 import { withFetch } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MessageService } from 'primeng/api';
+import { providePrimeNG } from 'primeng/config';
+import theme from '@primeuix/themes/aura';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,6 +21,11 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(withEventReplay()),
     provideHttpClient(withFetch()),
     provideAnimationsAsync(),
+    providePrimeNG({
+      theme: {
+        preset: theme,
+      },
+    }),
     MessageService,
   ],
 };

@@ -1,43 +1,36 @@
-import { Injectable, signal, WritableSignal } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { User } from '../models/User.model';
 import { ApiService } from './api.service';
-import { LoaderService } from './loader.service';
 import APIConfig from '../config/api.config';
-import LoaderActions from '../enums/loader.enum';
+import { catchError, map, throwError } from 'rxjs';
+import { SuccessResponse } from '../models/Response.model';
 import { AuthToken } from '../models/Auth.model';
+import storageConstants from '../constants/storage.constants';
 import { Exception } from '../exception/app.exception';
-import { ToastService } from './toast.service';
-import { finalize } from 'rxjs';
+import ErrorCode from '../enums/error.enum';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-  private _auth: WritableSignal<AuthToken | Exception | null> = signal(null);
-  constructor(
-    private apiService: ApiService,
-    private loaderService: LoaderService,
-    private toast: ToastService,
-  ) {}
+  constructor(private apiService: ApiService) {}
   login(data: { username: string; password: string }) {
-    const apiCall$ = this.apiService.post<User>(APIConfig.LOGIN, data);
-    if (apiCall$) {
-      this.loaderService.enable(LoaderActions.LOG_IN);
-      apiCall$.pipe(finalize(() => this.loaderService.disable(LoaderActions.LOG_IN))).subscribe({
-        next: (res) => {
-          this.toast.success('Success', res.success);
-          console.log(res);
-        },
-        error: (err: Error) => {
-          console.log(err);
-          this.toast.error('Error', err.message);
-        },
-      });
-    } else {
-      console.log('API call failed');
-      this.toast.error('Error', 'Error');
-    }
+    return this.apiService.post<AuthToken>(APIConfig.LOGIN, data).pipe(
+      map<SuccessResponse<AuthToken>, User>((res) => {
+        localStorage.setItem(storageConstants.AUTHORIZATION_TOKEN, res.data.accessToken);
+        localStorage.setItem(storageConstants.REFRESH_TOKEN, res.data.refreshToken);
+        localStorage.setItem(storageConstants.USER_DATA, JSON.stringify(res.data.user));
+        return res.data.user!;
+      }),
+      catchError((err) => {
+        let exception: Exception;
+        if (err.status === 0) {
+          exception = new Exception(ErrorCode.NETWORK_ERROR, 'Network Error', err);
+        } else {
+          exception = new Exception(err.error.code, err.error.error, err.error);
+        }
+        return throwError(() => exception);
+      }),
+    );
   }
 
   register(name: string, username: string, password: string) {}
-
-  readonly auth = this._auth.asReadonly();
 }
