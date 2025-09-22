@@ -15,9 +15,9 @@ export class UserService {
   login(data: { username: string; password: string }) {
     return this.apiService.post<AuthToken>(APIConfig.LOGIN, data).pipe(
       map<SuccessResponse<AuthToken>, User>((res) => {
-        localStorage.setItem(storageConstants.AUTHORIZATION_TOKEN, res.data.accessToken);
-        localStorage.setItem(storageConstants.REFRESH_TOKEN, res.data.refreshToken);
-        localStorage.setItem(storageConstants.USER_DATA, JSON.stringify(res.data.user));
+        this.setAccessToken(res.data.accessToken);
+        this.setRefreshToken(res.data.refreshToken);
+        this.setUserData(res.data.user);
         return res.data.user!;
       }),
       catchError((err) => {
@@ -33,4 +33,30 @@ export class UserService {
   }
 
   register(name: string, username: string, password: string) {}
+
+  setConnectionId(connectionId: string) {
+    localStorage.setItem(storageConstants.CONNECTION_ID, connectionId);
+  }
+  setUserData(user: User) {
+    localStorage.setItem(storageConstants.USER_DATA, JSON.stringify(user));
+  }
+  setAccessToken(token: string) {
+    localStorage.setItem(storageConstants.AUTHORIZATION_TOKEN, token);
+  }
+  setRefreshToken(token: string) {
+    localStorage.setItem(storageConstants.REFRESH_TOKEN, token);
+  }
+  getConnectionId() {
+    localStorage.getItem(storageConstants.CONNECTION_ID);
+  }
+  getUserData(user: User): User | null {
+    const userJSON = localStorage.getItem(storageConstants.USER_DATA);
+    return userJSON ? User.from(JSON.parse(userJSON)) : null;
+  }
+  getAccessToken(token: string): string | null {
+    return localStorage.getItem(storageConstants.AUTHORIZATION_TOKEN);
+  }
+  getRefreshToken(token: string): string | null {
+    return localStorage.getItem(storageConstants.REFRESH_TOKEN);
+  }
 }

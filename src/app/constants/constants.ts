@@ -1,5 +1,7 @@
 const Constants = {
+  CONNECT: 'connect',
   DISCONNECT: 'disconnect',
+  CLIENT_HELLO: 'client-hello',
   SERVER_HELLO: 'server-hello',
   REGISTER_EVENT: 'register',
   UNREGISTER_EVENT: 'unregister',

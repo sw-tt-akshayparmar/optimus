@@ -12,6 +12,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { MessageService } from 'primeng/api';
 import { providePrimeNG } from 'primeng/config';
 import theme from '@primeuix/themes/aura';
+import { provideSocketIo } from 'ngx-socket-io';
+import environments from './environments';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -27,5 +29,8 @@ export const appConfig: ApplicationConfig = {
       },
     }),
     MessageService,
+    provideSocketIo({
+      url: environments.SERVER_SOCKETIO_URL,
+    }),
   ],
 };
