@@ -20,5 +20,8 @@
       }
     </ul>
   </div>
-  <p-button (click)="router.navigate(['register'])" [rounded]="true" label="SIGN IN" />
+  <div class="flex gap-1">
+    <p-button (click)="router.navigate(['login'])" [rounded]="true" label="LOG IN" />
+    <p-button (click)="router.navigate(['register'])" [rounded]="true" outlined label="SIGN IN" />
+  </div>
 </nav>

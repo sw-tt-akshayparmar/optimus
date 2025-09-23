@@ -11,11 +11,20 @@ import { ToastService } from '../../services/toast.service';
 import { Exception } from '../../exception/app.exception';
 import { Router } from '@angular/router';
 import { NgOptimizedImage } from '@angular/common';
+import { FloatLabel } from 'primeng/floatlabel';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, InputText, InputGroup, Button, InputGroupAddon, NgOptimizedImage],
+  imports: [
+    ReactiveFormsModule,
+    InputText,
+    InputGroup,
+    Button,
+    InputGroupAddon,
+    NgOptimizedImage,
+    FloatLabel,
+  ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })

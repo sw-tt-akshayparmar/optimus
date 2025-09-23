@@ -1,38 +1,35 @@
 <div class="login w-full h-[80%] flex items-center justify-center">
   <form
-    class="p-[50px] max-w-[720px] border border-gray-500 rounded-lg"
+    class="p-[32px] w-full max-w-[480px] border border-gray-500 rounded-lg"
     [formGroup]="loginForm"
     (ngSubmit)="onSubmit()"
   >
-    <p-input-group class="my-2">
+    <p-input-group class="my-4">
       <p-inputgroup-addon>
         <i class="pi pi-at"></i>
       </p-inputgroup-addon>
-      <input
-        name="username"
-        id="username"
-        pInputText
-        formControlName="username"
-        placeholder="Enter Username"
-        type="text"
-      />
+      <p-floatlabel variant="on">
+        <input name="username" id="username" pInputText formControlName="username" type="text" />
+        <label for="username">Enter Username*</label>
+      </p-floatlabel>
     </p-input-group>
-    <p-input-group class="my-2">
+    <p-input-group class="my-4">
       <p-inputgroup-addon>
         <i class="pi pi-lock"></i>
       </p-inputgroup-addon>
-      <input
-        name="password"
-        id="password"
-        pInputText
-        formControlName="password"
-        placeholder="Enter Password"
-        type="password"
-      />
+      <p-floatlabel variant="on">
+        <input
+          name="password"
+          id="password"
+          pInputText
+          formControlName="password"
+          type="password"
+        />
+        <label for="password">Enter Password*</label>
+      </p-floatlabel>
     </p-input-group>
     <div class="flex flex-col w-full gap-2 mt-4">
       <p-button
-        [disabled]="!loginForm.valid"
         icon="pi pi-lock"
         [loading]="loaders.isLoading(LoaderActions.LOG_IN)"
         type="submit"

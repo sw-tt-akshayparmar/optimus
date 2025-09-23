@@ -1,66 +1,90 @@
 <div class="login w-full h-[80%] flex items-center justify-center">
   <form
-    class="p-[50px] max-w-[720px] border border-gray-500 rounded-lg"
+    class="p-[32px] w-full max-w-[480px] border border-gray-500 rounded-lg"
     [formGroup]="regForm"
     (ngSubmit)="onSubmit()"
   >
-    <p-input-group class="my-2">
+    <!-- Username -->
+    <p-input-group class="my-4">
       <p-inputgroup-addon>
         <i class="pi pi-at"></i>
       </p-inputgroup-addon>
-      <input
-        name="username"
-        id="username"
-        pInputText
-        formControlName="username"
-        placeholder="Enter Username"
-        type="text"
-      />
+      <p-floatlabel variant="on">
+        <input name="username" id="username" pInputText formControlName="username" type="text" />
+        <label for="username">Enter Username*</label>
+      </p-floatlabel>
     </p-input-group>
-    <p-input-group class="my-2">
-      <p-inputgroup-addon> <i class="pi pi-user"></i></p-inputgroup-addon>
-      <input
-        name="name"
-        id="name"
-        pInputText
-        formControlName="name"
-        placeholder="Enter Name"
-        type="text"
-      />
+    <!--    @if (regForm.get('username')?.touched && getError('username')) {-->
+    <!--      <small class="text-red-500">-->
+    <!--        {{ getError('username') }}-->
+    <!--      </small>-->
+    <!--    }-->
+
+    <!-- Name -->
+    <p-input-group class="my-4">
+      <p-inputgroup-addon><i class="pi pi-user"></i></p-inputgroup-addon>
+      <p-floatlabel variant="on">
+        <input name="name" id="name" pInputText formControlName="name" type="text" />
+        <label for="name">Enter Name*</label>
+      </p-floatlabel>
     </p-input-group>
-    <p-input-group class="my-2">
+    <!--    @if (regForm.get('name')?.touched && getError('name')) {-->
+    <!--      <small class="text-red-500">-->
+    <!--        {{ getError('name') }}-->
+    <!--      </small>-->
+    <!--    }-->
+
+    <!-- Password -->
+    <p-input-group class="my-4">
       <p-inputgroup-addon>
         <i class="pi pi-lock"></i>
       </p-inputgroup-addon>
-      <input
-        name="password"
-        id="password"
-        pInputText
-        formControlName="password"
-        placeholder="Enter Password"
-        type="password"
-      />
+      <p-floatlabel variant="on">
+        <input
+          name="password"
+          id="password"
+          pInputText
+          formControlName="password"
+          type="password"
+        />
+        <label for="name">Enter Password*</label>
+      </p-floatlabel>
     </p-input-group>
-    <p-input-group class="my-2">
+    <!--    @if (regForm.get('password')?.touched && getError('password')) {-->
+    <!--      <small class="text-red-500">-->
+    <!--        {{ getError('password') }}-->
+    <!--      </small>-->
+    <!--    }-->
+
+    <!-- Confirm Password -->
+    <p-input-group class="my-4">
       <p-inputgroup-addon>
         <i class="pi pi-lock"></i>
       </p-inputgroup-addon>
-      <input
-        name="password1"
-        id="password1"
-        pInputText
-        formControlName="password1"
-        placeholder="Repeat Password"
-        type="password"
-      />
+      <p-floatlabel variant="on">
+        <input
+          name="passwordCfm"
+          id="passwordCfm"
+          pInputText
+          formControlName="passwordCfm"
+          type="password"
+        />
+        <label for="passwordCfm">Confirm Password*</label>
+      </p-floatlabel>
     </p-input-group>
+    <!--    @if (regForm.get('password1')?.touched && getError('passwordCfm')) {-->
+    <!--      <small class="text-red-500">-->
+    <!--        {{ getError('passwordCfm') }}-->
+    <!--      </small>-->
+    <!--    }-->
+
+    <!-- Buttons -->
     <div class="flex flex-col w-full gap-2 mt-4">
       <p-button
-        [disabled]="!regForm.valid"
         icon="pi pi-user-plus"
         [loading]="loaders.isLoading(LoaderActions.SIGN_IN)"
         type="submit"
-        label="SIGN IN"
+        label="REGISTER"
         [rounded]="true"
         styleClass="w-full"
       />
@@ -75,7 +99,10 @@
         (click)="router.navigate(['login'])"
       />
     </div>
+
     <div class="w-full text-center my-2">OR</div>
+
+    <!-- Social Logins -->
     <div class="flex justify-center item-center w-full gap-1">
       <div class="google">
         <button>
@@ -99,7 +126,7 @@
           />
         </button>
       </div>
-      <i class="microsoft">
+      <div class="microsoft">
         <button>
           <img
             class="w-[32px] h-[32px] rounded-full"
@@ -109,7 +136,7 @@
             width="16"
           />
         </button>
-      </i>
+      </div>
     </div>
   </form>
 </div>
