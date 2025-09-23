@@ -125,7 +125,7 @@ export class RegisterComponent {
         this.toast.error(`Registration Failed`, error.message);
       }
     } else {
-      this.toast.error(`Invalid Form`, `Please fix the highlighted errors.`);
+      this.toast.error(`Validation(s) Failed`, `Please enter valid details`);
     }
   }
 

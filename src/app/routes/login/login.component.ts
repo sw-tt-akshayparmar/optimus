@@ -67,5 +67,7 @@ export class LoginComponent {
     }
   }
 
+  private validate() {}
+
   protected readonly LoaderActions = LoaderActions;
 }
