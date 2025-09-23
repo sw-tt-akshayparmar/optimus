@@ -1,7 +1,7 @@
 <div class="login w-full h-[80%] flex items-center justify-center">
   <form
     class="p-[50px] max-w-[720px] border border-gray-500 rounded-lg"
-    [formGroup]="loginForm"
+    [formGroup]="regForm"
     (ngSubmit)="onSubmit()"
   >
     <p-input-group class="my-2">
@@ -18,6 +18,17 @@
       />
     </p-input-group>
     <p-input-group class="my-2">
+      <p-inputgroup-addon> <i class="pi pi-user"></i></p-inputgroup-addon>
+      <input
+        name="name"
+        id="name"
+        pInputText
+        formControlName="name"
+        placeholder="Enter Name"
+        type="text"
+      />
+    </p-input-group>
+    <p-input-group class="my-2">
       <p-inputgroup-addon>
         <i class="pi pi-lock"></i>
       </p-inputgroup-addon>
@@ -30,13 +41,26 @@
         type="password"
       />
     </p-input-group>
+    <p-input-group class="my-2">
+      <p-inputgroup-addon>
+        <i class="pi pi-lock"></i>
+      </p-inputgroup-addon>
+      <input
+        name="password1"
+        id="password1"
+        pInputText
+        formControlName="password1"
+        placeholder="Repeat Password"
+        type="password"
+      />
+    </p-input-group>
     <div class="flex flex-col w-full gap-2 mt-4">
       <p-button
-        [disabled]="!loginForm.valid"
-        icon="pi pi-lock"
-        [loading]="loaders.isLoading(LoaderActions.LOG_IN)"
+        [disabled]="!regForm.valid"
+        icon="pi pi-user-plus"
+        [loading]="loaders.isLoading(LoaderActions.SIGN_IN)"
         type="submit"
-        label="LOG IN"
+        label="SIGN IN"
         [rounded]="true"
         styleClass="w-full"
       />
@@ -44,11 +68,11 @@
       <p-button
         [rounded]="true"
         icon="pi pi-user"
-        [loading]="loaders.isLoading(LoaderActions.LOG_IN)"
-        label="SIGN IN"
+        [loading]="loaders.isLoading(LoaderActions.SIGN_IN)"
+        label="LOG IN"
         outlined
         styleClass="w-full"
-        (click)="router.navigate(['register'])"
+        (click)="router.navigate(['login'])"
       />
     </div>
     <div class="w-full text-center my-2">OR</div>

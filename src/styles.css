@@ -11,10 +11,6 @@ html, body {
   height: 100%;
 }
 
-button {
-  border-radius: calc(infinity * 1px) !important;
-}
-
 *::-webkit-scrollbar {
   display: none;
 }
@@ -23,3 +19,5 @@ button {
   box-sizing: border-box;
 }
 
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

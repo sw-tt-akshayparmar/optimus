@@ -3,6 +3,7 @@ enum LoaderActions {
   DELETE_PROJECT = 'DELETE_PROJECT',
   CREATE_PROJECT = 'CREATE_PROJECT',
   LOG_IN = 'LOG_IN',
+  SIGN_IN = 'SIGN_IN',
 }
 
 export default LoaderActions;

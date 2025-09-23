@@ -1,7 +1,6 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule, Router, RouterLinkActive } from '@angular/router';
 import { NgClass } from '@angular/common';
-import { MatButton } from '@angular/material/button';
 import { Button } from 'primeng/button';
 
 @Component({
@@ -9,9 +8,10 @@ import { Button } from 'primeng/button';
   standalone: true,
   imports: [RouterModule, RouterLinkActive, NgClass, Button],
   templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent {
-  private router = inject(Router);
+  protected router = inject(Router);
 
   navLinks = [
     { to: '/', label: 'Home' },

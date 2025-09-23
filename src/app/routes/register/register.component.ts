@@ -13,14 +13,14 @@ import { Router } from '@angular/router';
 import { NgOptimizedImage } from '@angular/common';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-register',
   standalone: true,
   imports: [ReactiveFormsModule, InputText, InputGroup, Button, InputGroupAddon, NgOptimizedImage],
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css'],
 })
-export class LoginComponent {
-  loginForm: FormGroup;
+export class RegisterComponent {
+  regForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -29,30 +29,32 @@ export class LoginComponent {
     protected loaders: LoaderService,
     protected router: Router,
   ) {
-    this.loginForm = this.fb.group({
+    this.regForm = this.fb.group({
       username: ['', Validators.required],
+      name: ['', Validators.required],
       password: ['', Validators.required],
+      password1: ['', Validators.required],
     });
   }
 
   onSubmit() {
-    if (this.loginForm.valid) {
+    if (this.regForm.valid) {
       try {
-        this.loaders.enable(LoaderActions.LOG_IN);
-        this.userService.login(this.loginForm.value).subscribe({
+        this.loaders.enable(LoaderActions.SIGN_IN);
+        this.userService.register(this.regForm.value).subscribe({
           next: (user) => {
-            this.loaders.disable(LoaderActions.LOG_IN);
+            this.loaders.disable(LoaderActions.SIGN_IN);
             this.toast.success(`Login Successful`, `Welcome back ${user.name}`);
-            this.loginForm.reset();
+            this.regForm.reset();
             this.router.navigate(['']);
           },
           error: (error: Exception) => {
-            this.loaders.disable(LoaderActions.LOG_IN);
+            this.loaders.disable(LoaderActions.SIGN_IN);
             this.toast.error(`Login Failed`, error.message);
           },
         });
       } catch (error: Exception | Error | any) {
-        this.loaders.disable(LoaderActions.LOG_IN);
+        this.loaders.disable(LoaderActions.SIGN_IN);
         this.toast.error(`Login Failed`, error.message);
       }
     }

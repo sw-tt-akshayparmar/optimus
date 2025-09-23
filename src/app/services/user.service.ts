@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { User } from '../models/User.model';
 import { ApiService } from './api.service';
 import APIConfig from '../config/api.config';
-import { catchError, map, throwError } from 'rxjs';
+import { catchError, map, of, throwError } from 'rxjs';
 import { SuccessResponse } from '../models/Response.model';
 import { AuthToken } from '../models/Auth.model';
 import storageConstants from '../constants/storage.constants';
@@ -32,7 +32,9 @@ export class UserService {
     );
   }
 
-  register(name: string, username: string, password: string) {}
+  register(data: { name: string; username: string; password: string }) {
+    return of(new User());
+  }
 
   setConnectionId(connectionId: string) {
     localStorage.setItem(storageConstants.CONNECTION_ID, connectionId);

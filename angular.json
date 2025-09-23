@@ -22,6 +22,7 @@
               }
             ],
             "styles": [
+              "src/custom-theme.scss",
               "src/styles.css"
             ],
             "server": "src/main.server.ts",
@@ -55,6 +56,10 @@
           "defaultConfiguration": "production"
         },
         "serve": {
+          "options": {
+            "sslKey": "D:/ssl certificates/server-ec.key",
+            "sslCert": "D:/ssl certificates/server-ec.crt"
+          },
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
