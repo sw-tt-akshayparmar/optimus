@@ -12,6 +12,9 @@ import { Exception } from '../../exception/app.exception';
 import { Router } from '@angular/router';
 import { NgOptimizedImage } from '@angular/common';
 import { FloatLabel } from 'primeng/floatlabel';
+import { Tooltip } from 'primeng/tooltip';
+import { IconField } from 'primeng/iconfield';
+import { InputIcon } from 'primeng/inputicon';
 
 @Component({
   selector: 'app-login',
@@ -24,6 +27,9 @@ import { FloatLabel } from 'primeng/floatlabel';
     InputGroupAddon,
     NgOptimizedImage,
     FloatLabel,
+    Tooltip,
+    IconField,
+    InputIcon,
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],

@@ -4,81 +4,90 @@
     [formGroup]="regForm"
     (ngSubmit)="onSubmit()"
   >
-    <!-- Username -->
     <p-input-group class="my-4">
-      <p-inputgroup-addon>
-        <i class="pi pi-at"></i>
-      </p-inputgroup-addon>
-      <p-floatlabel variant="on">
-        <input name="username" id="username" pInputText formControlName="username" type="text" />
-        <label for="username">Enter Username*</label>
+      <p-floatlabel variant="on" class="flex-1">
+        <p-iconfield>
+          <p-inputicon class="pi pi-at" />
+          <input id="username" name="username" pInputText formControlName="username" type="text" />
+          <label for="username">Enter Username*</label>
+          @if (true) {
+            <p-inputicon
+              [pTooltip]="undefined"
+              tooltipPosition="bottom"
+              style="color: red"
+              class="pi pi-exclamation-circle"
+            />
+          }
+        </p-iconfield>
       </p-floatlabel>
     </p-input-group>
-    <!--    @if (regForm.get('username')?.touched && getError('username')) {-->
-    <!--      <small class="text-red-500">-->
-    <!--        {{ getError('username') }}-->
-    <!--      </small>-->
-    <!--    }-->
 
-    <!-- Name -->
     <p-input-group class="my-4">
-      <p-inputgroup-addon><i class="pi pi-user"></i></p-inputgroup-addon>
-      <p-floatlabel variant="on">
-        <input name="name" id="name" pInputText formControlName="name" type="text" />
-        <label for="name">Enter Name*</label>
+      <p-floatlabel variant="on" class="flex-1">
+        <p-iconfield>
+          <p-inputicon class="pi pi-user" />
+          <input id="name" name="name" pInputText formControlName="name" type="text" />
+          <label for="name">Enter Name*</label>
+          @if (true) {
+            <p-inputicon
+              [pTooltip]="undefined"
+              tooltipPosition="bottom"
+              style="color: red"
+              class="pi pi-exclamation-circle"
+            />
+          }
+        </p-iconfield>
       </p-floatlabel>
     </p-input-group>
-    <!--    @if (regForm.get('name')?.touched && getError('name')) {-->
-    <!--      <small class="text-red-500">-->
-    <!--        {{ getError('name') }}-->
-    <!--      </small>-->
-    <!--    }-->
 
-    <!-- Password -->
     <p-input-group class="my-4">
-      <p-inputgroup-addon>
-        <i class="pi pi-lock"></i>
-      </p-inputgroup-addon>
-      <p-floatlabel variant="on">
-        <input
-          name="password"
-          id="password"
-          pInputText
-          formControlName="password"
-          type="password"
-        />
-        <label for="name">Enter Password*</label>
+      <p-floatlabel variant="on" class="flex-1">
+        <p-iconfield>
+          <p-inputicon class="pi pi-lock" />
+          <input
+            id="password"
+            name="password"
+            pInputText
+            formControlName="password"
+            type="password"
+          />
+          <label for="password">Enter Password*</label>
+          @if (true) {
+            <p-inputicon
+              [pTooltip]="undefined"
+              tooltipPosition="bottom"
+              style="color: red"
+              class="pi pi-exclamation-circle"
+            />
+          }
+        </p-iconfield>
       </p-floatlabel>
     </p-input-group>
-    <!--    @if (regForm.get('password')?.touched && getError('password')) {-->
-    <!--      <small class="text-red-500">-->
-    <!--        {{ getError('password') }}-->
-    <!--      </small>-->
-    <!--    }-->
 
-    <!-- Confirm Password -->
     <p-input-group class="my-4">
-      <p-inputgroup-addon>
-        <i class="pi pi-lock"></i>
-      </p-inputgroup-addon>
-      <p-floatlabel variant="on">
-        <input
-          name="passwordCfm"
-          id="passwordCfm"
-          pInputText
-          formControlName="passwordCfm"
-          type="password"
-        />
-        <label for="passwordCfm">Confirm Password*</label>
+      <p-floatlabel variant="on" class="flex-1">
+        <p-iconfield>
+          <p-inputicon class="pi pi-lock" />
+          <input
+            id="passwordCfm"
+            name="passwordCfm"
+            pInputText
+            formControlName="passwordCfm"
+            type="text"
+          />
+          <label for="passwordCfm">Confirm Password*</label>
+          @if (true) {
+            <p-inputicon
+              [pTooltip]="undefined"
+              tooltipPosition="bottom"
+              style="color: red"
+              class="pi pi-exclamation-circle"
+            />
+          }
+        </p-iconfield>
       </p-floatlabel>
     </p-input-group>
-    <!--    @if (regForm.get('password1')?.touched && getError('passwordCfm')) {-->
-    <!--      <small class="text-red-500">-->
-    <!--        {{ getError('passwordCfm') }}-->
-    <!--      </small>-->
-    <!--    }-->
 
-    <!-- Buttons -->
     <div class="flex flex-col w-full gap-2 mt-4">
       <p-button
         icon="pi pi-user-plus"
@@ -92,7 +101,7 @@
       <p-button
         [rounded]="true"
         icon="pi pi-user"
-        [loading]="loaders.isLoading(LoaderActions.SIGN_IN)"
+        [loading]="loaders.isLoading(LoaderActions.LOG_IN)"
         label="LOG IN"
         outlined
         styleClass="w-full"
@@ -102,7 +111,6 @@
 
     <div class="w-full text-center my-2">OR</div>
 
-    <!-- Social Logins -->
     <div class="flex justify-center item-center w-full gap-1">
       <div class="google">
         <button>
@@ -140,3 +148,26 @@
     </div>
   </form>
 </div>
+<ng-template #tooltipTemplate>
+  <div
+    class="flex items-center gap-2 px-3 py-2 rounded-md"
+    [class]="{
+      'border border-red-600 text-red-600 bg-red-50': true,
+      'border border-yellow-600 text-yellow-600 bg-yellow-50': false,
+      'border border-green-600 text-green-600 bg-green-50': false,
+      'border border-blue-600 text-blue-600 bg-blue-50': false,
+    }"
+  >
+    <i
+      class="pi"
+      [class]="{
+        'pi-times-circle': true,
+        'pi-exclamation-triangle': false,
+        'pi-check-circle': false,
+        'pi-info-circle': false,
+      }"
+    ></i>
+
+    <span>message</span>
+  </div>
+</ng-template>

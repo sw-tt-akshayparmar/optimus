@@ -20,6 +20,9 @@ import { Exception } from '../../exception/app.exception';
 import { Router } from '@angular/router';
 import { NgOptimizedImage } from '@angular/common';
 import { FloatLabel } from 'primeng/floatlabel';
+import { IconField } from 'primeng/iconfield';
+import { InputIcon } from 'primeng/inputicon';
+import { Tooltip } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-register',
@@ -29,9 +32,11 @@ import { FloatLabel } from 'primeng/floatlabel';
     InputText,
     InputGroup,
     Button,
-    InputGroupAddon,
     NgOptimizedImage,
     FloatLabel,
+    IconField,
+    InputIcon,
+    Tooltip,
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],

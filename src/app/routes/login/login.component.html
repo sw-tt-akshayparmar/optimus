@@ -5,27 +5,37 @@
     (ngSubmit)="onSubmit()"
   >
     <p-input-group class="my-4">
-      <p-inputgroup-addon>
-        <i class="pi pi-at"></i>
-      </p-inputgroup-addon>
-      <p-floatlabel variant="on">
-        <input name="username" id="username" pInputText formControlName="username" type="text" />
-        <label for="username">Enter Username*</label>
+      <p-floatlabel variant="on" class="flex-1">
+        <p-iconfield>
+          <p-inputicon class="pi pi-user" />
+          <input id="username" name="username" pInputText formControlName="username" type="text" />
+          <label for="username">Enter Username*</label>
+          @if (true) {
+            <p-inputicon
+              [pTooltip]="tooltipTemplate"
+              tooltipPosition="bottom"
+              style="color: red"
+              class="pi pi-exclamation-circle"
+            />
+          }
+        </p-iconfield>
       </p-floatlabel>
     </p-input-group>
     <p-input-group class="my-4">
-      <p-inputgroup-addon>
-        <i class="pi pi-lock"></i>
-      </p-inputgroup-addon>
-      <p-floatlabel variant="on">
-        <input
-          name="password"
-          id="password"
-          pInputText
-          formControlName="password"
-          type="password"
-        />
-        <label for="password">Enter Password*</label>
+      <p-floatlabel variant="on" class="flex-1">
+        <p-iconfield>
+          <p-inputicon class="pi pi-lock" />
+          <input id="password" name="password" pInputText formControlName="password" type="text" />
+          <label for="password">Enter Password*</label>
+          @if (true) {
+            <p-inputicon
+              [pTooltip]="tooltipTemplate"
+              tooltipPosition="bottom"
+              style="color: red"
+              class="pi pi-exclamation-circle"
+            />
+          }
+        </p-iconfield>
       </p-floatlabel>
     </p-input-group>
     <div class="flex flex-col w-full gap-2 mt-4">
@@ -41,7 +51,7 @@
       <p-button
         [rounded]="true"
         icon="pi pi-user"
-        [loading]="loaders.isLoading(LoaderActions.LOG_IN)"
+        [loading]="loaders.isLoading(LoaderActions.SIGN_IN)"
         label="SIGN IN"
         outlined
         styleClass="w-full"
@@ -86,3 +96,26 @@
     </div>
   </form>
 </div>
+<ng-template #tooltipTemplate>
+  <div
+    class="flex items-center gap-2 px-3 py-2 rounded-md"
+    [class]="{
+      'border border-red-600 text-red-600 bg-red-50': true,
+      'border border-yellow-600 text-yellow-600 bg-yellow-50': false,
+      'border border-green-600 text-green-600 bg-green-50': false,
+      'border border-blue-600 text-blue-600 bg-blue-50': false,
+    }"
+  >
+    <i
+      class="pi"
+      [class]="{
+        'pi-times-circle': true,
+        'pi-exclamation-triangle': false,
+        'pi-check-circle': false,
+        'pi-info-circle': false,
+      }"
+    ></i>
+
+    <span>message</span>
+  </div>
+</ng-template>
