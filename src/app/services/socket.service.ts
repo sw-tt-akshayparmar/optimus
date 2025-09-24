@@ -17,10 +17,8 @@ export class SocketService {
 
   constructor(private userService: UserService) {
     this.userService.on('login', (token: string) => {
-      console.log(token);
       this.socket.emit(Constants.CLIENT_HELLO, token);
     });
-    console.log('Socket Service constructor');
     if (isPlatformBrowser(this.platformId)) {
       this.socket.on(Constants.CONNECT, () => {
         this.socket.emit(Constants.CLIENT_HELLO, {
@@ -32,14 +30,11 @@ export class SocketService {
         (
           res: ErrorResponse<{ connectionId: string }> | SuccessResponse<{ connectionId: string }>,
         ) => {
-          console.log('hello from server', res);
           this.userService.setConnectionId(res.data!.connectionId);
         },
       );
 
-      this.socket.on(Constants.DISCONNECT, () => {
-        console.log('Socket disconnected');
-      });
+      this.socket.on(Constants.DISCONNECT, () => {});
     }
   }
 
