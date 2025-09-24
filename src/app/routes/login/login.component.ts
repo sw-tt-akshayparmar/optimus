@@ -4,7 +4,6 @@ import { UserService } from '../../services/user.service';
 import { InputText } from 'primeng/inputtext';
 import { InputGroup } from 'primeng/inputgroup';
 import { Button } from 'primeng/button';
-import { InputGroupAddon } from 'primeng/inputgroupaddon';
 import { LoaderService } from '../../services/loader.service';
 import LoaderActions from '../../enums/loader.enum';
 import { ToastService } from '../../services/toast.service';
@@ -15,6 +14,8 @@ import { FloatLabel } from 'primeng/floatlabel';
 import { Tooltip } from 'primeng/tooltip';
 import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
+import { SocketService } from '../../services/socket.service';
+import Constants from '../../constants/constants';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,6 @@ import { InputIcon } from 'primeng/inputicon';
     InputText,
     InputGroup,
     Button,
-    InputGroupAddon,
     NgOptimizedImage,
     FloatLabel,
     Tooltip,

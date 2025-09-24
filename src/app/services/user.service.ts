@@ -11,10 +11,12 @@ import ErrorCode from '../enums/error.enum';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
+  private listeners: Map<string, (data: any, ...args: any) => void> = new Map();
   constructor(private apiService: ApiService) {}
   login(data: { username: string; password: string }) {
     return this.apiService.post<AuthToken>(APIConfig.LOGIN, data).pipe(
       map<SuccessResponse<AuthToken>, User>((res) => {
+        this.listeners.get('login')?.call(null, res.data.accessToken);
         this.setAccessToken(res.data.accessToken);
         this.setRefreshToken(res.data.refreshToken);
         this.setUserData(res.data.user);
@@ -55,10 +57,14 @@ export class UserService {
     const userJSON = localStorage.getItem(storageConstants.USER_DATA);
     return userJSON ? User.from(JSON.parse(userJSON)) : null;
   }
-  getAccessToken(token: string): string | null {
+  getAccessToken(): string | null {
     return localStorage.getItem(storageConstants.AUTHORIZATION_TOKEN);
   }
   getRefreshToken(token: string): string | null {
     return localStorage.getItem(storageConstants.REFRESH_TOKEN);
+  }
+
+  on(event: string, listener: (data: any, ...args: any) => void) {
+    this.listeners.set(event, listener);
   }
 }
