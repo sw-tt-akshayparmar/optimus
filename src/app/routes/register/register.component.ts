@@ -111,19 +111,24 @@ export class RegisterComponent {
 
   onSubmit() {
     if (this.regForm.valid) {
-      this.loaders.enable(LoaderActions.SIGN_IN);
-      this.userService.register(this.regForm.value).subscribe({
-        next: (user) => {
-          this.loaders.disable(LoaderActions.SIGN_IN);
-          this.toast.success(`Registration Successful`, `Welcome ${user.name}!`);
-          this.regForm.reset();
-          this.router.navigate(['']);
-        },
-        error: (error: Exception) => {
-          this.loaders.disable(LoaderActions.SIGN_IN);
-          this.toast.error(`Registration Failed`, error.message);
-        },
-      });
+      try {
+        this.loaders.enable(LoaderActions.SIGN_IN);
+        this.userService.register(this.regForm.value).subscribe({
+          next: (user) => {
+            this.loaders.disable(LoaderActions.SIGN_IN);
+            this.toast.success(`Registration Successful`, `Welcome ${user.name}!`);
+            this.regForm.reset();
+            this.router.navigate(['']);
+          },
+          error: (error: Exception) => {
+            this.loaders.disable(LoaderActions.SIGN_IN);
+            this.toast.error(`Registration Failed`, error.message);
+          },
+        });
+      } catch (error: Exception | Error | any) {
+        this.loaders.disable(LoaderActions.SIGN_IN);
+        this.toast.error(`Registration Failed`, error.message);
+      }
     } else {
       this.toast.error(`Validation(s) Failed`, `Please enter valid details`);
     }

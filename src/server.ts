@@ -4,7 +4,7 @@ import {
   isMainModule,
   writeResponseToNodeResponse,
 } from '@angular/ssr/node';
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import { join } from 'node:path';
 import helmet from 'helmet';
 import compression from 'compression';
@@ -60,7 +60,7 @@ app.use((req, res, next) => {
 });
 
 // Basic error handler
-app.use((err: any, _req, res, _next) => {
+app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
   console.error(err);
   res.status(500).send('Internal Server Error');
 });

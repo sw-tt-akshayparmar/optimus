@@ -10,9 +10,12 @@
           <p-inputicon class="pi pi-at" />
           <input id="username" name="username" pInputText formControlName="username" type="text" />
           <label for="username">Enter Username*</label>
-          @if (regForm.get('username')?.invalid && (regForm.get('username')?.dirty || regForm.get('username')?.touched)) {
+          @if (
+            regForm.get('username')?.invalid &&
+            (regForm.get('username')?.dirty || regForm.get('username')?.touched)
+          ) {
             <p-inputicon
-              [pTooltip]="getError('username')"
+              [pTooltip]="getError('username')!"
               tooltipPosition="bottom"
               style="color: red"
               class="pi pi-exclamation-circle"
@@ -28,9 +31,12 @@
           <p-inputicon class="pi pi-user" />
           <input id="name" name="name" pInputText formControlName="name" type="text" />
           <label for="name">Enter Name*</label>
-          @if (regForm.get('name')?.invalid && (regForm.get('name')?.dirty || regForm.get('name')?.touched)) {
+          @if (
+            regForm.get('name')?.invalid &&
+            (regForm.get('name')?.dirty || regForm.get('name')?.touched)
+          ) {
             <p-inputicon
-              [pTooltip]="getError('name')"
+              [pTooltip]="getError('name')!"
               tooltipPosition="bottom"
               style="color: red"
               class="pi pi-exclamation-circle"
@@ -52,9 +58,12 @@
             type="password"
           />
           <label for="password">Enter Password*</label>
-          @if (regForm.get('password')?.invalid && (regForm.get('password')?.dirty || regForm.get('password')?.touched)) {
+          @if (
+            regForm.get('password')?.invalid &&
+            (regForm.get('password')?.dirty || regForm.get('password')?.touched)
+          ) {
             <p-inputicon
-              [pTooltip]="getError('password')"
+              [pTooltip]="getError('password')!"
               tooltipPosition="bottom"
               style="color: red"
               class="pi pi-exclamation-circle"
@@ -76,7 +85,11 @@
             type="password"
           />
           <label for="passwordCfm">Confirm Password*</label>
-          @if (regForm.get('passwordCfm')?.invalid && (regForm.get('passwordCfm')?.dirty || regForm.get('passwordCfm')?.touched) || regForm.hasError('passwordMismatch')) {
+          @if (
+            (regForm.get('passwordCfm')?.invalid &&
+              (regForm.get('passwordCfm')?.dirty || regForm.get('passwordCfm')?.touched)) ||
+            regForm.hasError('passwordMismatch')
+          ) {
             <p-inputicon
               [pTooltip]="getError('passwordCfm') ?? 'Passwords do not match'"
               tooltipPosition="bottom"

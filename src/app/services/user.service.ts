@@ -18,34 +18,19 @@ export class UserService {
   ) {}
   login(data: { username: string; password: string }) {
     return this.apiService.post<AuthToken>(APIConfig.LOGIN, data).pipe(
-      map((res: SuccessResponse<AuthToken>): User => {
-        const token = res?.data?.accessToken;
-        const refresh = res?.data?.refreshToken;
-        const user = res?.data?.user;
-
-        if (!token || !refresh || !user) {
-          throw new Exception(
-            ErrorCode.API_FAILURE,
-            'Invalid authentication response',
-            res,
-          );
-        }
-
-        this.socketService.connect(token);
-        this.setAccessToken(token);
-        this.setRefreshToken(refresh);
-        this.setUserData(user);
-        return user;
+      map<SuccessResponse<AuthToken>, User>((res) => {
+        this.socketService.connect(res.data.accessToken);
+        this.setAccessToken(res.data.accessToken);
+        this.setRefreshToken(res.data.refreshToken);
+        this.setUserData(res.data.user);
+        return res.data.user!;
       }),
       catchError((err) => {
-        if (err instanceof Exception) return throwError(() => err);
         let exception: Exception;
-        if (err?.status === 0) {
+        if (err.status === 0) {
           exception = new Exception(ErrorCode.NETWORK_ERROR, 'Network Error', err);
         } else {
-          const code = err?.error?.code ?? ErrorCode.API_FAILURE;
-          const message = err?.error?.error ?? err?.message ?? 'Something went wrong';
-          exception = new Exception(code, message, err?.error ?? err);
+          exception = new Exception(err.error.code, err.error.error, err.error);
         }
         return throwError(() => exception);
       }),
@@ -53,39 +38,7 @@ export class UserService {
   }
 
   register(data: { name: string; username: string; password: string }) {
-    return this.apiService.post<AuthToken>(APIConfig.REGISTER, data).pipe(
-      map((res: SuccessResponse<AuthToken>): User => {
-        const token = res?.data?.accessToken;
-        const refresh = res?.data?.refreshToken;
-        const user = res?.data?.user;
-
-        if (!token || !refresh || !user) {
-          throw new Exception(
-            ErrorCode.API_FAILURE,
-            'Invalid registration response',
-            res,
-          );
-        }
-
-        this.socketService.connect(token);
-        this.setAccessToken(token);
-        this.setRefreshToken(refresh);
-        this.setUserData(user);
-        return user;
-      }),
-      catchError((err) => {
-        if (err instanceof Exception) return throwError(() => err);
-        let exception: Exception;
-        if (err?.status === 0) {
-          exception = new Exception(ErrorCode.NETWORK_ERROR, 'Network Error', err);
-        } else {
-          const code = err?.error?.code ?? ErrorCode.API_FAILURE;
-          const message = err?.error?.error ?? err?.message ?? 'Something went wrong';
-          exception = new Exception(code, message, err?.error ?? err);
-        }
-        return throwError(() => exception);
-      }),
-    );
+    return of(new User());
   }
 
   setConnectionId(connectionId: string) {
