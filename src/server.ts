@@ -6,11 +6,25 @@ import {
 } from '@angular/ssr/node';
 import express from 'express';
 import { join } from 'node:path';
+import helmet from 'helmet';
+import compression from 'compression';
+import morgan from 'morgan';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
 
 const app = express();
 const angularApp = new AngularNodeAppEngine();
+
+const isProd = process.env['NODE_ENV'] === 'production';
+
+// Security and performance middlewares
+app.use(
+  helmet({
+    contentSecurityPolicy: isProd ? undefined : false, // disable CSP in dev to ease HMR
+  }),
+);
+app.use(compression());
+app.use(morgan(isProd ? 'combined' : 'dev'));
 
 /**
  * Example Express Rest API endpoints can be defined here.
@@ -43,6 +57,12 @@ app.use((req, res, next) => {
     .handle(req)
     .then((response) => (response ? writeResponseToNodeResponse(response, res) : next()))
     .catch(next);
+});
+
+// Basic error handler
+app.use((err: any, _req, res, _next) => {
+  console.error(err);
+  res.status(500).send('Internal Server Error');
 });
 
 /**

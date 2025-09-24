@@ -46,7 +46,10 @@
     "primeng": "^20.1.2",
     "rxjs": "~7.8.0",
     "sass": "^1.92.1",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "compression": "^1.7.4",
+    "helmet": "^7.1.0",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "@angular-eslint/builder": "^20.3.0",

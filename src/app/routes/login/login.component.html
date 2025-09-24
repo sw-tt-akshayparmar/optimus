@@ -10,9 +10,9 @@
           <p-inputicon class="pi pi-user" />
           <input id="username" name="username" pInputText formControlName="username" type="text" />
           <label for="username">Enter Username*</label>
-          @if (true) {
+          @if (loginForm.get('username')?.invalid && (loginForm.get('username')?.dirty || loginForm.get('username')?.touched)) {
             <p-inputicon
-              [pTooltip]="tooltipTemplate"
+              [pTooltip]="getError('username')"
               tooltipPosition="bottom"
               style="color: red"
               class="pi pi-exclamation-circle"
@@ -33,9 +33,9 @@
             type="password"
           />
           <label for="password">Enter Password*</label>
-          @if (true) {
+          @if (loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)) {
             <p-inputicon
-              [pTooltip]="tooltipTemplate"
+              [pTooltip]="getError('password') ?? 'Invalid password'"
               tooltipPosition="bottom"
               style="color: red"
               class="pi pi-exclamation-circle"
@@ -60,6 +60,7 @@
         [loading]="loaders.isLoading(LoaderActions.SIGN_IN)"
         label="SIGN IN"
         outlined
+        type="button"
         styleClass="w-full"
         (click)="router.navigate(['register'])"
       />
@@ -67,7 +68,7 @@
     <div class="w-full text-center my-2">OR</div>
     <div class="flex justify-center items-center w-full gap-1">
       <div class="google">
-        <button>
+        <button type="button">
           <img
             class="w-[32px] h-[32px] rounded-full"
             ngSrc="/images/google.svg"
@@ -78,7 +79,7 @@
         </button>
       </div>
       <div class="github">
-        <button>
+        <button type="button">
           <img
             class="w-[32px] h-[32px] rounded-full"
             ngSrc="/images/github.svg"
@@ -89,7 +90,7 @@
         </button>
       </div>
       <i class="microsoft">
-        <button>
+        <button type="button">
           <img
             class="w-[32px] h-[32px] rounded-full"
             ngSrc="/images/microsoft.svg"

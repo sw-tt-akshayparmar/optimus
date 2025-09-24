@@ -14,6 +14,7 @@ import { FloatLabel } from 'primeng/floatlabel';
 import { Tooltip } from 'primeng/tooltip';
 import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
+import { LoginModel } from '../../models/Auth.model';
 
 @Component({
   selector: 'app-login',
@@ -50,28 +51,30 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      try {
-        this.loaders.enable(LoaderActions.LOG_IN);
-        this.userService.login(this.loginForm.value).subscribe({
-          next: (user) => {
-            this.loaders.disable(LoaderActions.LOG_IN);
-            this.toast.success(`Login Successful`, `Welcome back ${user.name}`);
-            this.loginForm.reset();
-            this.router.navigate(['']);
-          },
-          error: (error: Exception) => {
-            this.loaders.disable(LoaderActions.LOG_IN);
-            this.toast.error(`Login Failed`, error.message);
-          },
-        });
-      } catch (error: Exception | Error | any) {
-        this.loaders.disable(LoaderActions.LOG_IN);
-        this.toast.error(`Login Failed`, error.message);
-      }
+      this.loaders.enable(LoaderActions.LOG_IN);
+      this.userService.login(this.loginForm.value as LoginModel).subscribe({
+        next: (user) => {
+          this.loaders.disable(LoaderActions.LOG_IN);
+          this.toast.success(`Login Successful`, `Welcome back ${user.name}`);
+          this.loginForm.reset();
+          this.router.navigate(['']);
+        },
+        error: (error: Exception) => {
+          this.loaders.disable(LoaderActions.LOG_IN);
+          this.toast.error(`Login Failed`, error.message);
+        },
+      });
+    } else {
+      this.toast.error('Validation(s) Failed', 'Please enter valid username and password');
     }
   }
 
-  private validate() {}
+  getError(controlName: string): string | null {
+    const control = this.loginForm.get(controlName);
+    if (!control) return null;
+    if (control.hasError('required')) return `${controlName} is required`;
+    return null;
+  }
 
   protected readonly LoaderActions = LoaderActions;
 }

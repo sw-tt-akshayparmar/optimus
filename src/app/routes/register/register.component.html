@@ -10,9 +10,9 @@
           <p-inputicon class="pi pi-at" />
           <input id="username" name="username" pInputText formControlName="username" type="text" />
           <label for="username">Enter Username*</label>
-          @if (true) {
+          @if (regForm.get('username')?.invalid && (regForm.get('username')?.dirty || regForm.get('username')?.touched)) {
             <p-inputicon
-              [pTooltip]="undefined"
+              [pTooltip]="getError('username')"
               tooltipPosition="bottom"
               style="color: red"
               class="pi pi-exclamation-circle"
@@ -28,9 +28,9 @@
           <p-inputicon class="pi pi-user" />
           <input id="name" name="name" pInputText formControlName="name" type="text" />
           <label for="name">Enter Name*</label>
-          @if (true) {
+          @if (regForm.get('name')?.invalid && (regForm.get('name')?.dirty || regForm.get('name')?.touched)) {
             <p-inputicon
-              [pTooltip]="undefined"
+              [pTooltip]="getError('name')"
               tooltipPosition="bottom"
               style="color: red"
               class="pi pi-exclamation-circle"
@@ -52,9 +52,9 @@
             type="password"
           />
           <label for="password">Enter Password*</label>
-          @if (true) {
+          @if (regForm.get('password')?.invalid && (regForm.get('password')?.dirty || regForm.get('password')?.touched)) {
             <p-inputicon
-              [pTooltip]="undefined"
+              [pTooltip]="getError('password')"
               tooltipPosition="bottom"
               style="color: red"
               class="pi pi-exclamation-circle"
@@ -76,9 +76,9 @@
             type="password"
           />
           <label for="passwordCfm">Confirm Password*</label>
-          @if (true) {
+          @if (regForm.get('passwordCfm')?.invalid && (regForm.get('passwordCfm')?.dirty || regForm.get('passwordCfm')?.touched) || regForm.hasError('passwordMismatch')) {
             <p-inputicon
-              [pTooltip]="undefined"
+              [pTooltip]="getError('passwordCfm') ?? 'Passwords do not match'"
               tooltipPosition="bottom"
               style="color: red"
               class="pi pi-exclamation-circle"
@@ -104,6 +104,7 @@
         [loading]="loaders.isLoading(LoaderActions.LOG_IN)"
         label="LOG IN"
         outlined
+        type="button"
         styleClass="w-full"
         (click)="router.navigate(['login'])"
       />
@@ -113,7 +114,7 @@
 
     <div class="flex justify-center items-center w-full gap-1">
       <div class="google">
-        <button>
+        <button type="button">
           <img
             class="w-[32px] h-[32px] rounded-full"
             ngSrc="/images/google.svg"
@@ -124,7 +125,7 @@
         </button>
       </div>
       <div class="github">
-        <button>
+        <button type="button">
           <img
             class="w-[32px] h-[32px] rounded-full"
             ngSrc="/images/github.svg"
@@ -135,7 +136,7 @@
         </button>
       </div>
       <div class="microsoft">
-        <button>
+        <button type="button">
           <img
             class="w-[32px] h-[32px] rounded-full"
             ngSrc="/images/microsoft.svg"

@@ -27,10 +27,23 @@ export class SocketService {
         (
           res: ErrorResponse<{ connectionId: string }> | SuccessResponse<{ connectionId: string }>,
         ) => {
-          localStorage.setItem(storageConstants.CONNECTION_ID, res.data!.connectionId);
+          if ((res as SuccessResponse<{ connectionId: string }>).isSuccessful === true) {
+            const success = res as SuccessResponse<{ connectionId: string }>;
+            if (success.data?.connectionId) {
+              localStorage.setItem(
+                storageConstants.CONNECTION_ID,
+                success.data.connectionId,
+              );
+            }
+          } else {
+            // Handle error response from server hello
+            console.warn('SERVER_HELLO error:', res);
+          }
         },
       );
-      this.socket.on(Constants.DISCONNECT, () => {});
+      this.socket.on(Constants.DISCONNECT, () => {
+        console.warn('Socket disconnected');
+      });
     }
   }
   connect(authorization: string, connectionId?: string) {
