@@ -14,8 +14,6 @@ import { FloatLabel } from 'primeng/floatlabel';
 import { Tooltip } from 'primeng/tooltip';
 import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
-import { SocketService } from '../../services/socket.service';
-import Constants from '../../constants/constants';
 
 @Component({
   selector: 'app-login',

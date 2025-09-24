@@ -2,8 +2,8 @@ import { Injectable, inject, PLATFORM_ID } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { isPlatformBrowser } from '@angular/common';
 import Constants from '../constants/constants';
-import { UserService } from './user.service';
 import { ErrorResponse, SuccessResponse } from '../models/Response.model';
+import storageConstants from '../constants/storage.constants';
 
 interface ClientHello {
   connectionId?: string;
@@ -15,14 +15,11 @@ export class SocketService {
   private socket = inject(Socket);
   private platformId = inject(PLATFORM_ID);
 
-  constructor(private userService: UserService) {
-    this.userService.on('login', (token: string) => {
-      this.socket.emit(Constants.CLIENT_HELLO, token);
-    });
+  constructor() {
     if (isPlatformBrowser(this.platformId)) {
       this.socket.on(Constants.CONNECT, () => {
         this.socket.emit(Constants.CLIENT_HELLO, {
-          authorization: this.userService.getAccessToken() ?? undefined,
+          authorization: localStorage.getItem(storageConstants.AUTHORIZATION_TOKEN) ?? undefined,
         } satisfies ClientHello);
       });
       this.socket.on(
@@ -30,14 +27,18 @@ export class SocketService {
         (
           res: ErrorResponse<{ connectionId: string }> | SuccessResponse<{ connectionId: string }>,
         ) => {
-          this.userService.setConnectionId(res.data!.connectionId);
+          localStorage.setItem(storageConstants.CONNECTION_ID, res.data!.connectionId);
         },
       );
-
       this.socket.on(Constants.DISCONNECT, () => {});
     }
   }
-
+  connect(authorization: string, connectionId?: string) {
+    this.socket.emit(Constants.CLIENT_HELLO, {
+      authorization,
+      connectionId,
+    } satisfies ClientHello);
+  }
   emit(event: string, data: any) {
     this.socket.emit(event, data);
   }

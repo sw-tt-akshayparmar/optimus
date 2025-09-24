@@ -8,15 +8,18 @@ import { AuthToken } from '../models/Auth.model';
 import storageConstants from '../constants/storage.constants';
 import { Exception } from '../exception/app.exception';
 import ErrorCode from '../enums/error.enum';
+import { SocketService } from './socket.service';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-  private listeners: Map<string, (data: any, ...args: any) => void> = new Map();
-  constructor(private apiService: ApiService) {}
+  constructor(
+    private apiService: ApiService,
+    private socketService: SocketService,
+  ) {}
   login(data: { username: string; password: string }) {
     return this.apiService.post<AuthToken>(APIConfig.LOGIN, data).pipe(
       map<SuccessResponse<AuthToken>, User>((res) => {
-        this.listeners.get('login')?.call(null, res.data.accessToken);
+        this.socketService.connect(res.data.accessToken);
         this.setAccessToken(res.data.accessToken);
         this.setRefreshToken(res.data.refreshToken);
         this.setUserData(res.data.user);
@@ -62,9 +65,5 @@ export class UserService {
   }
   getRefreshToken(token: string): string | null {
     return localStorage.getItem(storageConstants.REFRESH_TOKEN);
-  }
-
-  on(event: string, listener: (data: any, ...args: any) => void) {
-    this.listeners.set(event, listener);
   }
 }
