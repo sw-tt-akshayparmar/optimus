@@ -1,7 +1,7 @@
 import ErrorCode from '../enums/error.enum';
 
 export interface SuccessResponse<Data = any> {
-  isSuccessFull: true;
+  isSuccessful: true;
   status: number;
   success: string;
   data: Data;
@@ -13,7 +13,7 @@ interface ErrorDescription {
 }
 
 export interface ErrorResponse<Data = any> {
-  isSuccessFull: false;
+  isSuccessful: false;
   status: number;
   error: string;
   description: ErrorDescription;

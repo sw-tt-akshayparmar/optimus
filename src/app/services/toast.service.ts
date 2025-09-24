@@ -8,7 +8,7 @@ export class ToastService {
   constructor(private messageService: MessageService) {}
 
   success(summary: string, detail: string, life: number = 3000, key?: string) {
-    return this.messageService.add({
+    this.messageService.add({
       severity: 'success',
       summary,
       detail,

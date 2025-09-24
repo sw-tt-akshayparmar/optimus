@@ -54,16 +54,16 @@ export class UserService {
     localStorage.setItem(storageConstants.REFRESH_TOKEN, token);
   }
   getConnectionId() {
-    localStorage.getItem(storageConstants.CONNECTION_ID);
+    return localStorage.getItem(storageConstants.CONNECTION_ID);
   }
-  getUserData(user: User): User | null {
+  getUserData(): User | null {
     const userJSON = localStorage.getItem(storageConstants.USER_DATA);
     return userJSON ? User.from(JSON.parse(userJSON)) : null;
   }
   getAccessToken(): string | null {
     return localStorage.getItem(storageConstants.AUTHORIZATION_TOKEN);
   }
-  getRefreshToken(token: string): string | null {
+  getRefreshToken(): string | null {
     return localStorage.getItem(storageConstants.REFRESH_TOKEN);
   }
 }
