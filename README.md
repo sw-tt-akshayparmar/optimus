@@ -139,8 +139,8 @@ If you change your backend `host/port/protocol`, update `environments.ts` accord
 ## Troubleshooting
 
 - SSL certificate issues in dev
-    - If ng serve fails due to SSL paths, update `angular.json` serve.options.sslKey and sslCert, or remove them and use
-      ng serve `--ssl` with a locally trusted Angular CLI certificate.
+    - If ng serve fails due to SSL paths, update `angular.json` `serve.options.sslKey` and `sslCert`, or remove them and use
+      `ng serve --ssl` with a locally trusted Angular CLI certificate.
 - CORS or network errors
     - Ensure the backend is running, reachable, and CORS is configured if the frontend and backend are on different
       origins.
