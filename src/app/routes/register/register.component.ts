@@ -19,9 +19,6 @@ import { Exception } from '../../exception/app.exception';
 import { Router } from '@angular/router';
 import { NgOptimizedImage } from '@angular/common';
 import { FloatLabel } from 'primeng/floatlabel';
-import { IconField } from 'primeng/iconfield';
-import { InputIcon } from 'primeng/inputicon';
-import { Tooltip } from 'primeng/tooltip';
 import { InputGroupAddon } from 'primeng/inputgroupaddon';
 import { Message } from 'primeng/message';
 
@@ -35,9 +32,6 @@ import { Message } from 'primeng/message';
     Button,
     NgOptimizedImage,
     FloatLabel,
-    IconField,
-    InputIcon,
-    Tooltip,
     InputGroupAddon,
     Message,
   ],
