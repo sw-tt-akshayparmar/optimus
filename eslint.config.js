@@ -3,11 +3,9 @@ import angularPlugin from "@angular-eslint/eslint-plugin";
 import angularTemplatePlugin from "@angular-eslint/eslint-plugin-template";
 import angularTemplateParser from "@angular-eslint/template-parser";
 import prettierPlugin from "eslint-plugin-prettier";
-// Add this import to disable conflicting stylistic rules
 import eslintConfigPrettier from "eslint-config-prettier";
 
 export default [
-  // TypeScript files
   {
     files: ["**/*.ts"],
     languageOptions: {
