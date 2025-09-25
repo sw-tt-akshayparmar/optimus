@@ -38,7 +38,24 @@ export class UserService {
   }
 
   register(data: { name: string; username: string; password: string }) {
-    return of(new User());
+    return this.apiService.post<AuthToken>(APIConfig.REGISTER, data).pipe(
+      map<SuccessResponse<AuthToken>, User>((res) => {
+        this.socketService.connect(res.data.accessToken);
+        this.setAccessToken(res.data.accessToken);
+        this.setRefreshToken(res.data.refreshToken);
+        this.setUserData(res.data.user);
+        return res.data.user!;
+      }),
+      catchError((err) => {
+        let exception: Exception;
+        if (err.status === 0) {
+          exception = new Exception(ErrorCode.NETWORK_ERROR, 'Network Error', err);
+        } else {
+          exception = new Exception(err.error.code, err.error.error, err.error);
+        }
+        return throwError(() => exception);
+      }),
+    );
   }
 
   setConnectionId(connectionId: string) {

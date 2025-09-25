@@ -1,59 +1,45 @@
-# NgMigration
+## Backend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.1.
+This frontend pairs with the backend service here:
+https://github.com/vitaminncpp/bun-project
 
-## Development server
+- Start the backend following its README.
+- Configure the frontend to point to the backend API:
+    - Option 1: Use an environment variable at runtime (e.g., API base URL via SSR/server config or environment file).
+    - Option 2: Set a build-time environment file (Angular environments) with your API base URL.
 
-To start a local development server, run:
+Typical local setup:
 
-```bash
-ng serve
-```
+- Backend runs on https://localhost:5000
+- Frontend dev server runs on https://localhost:4200
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Getting Started
 
-## Code scaffolding
+Prerequisites:
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- Node.js 20+
+- npm 10+
 
-```bash
-ng generate component component-name
-```
+### Install:
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+`bash npm install`
 
-```bash
-ng generate --help
-```
+### Start dev server:
 
-## Building
+`bash npm run start`
 
-To build the project run:
+### Build production:
 
-```bash
-ng build
-```
+`bash npm run build`
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### Preview/serve dist (SSR or static, depending on your setup):
 
-## Running unit tests
+`bash npm run serve`
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+### Lint:
 
-```bash
-ng test
-```
+`bash npm run lint`
 
-## Running end-to-end tests
+### Format:
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+`bash npm run format`
