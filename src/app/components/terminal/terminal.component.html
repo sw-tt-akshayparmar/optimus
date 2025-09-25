@@ -1,0 +1,54 @@
+<div
+  class="flex flex-col h-full min-h-[320px] max-h-[720px] w-full rounded-t-xl border-t shadow-lg"
+>
+  <!-- Top Bar -->
+  <div class="flex items-center justify-between gap-2 px-3 py-2">
+    <div class="flex items-center gap-2">
+      <span class="h-3 w-3 rounded-full inline-block bg-[red]"></span>
+      <span class="h-3 w-3 rounded-full inline-block bg-[orange]"></span>
+      <span class="h-3 w-3 rounded-full inline-block bg-[green]"></span>
+      <div class="ml-2 text-sm font-medium opacity-90">terminal</div>
+    </div>
+    <div class="text-xs opacity-70">/ web • demo</div>
+  </div>
+
+  <!-- Scrollable content -->
+  <div #container class="flex-1 overflow-y-auto px-4 py-3">
+    <div class="flex flex-col gap-2 font-mono text-sm">
+      @if (lines().length === 0) {
+        <div class="text-gray-400 italic">(cleared)</div>
+      }
+      @for (ln of lines(); track ln.id) {
+        <div
+          [class]="{
+            'text-teal-300': ln.type === 'input',
+            'text-gray-200': ln.type === 'output',
+            'text-amber-300 italic': ln.type === 'system',
+          }"
+        >
+          {{ ln.text }}
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Input row -->
+  <form (ngSubmit)="handleSubmit()" class="px-3 py-2">
+    <div class="flex items-center gap-3">
+      <div class="font-mono text-sm text-teal-300">
+        {{ this.userService.getUserData()?.username }}
+      </div>
+      <input
+        #inputEl
+        type="text"
+        [formControl]="inputCtrl"
+        (keydown)="handleKeyDown($event)"
+        placeholder="type a command..."
+        class="p-2 bg-inherit font-[consolas] w-full text-inherit border-none placeholder:opacity-50"
+        autocomplete="off"
+        spellcheck="false"
+        aria-label="Terminal input"
+      />
+    </div>
+  </form>
+</div>

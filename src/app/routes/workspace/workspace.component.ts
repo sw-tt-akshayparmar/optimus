@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
+import { ProjectComponent } from '../../components/projects/projects.component';
+import { TerminalComponent } from '../../components/terminal/terminal.component';
 
 @Component({
   selector: 'app-workspace',
   standalone: true,
-  template: `
-    <section class="p-6">
-      <h1 class="text-2xl font-semibold">Workspace</h1>
-      <p class="mt-2 text-muted-color">Organize and manage your work here.</p>
-    </section>
-  `,
+  templateUrl: './workspace.component.html',
+  imports: [ProjectComponent, TerminalComponent],
 })
 export class WorkspaceComponent {}
