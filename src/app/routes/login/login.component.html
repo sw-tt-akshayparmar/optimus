@@ -2,54 +2,49 @@
   <form
     class="p-[32px] w-full max-w-[480px] border border-gray-500 rounded-lg"
     [formGroup]="loginForm"
-    (ngSubmit)="onSubmit()"
   >
+    @if (this.loginForm.touched && this.loginForm.invalid) {
+      <p-message severity="error" icon="pi pi-times-circle" styleClass="mb-2"
+        >Validation(s) Failed
+      </p-message>
+    }
     <p-input-group class="my-4">
-      <p-floatlabel variant="on" class="flex-1">
-        <p-iconfield>
-          <p-inputicon class="pi pi-user" />
-          <input id="username" name="username" pInputText formControlName="username" type="text" />
-          <label for="username">Enter Username*</label>
-          @if (
-            loginForm.get('username')?.invalid &&
-            (loginForm.get('username')?.dirty || loginForm.get('username')?.touched)
-          ) {
-            <p-inputicon
-              [pTooltip]="getError('username')!"
-              tooltipPosition="bottom"
-              style="color: red"
-              class="pi pi-exclamation-circle"
-            />
-          }
-        </p-iconfield>
+      <p-inputgroup-addon>
+        <i class="pi pi-at"></i>
+      </p-inputgroup-addon>
+      <p-floatlabel variant="on">
+        <input name="username" id="username" pInputText formControlName="username" type="text" />
+        <label for="username">Enter Username*</label>
       </p-floatlabel>
     </p-input-group>
+    @if (
+      loginForm.get('username')?.invalid &&
+      (loginForm.get('username')?.dirty || loginForm.get('username')?.touched)
+    ) {
+      <p-message severity="error" variant="simple">{{ this.getError('username') }}</p-message>
+    }
+
     <p-input-group class="my-4">
-      <p-floatlabel variant="on" class="flex-1">
-        <p-iconfield>
-          <p-inputicon class="pi pi-lock" />
-          <input
-            id="password"
-            name="password"
-            pInputText
-            formControlName="password"
-            type="password"
-          />
-          <label for="password">Enter Password*</label>
-          @if (
-            loginForm.get('password')?.invalid &&
-            (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)
-          ) {
-            <p-inputicon
-              [pTooltip]="getError('password') ?? 'Invalid password'"
-              tooltipPosition="bottom"
-              style="color: red"
-              class="pi pi-exclamation-circle"
-            />
-          }
-        </p-iconfield>
+      <p-inputgroup-addon>
+        <i class="pi pi-lock"></i>
+      </p-inputgroup-addon>
+      <p-floatlabel variant="on">
+        <input
+          name="password"
+          id="password"
+          pInputText
+          formControlName="password"
+          type="password"
+        />
+        <label for="password">Enter Password*</label>
       </p-floatlabel>
     </p-input-group>
+    @if (
+      loginForm.get('password')?.invalid &&
+      (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)
+    ) {
+      <p-message severity="error" variant="simple">{{ this.getError('password') }}</p-message>
+    }
     <div class="flex flex-col w-full gap-2 mt-4">
       <p-button
         icon="pi pi-lock"
@@ -58,6 +53,7 @@
         label="LOG IN"
         [rounded]="true"
         styleClass="w-full"
+        (click)="onSubmit()"
       />
 
       <p-button
@@ -79,8 +75,8 @@
             class="w-[32px] h-[32px] rounded-full"
             ngSrc="/images/google.svg"
             alt="Google Login"
-            height="24"
-            width="24"
+            [height]="32"
+            [width]="32"
           />
         </button>
       </div>
@@ -90,8 +86,8 @@
             class="w-[32px] h-[32px] rounded-full"
             ngSrc="/images/github.svg"
             alt="GitHub Login"
-            height="96"
-            width="98"
+            [height]="32"
+            [width]="32"
           />
         </button>
       </div>
@@ -101,34 +97,11 @@
             class="w-[32px] h-[32px] rounded-full"
             ngSrc="/images/microsoft.svg"
             alt="Microsoft Login"
-            height="16"
-            width="16"
+            [height]="32"
+            [width]="32"
           />
         </button>
       </i>
     </div>
   </form>
 </div>
-<ng-template #tooltipTemplate>
-  <div
-    class="flex items-center gap-2 px-3 py-2 rounded-md"
-    [class]="{
-      'border border-red-600 text-red-600 bg-red-50': true,
-      'border border-yellow-600 text-yellow-600 bg-yellow-50': false,
-      'border border-green-600 text-green-600 bg-green-50': false,
-      'border border-blue-600 text-blue-600 bg-blue-50': false,
-    }"
-  >
-    <i
-      class="pi"
-      [class]="{
-        'pi-times-circle': true,
-        'pi-exclamation-triangle': false,
-        'pi-check-circle': false,
-        'pi-info-circle': false,
-      }"
-    ></i>
-
-    <span>message</span>
-  </div>
-</ng-template>

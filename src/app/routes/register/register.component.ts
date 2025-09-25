@@ -12,7 +12,6 @@ import { UserService } from '../../services/user.service';
 import { InputText } from 'primeng/inputtext';
 import { InputGroup } from 'primeng/inputgroup';
 import { Button } from 'primeng/button';
-import { InputGroupAddon } from 'primeng/inputgroupaddon';
 import { LoaderService } from '../../services/loader.service';
 import LoaderActions from '../../enums/loader.enum';
 import { ToastService } from '../../services/toast.service';
@@ -23,6 +22,8 @@ import { FloatLabel } from 'primeng/floatlabel';
 import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
 import { Tooltip } from 'primeng/tooltip';
+import { InputGroupAddon } from 'primeng/inputgroupaddon';
+import { Message } from 'primeng/message';
 
 @Component({
   selector: 'app-register',
@@ -37,6 +38,8 @@ import { Tooltip } from 'primeng/tooltip';
     IconField,
     InputIcon,
     Tooltip,
+    InputGroupAddon,
+    Message,
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],

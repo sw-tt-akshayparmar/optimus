@@ -2,104 +2,86 @@
   <form
     class="p-[32px] w-full max-w-[480px] border border-gray-500 rounded-lg"
     [formGroup]="regForm"
-    (ngSubmit)="onSubmit()"
   >
+    @if (this.regForm.touched && this.regForm.invalid) {
+      <p-message severity="error" icon="pi pi-times-circle" styleClass="mb-2"
+        >Validation(s) Failed
+      </p-message>
+    }
     <p-input-group class="my-4">
-      <p-floatlabel variant="on" class="flex-1">
-        <p-iconfield>
-          <p-inputicon class="pi pi-at" />
-          <input id="username" name="username" pInputText formControlName="username" type="text" />
-          <label for="username">Enter Username*</label>
-          @if (
-            regForm.get('username')?.invalid &&
-            (regForm.get('username')?.dirty || regForm.get('username')?.touched)
-          ) {
-            <p-inputicon
-              [pTooltip]="getError('username')!"
-              tooltipPosition="bottom"
-              style="color: red"
-              class="pi pi-exclamation-circle"
-            />
-          }
-        </p-iconfield>
+      <p-inputgroup-addon>
+        <i class="pi pi-at"></i>
+      </p-inputgroup-addon>
+      <p-floatlabel variant="on">
+        <input name="username" id="username" pInputText formControlName="username" type="text" />
+        <label for="username">Enter Username*</label>
       </p-floatlabel>
     </p-input-group>
+    @if (
+      regForm.get('username')?.invalid &&
+      (regForm.get('username')?.dirty || regForm.get('username')?.touched)
+    ) {
+      <p-message severity="error" variant="simple">{{ this.getError('username') }}</p-message>
+    }
 
     <p-input-group class="my-4">
-      <p-floatlabel variant="on" class="flex-1">
-        <p-iconfield>
-          <p-inputicon class="pi pi-user" />
-          <input id="name" name="name" pInputText formControlName="name" type="text" />
-          <label for="name">Enter Name*</label>
-          @if (
-            regForm.get('name')?.invalid &&
-            (regForm.get('name')?.dirty || regForm.get('name')?.touched)
-          ) {
-            <p-inputicon
-              [pTooltip]="getError('name')!"
-              tooltipPosition="bottom"
-              style="color: red"
-              class="pi pi-exclamation-circle"
-            />
-          }
-        </p-iconfield>
+      <p-inputgroup-addon>
+        <i class="pi pi-user"></i>
+      </p-inputgroup-addon>
+      <p-floatlabel variant="on">
+        <input name="name" id="name" pInputText formControlName="name" type="text" />
+        <label for="name">Enter Name*</label>
       </p-floatlabel>
     </p-input-group>
+    @if (
+      regForm.get('name')?.invalid && (regForm.get('name')?.dirty || regForm.get('name')?.touched)
+    ) {
+      <p-message severity="error" variant="simple">{{ this.getError('name') }}</p-message>
+    }
+    <p-input-group class="my-4">
+      <p-inputgroup-addon>
+        <i class="pi pi-lock"></i>
+      </p-inputgroup-addon>
+      <p-floatlabel variant="on">
+        <input
+          name="password"
+          id="password"
+          pInputText
+          formControlName="password"
+          type="password"
+        />
+        <label for="password">Enter Password*</label>
+      </p-floatlabel>
+    </p-input-group>
+    @if (
+      regForm.get('password')?.invalid &&
+      (regForm.get('password')?.dirty || regForm.get('password')?.touched)
+    ) {
+      <p-message severity="error" variant="simple">{{ this.getError('password') }}</p-message>
+    }
 
     <p-input-group class="my-4">
-      <p-floatlabel variant="on" class="flex-1">
-        <p-iconfield>
-          <p-inputicon class="pi pi-lock" />
-          <input
-            id="password"
-            name="password"
-            pInputText
-            formControlName="password"
-            type="password"
-          />
-          <label for="password">Enter Password*</label>
-          @if (
-            regForm.get('password')?.invalid &&
-            (regForm.get('password')?.dirty || regForm.get('password')?.touched)
-          ) {
-            <p-inputicon
-              [pTooltip]="getError('password')!"
-              tooltipPosition="bottom"
-              style="color: red"
-              class="pi pi-exclamation-circle"
-            />
-          }
-        </p-iconfield>
+      <p-inputgroup-addon>
+        <i class="pi pi-lock"></i>
+      </p-inputgroup-addon>
+      <p-floatlabel variant="on">
+        <input
+          name="passwordCfm"
+          id="passwordCfm"
+          pInputText
+          formControlName="passwordCfm"
+          type="password"
+        />
+        <label for="passwordCfm">Confirm Password*</label>
       </p-floatlabel>
     </p-input-group>
-
-    <p-input-group class="my-4">
-      <p-floatlabel variant="on" class="flex-1">
-        <p-iconfield>
-          <p-inputicon class="pi pi-lock" />
-          <input
-            id="passwordCfm"
-            name="passwordCfm"
-            pInputText
-            formControlName="passwordCfm"
-            type="password"
-          />
-          <label for="passwordCfm">Confirm Password*</label>
-          @if (
-            (regForm.get('passwordCfm')?.invalid &&
-              (regForm.get('passwordCfm')?.dirty || regForm.get('passwordCfm')?.touched)) ||
-            regForm.hasError('passwordMismatch')
-          ) {
-            <p-inputicon
-              [pTooltip]="getError('passwordCfm') ?? 'Passwords do not match'"
-              tooltipPosition="bottom"
-              style="color: red"
-              class="pi pi-exclamation-circle"
-            />
-          }
-        </p-iconfield>
-      </p-floatlabel>
-    </p-input-group>
+    @if (
+      (regForm.get('passwordCfm')?.invalid &&
+        (regForm.get('passwordCfm')?.dirty || regForm.get('passwordCfm')?.touched)) ||
+      regForm.hasError('passwordMismatch')
+    ) {
+      <p-message severity="error" variant="simple">{{ this.getError('passwordCfm') }}</p-message>
+    }
 
     <div class="flex flex-col w-full gap-2 mt-4">
       <p-button
@@ -109,6 +91,7 @@
         label="REGISTER"
         [rounded]="true"
         styleClass="w-full"
+        (click)="onSubmit()"
       />
 
       <p-button
@@ -132,8 +115,8 @@
             class="w-[32px] h-[32px] rounded-full"
             ngSrc="/images/google.svg"
             alt="Google Login"
-            height="24"
-            width="24"
+            [height]="32"
+            [width]="32"
           />
         </button>
       </div>
@@ -143,8 +126,8 @@
             class="w-[32px] h-[32px] rounded-full"
             ngSrc="/images/github.svg"
             alt="GitHub Login"
-            height="96"
-            width="98"
+            [height]="32"
+            [width]="32"
           />
         </button>
       </div>
@@ -154,34 +137,11 @@
             class="w-[32px] h-[32px] rounded-full"
             ngSrc="/images/microsoft.svg"
             alt="Microsoft Login"
-            height="16"
-            width="16"
+            [height]="32"
+            [width]="32"
           />
         </button>
       </div>
     </div>
   </form>
 </div>
-<ng-template #tooltipTemplate>
-  <div
-    class="flex items-center gap-2 px-3 py-2 rounded-md"
-    [class]="{
-      'border border-red-600 text-red-600 bg-red-50': true,
-      'border border-yellow-600 text-yellow-600 bg-yellow-50': false,
-      'border border-green-600 text-green-600 bg-green-50': false,
-      'border border-blue-600 text-blue-600 bg-blue-50': false,
-    }"
-  >
-    <i
-      class="pi"
-      [class]="{
-        'pi-times-circle': true,
-        'pi-exclamation-triangle': false,
-        'pi-check-circle': false,
-        'pi-info-circle': false,
-      }"
-    ></i>
-
-    <span>message</span>
-  </div>
-</ng-template>
