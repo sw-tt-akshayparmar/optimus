@@ -21,7 +21,9 @@
       regForm.get('username')?.invalid &&
       (regForm.get('username')?.dirty || regForm.get('username')?.touched)
     ) {
-      <p-message severity="error" variant="simple">{{ this.getError('username') }}</p-message>
+      <p-message size="small" severity="error" variant="simple"
+        >{{ this.getError('username') }}
+      </p-message>
     }
 
     <p-input-group class="my-4">
@@ -36,7 +38,9 @@
     @if (
       regForm.get('name')?.invalid && (regForm.get('name')?.dirty || regForm.get('name')?.touched)
     ) {
-      <p-message severity="error" variant="simple">{{ this.getError('name') }}</p-message>
+      <p-message size="small" severity="error" variant="simple">{{
+        this.getError('name')
+      }}</p-message>
     }
     <p-input-group class="my-4">
       <p-inputgroup-addon>
@@ -57,7 +61,9 @@
       regForm.get('password')?.invalid &&
       (regForm.get('password')?.dirty || regForm.get('password')?.touched)
     ) {
-      <p-message severity="error" variant="simple">{{ this.getError('password') }}</p-message>
+      <p-message size="small" severity="error" variant="simple">{{
+        this.getError('password')
+      }}</p-message>
     }
 
     <p-input-group class="my-4">
@@ -80,7 +86,9 @@
         (regForm.get('passwordCfm')?.dirty || regForm.get('passwordCfm')?.touched)) ||
       regForm.hasError('passwordMismatch')
     ) {
-      <p-message severity="error" variant="simple">{{ this.getError('passwordCfm') }}</p-message>
+      <p-message size="small" severity="error" variant="simple">{{
+        this.getError('passwordCfm')
+      }}</p-message>
     }
 
     <div class="flex flex-col w-full gap-2 mt-4">

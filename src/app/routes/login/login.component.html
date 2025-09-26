@@ -21,7 +21,9 @@
       loginForm.get('username')?.invalid &&
       (loginForm.get('username')?.dirty || loginForm.get('username')?.touched)
     ) {
-      <p-message severity="error" variant="simple">{{ this.getError('username') }}</p-message>
+      <p-message size="small" severity="error" variant="simple">{{
+        this.getError('username')
+      }}</p-message>
     }
 
     <p-input-group class="my-4">
@@ -43,7 +45,9 @@
       loginForm.get('password')?.invalid &&
       (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)
     ) {
-      <p-message severity="error" variant="simple">{{ this.getError('password') }}</p-message>
+      <p-message size="small" severity="error" variant="simple">{{
+        this.getError('password')
+      }}</p-message>
     }
     <div class="flex flex-col w-full gap-2 mt-4">
       <p-button
