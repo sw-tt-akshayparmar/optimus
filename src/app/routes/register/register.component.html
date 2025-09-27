@@ -1,155 +1,110 @@
-<div class="login w-full h-[80%] flex items-center justify-center">
-  <form
-    class="p-[32px] w-full max-w-[480px] border border-gray-500 rounded-lg"
-    [formGroup]="regForm"
+<div class="login w-full h-[90%] flex items-center justify-center">
+  <div
+    class="w-full h-[620px] max-w-[480px] border border-gray-500 rounded-lg flex justify-center items-center"
   >
-    @if (this.regForm.touched && this.regForm.invalid) {
-      <p-message severity="error" icon="pi pi-times-circle" styleClass="mb-2"
-        >Validation(s) Failed
-      </p-message>
-    }
-    <p-input-group class="my-4">
-      <p-inputgroup-addon>
-        <i class="pi pi-at"></i>
-      </p-inputgroup-addon>
-      <p-floatlabel variant="on">
-        <input name="username" id="username" pInputText formControlName="username" type="text" />
-        <label for="username">Enter Username*</label>
-      </p-floatlabel>
-    </p-input-group>
-    @if (
-      regForm.get('username')?.invalid &&
-      (regForm.get('username')?.dirty || regForm.get('username')?.touched)
-    ) {
-      <p-message size="small" severity="error" variant="simple"
-        >{{ this.getError('username') }}
-      </p-message>
-    }
+    <form class="p-8 w-full max-w-[480px]" [formGroup]="regForm">
+      <mat-form-field class="w-full mb-2" appearance="outline">
+        <mat-icon matPrefix>perm_identity</mat-icon>
+        <input name="username" id="username" matInput formControlName="username" type="text" />
+        <mat-label for="username"> Enter Username</mat-label>
+        @if (
+          regForm.get('username')?.invalid &&
+          (regForm.get('username')?.dirty || regForm.get('username')?.touched)
+        ) {
+          <mat-error>{{ this.getError('username') }}</mat-error>
+        }
+      </mat-form-field>
 
-    <p-input-group class="my-4">
-      <p-inputgroup-addon>
-        <i class="pi pi-user"></i>
-      </p-inputgroup-addon>
-      <p-floatlabel variant="on">
-        <input name="name" id="name" pInputText formControlName="name" type="text" />
-        <label for="name">Enter Name*</label>
-      </p-floatlabel>
-    </p-input-group>
-    @if (
-      regForm.get('name')?.invalid && (regForm.get('name')?.dirty || regForm.get('name')?.touched)
-    ) {
-      <p-message size="small" severity="error" variant="simple">{{
-        this.getError('name')
-      }}</p-message>
-    }
-    <p-input-group class="my-4">
-      <p-inputgroup-addon>
-        <i class="pi pi-lock"></i>
-      </p-inputgroup-addon>
-      <p-floatlabel variant="on">
-        <input
-          name="password"
-          id="password"
-          pInputText
-          formControlName="password"
-          type="password"
-        />
-        <label for="password">Enter Password*</label>
-      </p-floatlabel>
-    </p-input-group>
-    @if (
-      regForm.get('password')?.invalid &&
-      (regForm.get('password')?.dirty || regForm.get('password')?.touched)
-    ) {
-      <p-message size="small" severity="error" variant="simple">{{
-        this.getError('password')
-      }}</p-message>
-    }
+      <mat-form-field class="w-full mb-2" appearance="outline">
+        <mat-icon matPrefix>person</mat-icon>
+        <input name="name" id="name" matInput formControlName="name" type="text" />
+        <mat-label for="name"> Enter Name</mat-label>
+        @if (
+          regForm.get('name')?.invalid &&
+          (regForm.get('name')?.dirty || regForm.get('name')?.touched)
+        ) {
+          <mat-error>{{ this.getError('name') }}</mat-error>
+        }
+      </mat-form-field>
 
-    <p-input-group class="my-4">
-      <p-inputgroup-addon>
-        <i class="pi pi-lock"></i>
-      </p-inputgroup-addon>
-      <p-floatlabel variant="on">
+      <mat-form-field class="w-full mb-3" appearance="outline">
+        <mat-label for="password"> Enter Password</mat-label>
+        <mat-icon matPrefix>lock</mat-icon>
+        <input name="password" id="password" matInput formControlName="password" type="password" />
+
+        @if (
+          regForm.get('password')?.invalid &&
+          (regForm.get('password')?.dirty || regForm.get('password')?.touched)
+        ) {
+          <mat-error>{{ this.getError('password') }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="w-full mb-3" appearance="outline">
+        <mat-label for="passwordCfm"> Enter Password</mat-label>
+        <mat-icon matPrefix>lock</mat-icon>
         <input
           name="passwordCfm"
           id="passwordCfm"
-          pInputText
+          matInput
           formControlName="passwordCfm"
           type="password"
         />
-        <label for="passwordCfm">Confirm Password*</label>
-      </p-floatlabel>
-    </p-input-group>
-    @if (
-      (regForm.get('passwordCfm')?.invalid &&
-        (regForm.get('passwordCfm')?.dirty || regForm.get('passwordCfm')?.touched)) ||
-      regForm.hasError('passwordMismatch')
-    ) {
-      <p-message size="small" severity="error" variant="simple">{{
-        this.getError('passwordCfm')
-      }}</p-message>
-    }
+        @if (
+          (regForm.get('passwordCfm')?.invalid &&
+            (regForm.get('passwordCfm')?.dirty || regForm.get('passwordCfm')?.touched)) ||
+          regForm.hasError('passwordMismatch')
+        ) {
+          <mat-error>{{ this.getError('passwordCfm') }}</mat-error>
+        }
+      </mat-form-field>
 
-    <div class="flex flex-col w-full gap-2 mt-4">
-      <p-button
-        icon="pi pi-user-plus"
-        [loading]="loaders.isLoading(LoaderActions.SIGN_IN)"
-        type="submit"
-        label="REGISTER"
-        [rounded]="true"
-        styleClass="w-full"
-        (click)="onSubmit()"
-      />
-
-      <p-button
-        [rounded]="true"
-        icon="pi pi-user"
-        [loading]="loaders.isLoading(LoaderActions.LOG_IN)"
-        label="LOG IN"
-        outlined
-        type="button"
-        styleClass="w-full"
-        (click)="router.navigate(['login'])"
-      />
-    </div>
-
-    <div class="w-full text-center my-2">OR</div>
-
-    <div class="flex justify-center items-center w-full gap-1">
-      <div class="google">
-        <button type="button">
-          <img
-            class="w-[32px] h-[32px] rounded-full"
-            ngSrc="/images/google.svg"
-            alt="Google Login"
-            [height]="32"
-            [width]="32"
-          />
+      <div class="flex flex-col w-full gap-2 mt-4">
+        <button matButton="filled" (click)="onSubmit()">
+          <mat-icon>person</mat-icon>
+          REGISTER
+        </button>
+        <button matButton="outlined" (click)="router.navigate(['login'])">
+          <mat-icon>perm_identity</mat-icon>
+          LOG IN
         </button>
       </div>
-      <div class="github">
-        <button type="button">
-          <img
-            class="w-[32px] h-[32px] rounded-full"
-            ngSrc="/images/github.svg"
-            alt="GitHub Login"
-            [height]="32"
-            [width]="32"
-          />
-        </button>
+      <div class="w-full text-center my-2">OR</div>
+      <div class="flex justify-center items-center w-full gap-1">
+        <div class="google">
+          <button type="button">
+            <img
+              class="w-[40px] h-[40px] rounded-full"
+              ngSrc="/images/google.svg"
+              alt="Google Login"
+              [height]="40"
+              [width]="40"
+            />
+          </button>
+        </div>
+        <div class="github">
+          <button type="button">
+            <img
+              class="w-[40px] h-[40px] rounded-full"
+              ngSrc="/images/github.svg"
+              alt="GitHub Login"
+              [height]="40"
+              [width]="40"
+            />
+          </button>
+        </div>
+        <div class="microsoft">
+          <button type="button">
+            <img
+              class="w-[40px] h-[40px] rounded-full"
+              ngSrc="/images/microsoft.svg"
+              alt="Microsoft Login"
+              [height]="40"
+              [width]="40"
+            />
+          </button>
+        </div>
       </div>
-      <div class="microsoft">
-        <button type="button">
-          <img
-            class="w-[32px] h-[32px] rounded-full"
-            ngSrc="/images/microsoft.svg"
-            alt="Microsoft Login"
-            [height]="32"
-            [width]="32"
-          />
-        </button>
-      </div>
-    </div>
-  </form>
+    </form>
+  </div>
 </div>

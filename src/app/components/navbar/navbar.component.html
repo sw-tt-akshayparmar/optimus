@@ -21,7 +21,11 @@
     </ul>
   </div>
   <div class="flex gap-1">
-    <p-button (click)="router.navigate(['login'])" [rounded]="true" label="LOG IN" />
-    <p-button (click)="router.navigate(['register'])" [rounded]="true" outlined label="SIGN IN" />
+    <button matButton="filled" (click)="router.navigate(['login'])">
+      <mat-icon>perm_identity</mat-icon>LOG IN
+    </button>
+    <button matButton="outlined" (click)="router.navigate(['register'])">
+      <mat-icon>person</mat-icon>SIGN IN
+    </button>
   </div>
 </nav>

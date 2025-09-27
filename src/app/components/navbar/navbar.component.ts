@@ -1,12 +1,13 @@
 import { Component, inject } from '@angular/core';
-import { RouterModule, Router, RouterLinkActive } from '@angular/router';
+import { Router, RouterLinkActive, RouterModule } from '@angular/router';
 import { NgClass } from '@angular/common';
-import { Button } from 'primeng/button';
+import { MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterModule, RouterLinkActive, NgClass, Button],
+  imports: [RouterModule, RouterLinkActive, NgClass, MatButton, MatIcon],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
 })

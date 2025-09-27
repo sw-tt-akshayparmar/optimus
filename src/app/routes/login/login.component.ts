@@ -1,31 +1,30 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
-import { InputText } from 'primeng/inputtext';
-import { InputGroup } from 'primeng/inputgroup';
-import { Button } from 'primeng/button';
 import { LoaderService } from '../../services/loader.service';
 import LoaderActions from '../../enums/loader.enum';
 import { ToastService } from '../../services/toast.service';
 import { Exception } from '../../exception/app.exception';
 import { Router } from '@angular/router';
 import { NgOptimizedImage } from '@angular/common';
-import { FloatLabel } from 'primeng/floatlabel';
-import { InputGroupAddon } from 'primeng/inputgroupaddon';
-import { Message } from 'primeng/message';
+import { MatError, MatFormField, MatLabel, MatPrefix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatIcon } from '@angular/material/icon';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    InputText,
-    InputGroup,
-    Button,
     NgOptimizedImage,
-    FloatLabel,
-    InputGroupAddon,
-    Message,
+    MatFormField,
+    MatInput,
+    MatLabel,
+    MatPrefix,
+    MatIcon,
+    MatButton,
+    MatError,
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
