@@ -6,49 +6,48 @@
   table.grid {
     border-spacing: 0;
 
-    tbody {
-      tr {
-        td.tile {
-          position: relative;
-          height: 80px;
-          width: 80px;
+    tr {
+      td.tile {
+        position: relative;
+        height: 80px;
+        width: 80px;
 
-          .piece {
-            position: absolute;
-            top: 0;
-            left: 0;
-            cursor: grab;
-            height: 100%;
-            width: 100%;
-            z-index: 1;
+        .piece {
+          position: absolute;
+          top: 0;
+          left: 0;
+          cursor: grab;
+          height: 100%;
+          width: 100%;
+          z-index: 1;
 
-            &:active {
-              cursor: grabbing;
-            }
-          }
-
-          .mark {
-            display: none;
-            justify-content: center;
-            align-items: center;
-            position: absolute;
-            top: 30%;
-            left: 30%;
-            border-radius: 50%;
-            height: 40%;
-            width: 40%;
-            background-color: #473f3944;
+          &:active {
+            cursor: grabbing;
           }
         }
 
-        td.dark {
-          background-color: #b88762;
+        .mark {
+          display: none;
+          justify-content: center;
+          align-items: center;
+          position: absolute;
+          top: 30%;
+          left: 30%;
+          border-radius: 50%;
+          height: 40%;
+          width: 40%;
+          background-color: #473f3944;
         }
+      }
 
-        td.light {
-          background-color: #edd6b0;
-        }
+      td.dark {
+        background-color: #0000;
+      }
+
+      td.light {
+        background-color: #0000;
       }
     }
   }
 }
+

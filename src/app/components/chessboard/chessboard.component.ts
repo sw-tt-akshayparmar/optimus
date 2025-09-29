@@ -1,13 +1,20 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  PLATFORM_ID,
+} from '@angular/core';
 import { Game } from '../../lib/chess/game';
 import { Move } from '../../lib/chess/move';
 import { Chessboard, Tile } from '../../lib/chess/chessboard';
 import Config from '../../lib/chess/chess.config';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { CommonModule, isPlatformBrowser, NgOptimizedImage } from '@angular/common';
 import 'jquery';
 // import * as $ from 'jquery';
 import { PiecePosition, PieceType } from '../../lib/chess/chess.types';
 import { ChessData, IChessData } from '../../data/chess.data';
+import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
 
 declare let $: any;
 
@@ -16,7 +23,8 @@ declare let $: any;
   standalone: true,
   templateUrl: './chessboard.component.html',
   styleUrl: './chessboard.component.scss',
-  imports: [CommonModule, NgOptimizedImage],
+  imports: [CommonModule, CdkDrag, CdkDropList, NgOptimizedImage],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChessboardComponent {
   protected game: Game;
@@ -27,8 +35,14 @@ export class ChessboardComponent {
   protected appData: IChessData = ChessData;
   protected moveMap: boolean[][] | null = null;
   protected move: Move = new Move(true);
+  protected readonly isBrowser: boolean;
+  protected data: Array<any> = [];
 
-  constructor(private cdRef: ChangeDetectorRef) {
+  constructor(
+    @Inject(PLATFORM_ID) platformId: Object,
+    private cdRef: ChangeDetectorRef,
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
     this.game = new Game();
     this.chessboard = this.game.getBoard();
     this.board = this.config.initialPosition;
@@ -117,4 +131,7 @@ export class ChessboardComponent {
     this.move.reset();
     return ret;
   }
+  // drop(event: any, i: number, j: number) {
+  //   console.log('event', event);
+  // }
 }

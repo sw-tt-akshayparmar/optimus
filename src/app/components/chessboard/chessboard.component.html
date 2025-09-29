@@ -1,33 +1,27 @@
 <div class="chessboard">
   <table class="grid loader-container" id="chessgrid">
-    <div class="loader">
-      <div class="spinner"></div>
-    </div>
-    <th></th>
-    <tbody>
-      @for (rank of board; let i = $index; track i) {
-        <tr class="rank">
-          @for (tile of rank; let j = $index; track j) {
-            <td
-              [id]="'' + i + '-' + j"
-              [class]="{ tile: true, dark: (i + j) % 2 === 1, light: (i + j) % 2 === 0 }"
-            >
-              <div class="piece" (mousedown)="onPieceGrab(i, j)">
-                @if (board[i][j]) {
-                  <img
-                    ngSrc="{{ appData.PIECE_IMG[board[i][j]!.color ? 1 : 0][board[i][j]!.piece] }}"
-                    alt="{{ appData.PIECE_IMG[board[i][j]!.color ? 1 : 0][board[i][j]!.piece] }}"
-                    [width]="config.tileSize"
-                    [height]="config.tileSize"
-                  />
-                }
+    @for (rank of board; let i = $index; track i) {
+      <tr class="rank">
+        @for (tile of rank; let j = $index; track j) {
+          <td
+            [ngClass]="{ tile: true, dark: (i + j) % 2 === 1, light: (i + j) % 2 === 0 }"
+            cdkDropList
+            (cdkDropListDropped)="drop($event, i, j)"
+          >
+            @if (board[i][j]) {
+              <div class="piece flex justify-center items-center" cdkDrag>
+                <div class="w-4 h-4 rounded-full bg-[#0ff5]"></div>
+                <!--                <img-->
+                <!--                  ngSrc="{{ appData.PIECE_IMG[board[i][j]!.color ? 1 : 0][board[i][j]!.piece] }}"-->
+                <!--                  alt="{{ appData.PIECE_IMG[board[i][j]!.color ? 1 : 0][board[i][j]!.piece] }}"-->
+                <!--                  [width]="config.tileSize"-->
+                <!--                  [height]="config.tileSize"-->
+                <!--                />-->
               </div>
-              <div class="mark"></div>
-              <div class="mark"></div>
-            </td>
-          }
-        </tr>
-      }
-    </tbody>
+            }
+          </td>
+        }
+      </tr>
+    }
   </table>
 </div>
