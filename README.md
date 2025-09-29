@@ -27,7 +27,9 @@ https://github.com/vitaminncpp/bun-project
 
 1) Install dependencies
 
-- `npm install`
+```bash
+npm install
+```
 
 2) Configure environment (API and Socket URLs)
 
@@ -40,7 +42,9 @@ https://github.com/vitaminncpp/bun-project
 
 3) Start the dev server (with SSL by default)
 
-- `npm run start`
+```bash
+npm run start
+```
 - The app will be served with SSL. See the SSL notes below if you need to change the certificate or disable SSL.
 
 Typical local setup:
@@ -69,7 +73,10 @@ Typical local setup:
 
 ## Development
 
-- Start dev server: `npm run start`
+- Start dev server: 
+```bash
+npm run start
+```
 - By default, SSL is enabled. Angular.json points to:
     - sslKey: `D:\ssl certificates\server-ec.key`
     - sslCert: `D:\ssl certificates\server-ec.crt`
@@ -80,12 +87,14 @@ Typical local setup:
 ## Building and Running with SSR (Production-like)
 
 1) Build the application
-
-- `npm run build`
+```bash 
+npm run build
+```
 
 2) Run the SSR server
-
-- `npm run serve:ssr:optimus`
+```bash 
+npm run serve:ssr:optimus
+```
 - The Express server (`src/server.ts`) will serve static assets from the browser build and render routes via Angular SSR.
   By default, it listens on PORT=4000 (configurable via env var PORT).
 
@@ -128,13 +137,25 @@ If you change your backend `host/port/protocol`, update `environments.ts` accord
 
 ## Linting and Formatting
 
-- Lint: `npm run lint`
-- Auto-fix: `npm run lint:fix`
-- Format: `npm run format`
+- Lint: 
+```bash
+npm run lint
+```
+- Auto-fix: 
+ ```bash
+npm run lint:fix
+````
+- Format: 
+```bash
+npm run format
+````
 
 ## Testing
 
-- Unit tests: `npm run test`
+- Unit tests: 
+```bash
+npm run test
+```
 
 ## Troubleshooting
 
