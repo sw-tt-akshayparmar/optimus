@@ -4,125 +4,79 @@ import {
   Component,
   Inject,
   PLATFORM_ID,
+  signal,
 } from '@angular/core';
 import { Game } from '../../lib/chess/game';
 import { Move } from '../../lib/chess/move';
 import { Chessboard, Tile } from '../../lib/chess/chessboard';
 import Config from '../../lib/chess/chess.config';
 import { CommonModule, isPlatformBrowser, NgOptimizedImage } from '@angular/common';
-import 'jquery';
-// import * as $ from 'jquery';
 import { PiecePosition, PieceType } from '../../lib/chess/chess.types';
 import { ChessData, IChessData } from '../../data/chess.data';
-import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
+import {
+  CdkDrag,
+  CdkDragDrop,
+  CdkDragPlaceholder,
+  CdkDropList,
+  CdkDropListGroup,
+} from '@angular/cdk/drag-drop';
 
-declare let $: any;
+type BoardUI = Array<Array<{ color: boolean; piece: PieceType } | null>>;
 
 @Component({
   selector: 'app-chessboard',
   standalone: true,
   templateUrl: './chessboard.component.html',
   styleUrl: './chessboard.component.scss',
-  imports: [CommonModule, CdkDrag, CdkDropList, NgOptimizedImage],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    CommonModule,
+    CdkDrag,
+    CdkDropList,
+    NgOptimizedImage,
+    CdkDropListGroup,
+    CdkDragPlaceholder,
+  ],
 })
 export class ChessboardComponent {
   protected game: Game;
   protected chessboard: Chessboard;
-  protected board: Array<Array<{ color: boolean; piece: PieceType } | null>>;
-  protected orientation: boolean = true;
   protected config = Config;
-  protected appData: IChessData = ChessData;
-  protected moveMap: boolean[][] | null = null;
+  protected board = signal<BoardUI>(this.config.random);
+  protected orientation: boolean = true;
+  protected chessData: IChessData = ChessData;
+  protected moveMap = signal<boolean[][] | null>(null);
   protected move: Move = new Move(true);
   protected readonly isBrowser: boolean;
   protected data: Array<any> = [];
 
-  constructor(
-    @Inject(PLATFORM_ID) platformId: Object,
-    private cdRef: ChangeDetectorRef,
-  ) {
+  constructor(@Inject(PLATFORM_ID) platformId: Object) {
     this.isBrowser = isPlatformBrowser(platformId);
     this.game = new Game();
     this.chessboard = this.game.getBoard();
-    this.board = this.config.initialPosition;
     this.updateBoard();
-  }
-
-  updateBoard(): boolean {
-    this.chessboard.board.forEach((rank: Tile[], i: number) => {
-      rank.forEach((tile: Tile, j: number) => {
-        if (tile.piece) {
-          this.board[i][j] = { color: tile.piece.getColor(), piece: tile.piece.getType() };
-        } else {
-          this.board[i][j] = null;
-        }
-      });
-    });
-    return false;
   }
 
   ngOnInit() {}
 
-  ngAfterViewChecked(): void {
-    this.jqueryRerender();
+  updateBoard(): boolean {
+    const newBoard = this.chessboard.board.map((rank: Tile[]) =>
+      rank.map((tile: Tile) =>
+        tile.piece
+          ? { color: tile.piece.getColor(), piece: tile.piece.getType() as PieceType }
+          : null,
+      ),
+    );
+    this.board.set(newBoard);
+    return false;
   }
 
-  jqueryRerender() {
-    $('.piece').draggable({
-      containment: 'table.grid#chessgrid',
-      revert: true,
-    });
-  }
+  onPieceGrab(event: any) {
+    console.log('onPieceGrab ', event);
+    const src = event.source.data;
+    const color = this.board()[src.x][src.y]!.color;
+    const map = this.game.getMoveMapFor(src.x, src.y, color);
 
-  onPieceGrab(x: number, y: number): boolean {
-    if (!this.chessboard.board[x][y].piece) {
-      return false;
-    }
-    const color = this.chessboard.board[x][y].piece!.getColor();
-    this.moveMap = this.game.getMoveMapFor(x, y, color);
-    this.move = new Move(color);
-    this.move.setSrc(x as PiecePosition, y as PiecePosition);
-    this.moveMap.forEach((rank, i) => {
-      rank.forEach((tile, j) => {
-        if (tile) {
-          $(`#${i}-${j}`).droppable({
-            drop: (e: any, ui: any) => {
-              this.drop(i as PiecePosition, j as PiecePosition);
-            },
-          });
-          $(`#${i}-${j} > .mark`).css({
-            display: 'flex',
-          });
-        } else {
-          try {
-            $(`#${i}-${j} > .mark`).css({
-              display: 'none',
-            });
-            $(`#${i}-${j}`).droppable('destroy');
-          } catch (err) {}
-        }
-      });
-    });
-    return true;
-  }
-
-  clearMovableTiles() {
-    $(`td.tile > .mark`).css({
-      display: 'none',
-    });
-    try {
-      $(`td.tile > .mark`).droppable('destroy');
-    } catch (err) {}
-
-    this.moveMap = null;
-  }
-
-  drop(x: PiecePosition, y: PiecePosition) {
-    this.clearMovableTiles();
-    this.move.setDest(x, y);
-    this.moveTo(this.move);
-    this.cdRef.detectChanges();
+    this.moveMap.set(map);
   }
 
   moveTo(move: Move = this.move): Move {
@@ -131,7 +85,13 @@ export class ChessboardComponent {
     this.move.reset();
     return ret;
   }
-  // drop(event: any, i: number, j: number) {
-  //   console.log('event', event);
-  // }
+  drop(event: CdkDragDrop<any>) {
+    const src: { x: PiecePosition; y: PiecePosition } = event.item.data;
+    const dest: { x: PiecePosition; y: PiecePosition } = event.container.data;
+    if (this.moveMap()?.[dest.x][dest.y]) {
+      const color = this.board()[src.x][src.y]!.color;
+      this.moveTo(new Move(color, src, dest));
+    }
+    this.moveMap.set(null);
+  }
 }

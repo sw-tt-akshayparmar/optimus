@@ -10,9 +10,22 @@ export class Move {
   type: MoveType = MoveType.NOT_APPLICABLE;
   player: boolean = true;
 
-  constructor(player: boolean) {
+  constructor(
+    player: boolean,
+    src?: { x: PiecePosition; y: PiecePosition },
+    dest?: { x: PiecePosition; y: PiecePosition },
+  ) {
     this.player = player;
     this.init();
+
+    if (src) {
+      this.xSrc = src.x;
+      this.ySrc = src.y;
+    }
+    if (dest) {
+      this.xDest = dest.x;
+      this.yDest = dest.y;
+    }
   }
 
   init() {

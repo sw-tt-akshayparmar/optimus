@@ -5,12 +5,11 @@
 
   table.grid {
     border-spacing: 0;
-
     tr {
       td.tile {
         position: relative;
-        height: 80px;
-        width: 80px;
+        height: 50px;
+        width: 50px;
 
         .piece {
           position: absolute;
@@ -27,7 +26,6 @@
         }
 
         .mark {
-          display: none;
           justify-content: center;
           align-items: center;
           position: absolute;
@@ -41,13 +39,22 @@
       }
 
       td.dark {
-        background-color: #0000;
+        //background-color: #0000;
+        background-color: #b88762;
       }
 
       td.light {
-        background-color: #0000;
+        //background-color: #0000;
+        background-color: #edd6b0;
       }
     }
   }
 }
 
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
