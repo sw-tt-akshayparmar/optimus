@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  Inject,
-  PLATFORM_ID,
-  signal,
-} from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { Game } from '../../lib/chess/game';
 import { Move } from '../../lib/chess/move';
 import { Chessboard, Tile } from '../../lib/chess/chessboard';
@@ -13,13 +6,7 @@ import Config from '../../lib/chess/chess.config';
 import { CommonModule, isPlatformBrowser, NgOptimizedImage } from '@angular/common';
 import { PiecePosition, PieceType } from '../../lib/chess/chess.types';
 import { ChessData, IChessData } from '../../data/chess.data';
-import {
-  CdkDrag,
-  CdkDragDrop,
-  CdkDragPlaceholder,
-  CdkDropList,
-  CdkDropListGroup,
-} from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDragDrop, CdkDropList, CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { GameService } from '../../services/game.service';
 import { ToastService } from '../../services/toast.service';
 
@@ -32,7 +19,7 @@ type BoardUI = Array<Array<{ color: boolean; piece: PieceType } | null>>;
   styleUrl: './chessboard.component.scss',
   imports: [CommonModule, CdkDrag, CdkDropList, NgOptimizedImage, CdkDropListGroup],
 })
-export class ChessboardComponent {
+export class ChessboardComponent implements OnInit {
   protected game!: Game;
   protected chessboard!: Chessboard;
   protected config = Config;

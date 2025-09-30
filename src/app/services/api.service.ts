@@ -15,7 +15,7 @@ export class ApiService {
 
   get<Data = any, Error = any>(
     api: { path: string; auth?: boolean },
-    params?: Array<string>,
+    params?: Array<string> | null,
     query?: Record<string, string>,
     headers?: Record<string, string>,
   ): Observable<SuccessResponse<Data>> {
@@ -26,7 +26,7 @@ export class ApiService {
   post<Data = any, Error = any>(
     api: { path: string; auth?: boolean },
     data?: any,
-    params?: Array<string>,
+    params?: Array<string> | null,
     query?: Record<string, string>,
     headers?: Record<string, string>,
   ): Observable<SuccessResponse<Data>> {
@@ -37,7 +37,7 @@ export class ApiService {
   put<Data = any, Error = any>(
     api: { path: string; auth?: boolean },
     data?: any,
-    params?: Array<string>,
+    params?: Array<string> | null,
     query?: Record<string, string>,
     headers?: Record<string, string>,
   ): Observable<SuccessResponse<Data>> {
@@ -47,7 +47,7 @@ export class ApiService {
 
   delete<Data = any, Error = any>(
     api: { path: string; auth?: boolean },
-    params?: Array<string>,
+    params?: Array<string> | null,
     query?: Record<string, string>,
     headers?: Record<string, string>,
   ): Observable<SuccessResponse<Data>> {
@@ -57,7 +57,7 @@ export class ApiService {
 
   private prepareAPI(
     api: { path: string; auth?: boolean },
-    params?: Array<string>,
+    params?: Array<string> | null,
     query?: Record<string, string>,
     headers: Record<string, string> = {},
   ): {

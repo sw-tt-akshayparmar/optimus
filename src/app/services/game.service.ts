@@ -3,16 +3,32 @@ import { Observable, of, tap } from 'rxjs';
 import { SocketService } from './socket.service';
 import Constants from '../constants/constants';
 import { ApiService } from './api.service';
+import APIConfig from '../config/api.config';
+import { UserService } from './user.service';
+import { ErrorResponse, SuccessResponse } from '../models/Response.model';
 
 @Injectable({ providedIn: 'root' })
 export class GameService {
   constructor(
     private socket: SocketService,
     private apiService: ApiService,
+    private userService: UserService,
   ) {}
   startMatch(): Observable<any> {
-    // TODO: Replace with actual HTTP call
-    return of({ id: Math.floor(Math.random() * 10000) });
+    return this.apiService
+      .post(APIConfig.GAME_MATCH, null, null, {
+        connectionId: this.userService.getConnectionId()!,
+      })
+      .pipe(
+        tap({
+          next: (data: SuccessResponse) => {
+            console.log(data);
+          },
+          error: (err: ErrorResponse) => {
+            console.log(err);
+          },
+        }),
+      );
   }
   onMoves() {
     return this.socket.on(Constants.GAME_MOVE).pipe(
