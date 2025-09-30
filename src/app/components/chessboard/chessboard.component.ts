@@ -20,6 +20,8 @@ import {
   CdkDropList,
   CdkDropListGroup,
 } from '@angular/cdk/drag-drop';
+import { GameService } from '../../services/game.service';
+import { ToastService } from '../../services/toast.service';
 
 type BoardUI = Array<Array<{ color: boolean; piece: PieceType } | null>>;
 
@@ -28,18 +30,11 @@ type BoardUI = Array<Array<{ color: boolean; piece: PieceType } | null>>;
   standalone: true,
   templateUrl: './chessboard.component.html',
   styleUrl: './chessboard.component.scss',
-  imports: [
-    CommonModule,
-    CdkDrag,
-    CdkDropList,
-    NgOptimizedImage,
-    CdkDropListGroup,
-    CdkDragPlaceholder,
-  ],
+  imports: [CommonModule, CdkDrag, CdkDropList, NgOptimizedImage, CdkDropListGroup],
 })
 export class ChessboardComponent {
-  protected game: Game;
-  protected chessboard: Chessboard;
+  protected game!: Game;
+  protected chessboard!: Chessboard;
   protected config = Config;
   protected board = signal<BoardUI>(this.config.random);
   protected orientation: boolean = true;
@@ -49,14 +44,27 @@ export class ChessboardComponent {
   protected readonly isBrowser: boolean;
   protected data: Array<any> = [];
 
-  constructor(@Inject(PLATFORM_ID) platformId: Object) {
+  constructor(
+    @Inject(PLATFORM_ID) platformId: Object,
+    private gameService: GameService,
+    private toast: ToastService,
+  ) {
     this.isBrowser = isPlatformBrowser(platformId);
+  }
+
+  ngOnInit() {
+    this.gameService.onMatch().subscribe({
+      next: (data: any) => {
+        this.toast.success('Success', data.success);
+      },
+      error: (err) => {
+        this.toast.error('Error', err.message);
+      },
+    });
     this.game = new Game();
     this.chessboard = this.game.getBoard();
     this.updateBoard();
   }
-
-  ngOnInit() {}
 
   updateBoard(): boolean {
     const newBoard = this.chessboard.board.map((rank: Tile[]) =>
@@ -71,7 +79,6 @@ export class ChessboardComponent {
   }
 
   onPieceGrab(event: any) {
-    console.log('onPieceGrab ', event);
     const src = event.source.data;
     const color = this.board()[src.x][src.y]!.color;
     const map = this.game.getMoveMapFor(src.x, src.y, color);

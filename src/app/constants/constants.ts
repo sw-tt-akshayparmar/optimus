@@ -7,11 +7,13 @@ const Constants = {
   UNREGISTER_EVENT: 'unregister',
   MESSAGE_EVENT: 'message',
   PRIVATE_CHAT: 'private-chat',
-  MATCH_FOUND: 'match-found',
   OPPONENT_DISCONNECTED: 'opponent-disconnected',
 
   SHELL_IN: 'shell-in',
   SHELL_OUT: 'shell-out',
+
+  GAME_MOVE: 'game-move',
+  MATCH_FOUND: 'match-found',
 };
 
 export default Constants;
