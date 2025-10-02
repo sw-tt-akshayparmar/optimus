@@ -9,6 +9,7 @@ import { ChessData, IChessData } from '../../data/chess.data';
 import { CdkDrag, CdkDragDrop, CdkDropList, CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { GameService } from '../../services/game.service';
 import { ToastService } from '../../services/toast.service';
+import { MatButton } from '@angular/material/button';
 
 type BoardUI = Array<Array<{ color: boolean; piece: PieceType } | null>>;
 
@@ -17,7 +18,7 @@ type BoardUI = Array<Array<{ color: boolean; piece: PieceType } | null>>;
   standalone: true,
   templateUrl: './chessboard.component.html',
   styleUrl: './chessboard.component.scss',
-  imports: [CommonModule, CdkDrag, CdkDropList, NgOptimizedImage, CdkDropListGroup],
+  imports: [CommonModule, CdkDrag, CdkDropList, NgOptimizedImage, CdkDropListGroup, MatButton],
 })
 export class ChessboardComponent implements OnInit {
   protected game!: Game;
@@ -87,5 +88,16 @@ export class ChessboardComponent implements OnInit {
       this.moveTo(new Move(color, src, dest));
     }
     this.moveMap.set(null);
+  }
+
+  startGame() {
+    this.gameService.startMatch().subscribe({
+      next: (data) => {
+        console.log(data);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 }

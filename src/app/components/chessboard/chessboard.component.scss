@@ -1,10 +1,14 @@
 .chessboard {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-content: center;
+  align-items: center;
+  height: 90vh;
 
   table.grid {
     border-spacing: 0;
+    width: fit-content;
+    height: fit-content;
 
     tr {
       td.tile {
