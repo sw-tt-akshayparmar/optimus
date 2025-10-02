@@ -35,6 +35,9 @@
                   [height]="config.tileSize"
                 />
               </div>
+              @if (moveMap()?.[i]?.[j]) {
+                <div class="mark-piece"></div>
+              }
             } @else {
               @if (moveMap()?.[i]?.[j]) {
                 <div class="mark"></div>

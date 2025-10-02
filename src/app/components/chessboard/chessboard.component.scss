@@ -5,6 +5,7 @@
 
   table.grid {
     border-spacing: 0;
+
     tr {
       td.tile {
         position: relative;
@@ -35,6 +36,18 @@
           height: 40%;
           width: 40%;
           background-color: #473f3944;
+        }
+
+        .mark-piece {
+          justify-content: center;
+          align-items: center;
+          position: absolute;
+          top: 15%;
+          left: 15%;
+          border-radius: 50%;
+          height: 70%;
+          width: 70%;
+          border: solid 5px #473f3965;
         }
       }
 
