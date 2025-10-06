@@ -4,46 +4,57 @@ import { Move } from '../../lib/chess/move';
 import { Chessboard, Tile } from '../../lib/chess/chessboard';
 import Config from '../../lib/chess/chess.config';
 import { CommonModule, isPlatformBrowser, NgOptimizedImage } from '@angular/common';
-import { PiecePosition, PieceType } from '../../lib/chess/chess.types';
+import { Board, PiecePosition, PieceType } from '../../lib/chess/chess.types';
 import { ChessData, IChessData } from '../../data/chess.data';
 import { CdkDrag, CdkDragDrop, CdkDropList, CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { GameService } from '../../services/game.service';
 import { ToastService } from '../../services/toast.service';
-import { MatButton } from '@angular/material/button';
-
-type BoardUI = Array<Array<{ color: boolean; piece: PieceType } | null>>;
+import { MatFabButton } from '@angular/material/button';
+import { MatProgressBar } from '@angular/material/progress-bar';
+import { LoaderService } from '../../services/loader.service';
+import LoaderActions from '../../enums/loader.enum';
+import { GameMatch } from '../../models/game/GameMatch.model';
 
 @Component({
   selector: 'app-chessboard',
   standalone: true,
   templateUrl: './chessboard.component.html',
   styleUrl: './chessboard.component.scss',
-  imports: [CommonModule, CdkDrag, CdkDropList, NgOptimizedImage, CdkDropListGroup, MatButton],
+  imports: [
+    CommonModule,
+    CdkDrag,
+    CdkDropList,
+    CdkDropListGroup,
+    MatProgressBar,
+    MatFabButton,
+    NgOptimizedImage,
+  ],
 })
 export class ChessboardComponent implements OnInit {
   protected game!: Game;
   protected chessboard!: Chessboard;
   protected config = Config;
-  protected board = signal<BoardUI>(this.config.random);
+  protected board = signal<Board>(this.config.random);
   protected orientation: boolean = true;
   protected chessData: IChessData = ChessData;
   protected moveMap = signal<boolean[][] | null>(null);
   protected move: Move = new Move(true);
   protected readonly isBrowser: boolean;
   protected data: Array<any> = [];
-
   constructor(
     @Inject(PLATFORM_ID) platformId: Object,
     private gameService: GameService,
     private toast: ToastService,
+    protected loader: LoaderService,
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
 
   ngOnInit() {
     this.gameService.onMatch().subscribe({
-      next: (data: any) => {
-        this.toast.success('Success', data.success);
+      next: (game: GameMatch) => {
+        this.loader.disable(LoaderActions.GAME_REQUEST);
+        this.toast.success('Success', game.opponentId!);
       },
       error: (err) => {
         this.toast.error('Error', err.message);
@@ -91,6 +102,7 @@ export class ChessboardComponent implements OnInit {
   }
 
   startGame() {
+    this.loader.enable(LoaderActions.GAME_REQUEST);
     this.gameService.startMatch().subscribe({
       next: (data) => {
         console.log(data);
@@ -100,4 +112,6 @@ export class ChessboardComponent implements OnInit {
       },
     });
   }
+
+  protected readonly LoaderActions = LoaderActions;
 }

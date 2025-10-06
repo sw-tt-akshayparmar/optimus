@@ -4,6 +4,7 @@ import { State } from './state';
 import { Move } from './move';
 import Config from './chess.config';
 import { MoveType } from './games.enum';
+import { Board } from './chess.types';
 
 export class Game {
   board: Chessboard;
@@ -46,4 +47,5 @@ export class Game {
     }
     return Config.empty;
   }
+  loadBoard(board: Board) {}
 }

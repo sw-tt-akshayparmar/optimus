@@ -4,6 +4,8 @@ enum LoaderActions {
   CREATE_PROJECT = 'CREATE_PROJECT',
   LOG_IN = 'LOG_IN',
   SIGN_IN = 'SIGN_IN',
+
+  GAME_REQUEST = 'GAME_REQUEST ',
 }
 
 export default LoaderActions;

@@ -1,53 +1,65 @@
 <div class="chessboard">
-  <table class="grid loader-container" id="chessgrid" cdkDropListGroup>
-    @for (rank of board(); let i = $index; track i) {
-      <tr class="rank">
-        @for (tile of rank; let j = $index; track j) {
-          <td
-            class="tile"
-            [id]="'tile-' + i + '-' + j"
-            [ngClass]="{
-              dark: (i + j) % 2 === 1,
-              light: (i + j) % 2 === 0,
-            }"
-            cdkDropList
-            (cdkDropListDropped)="drop($event)"
-            [cdkDropListData]="{ x: i, y: j }"
-          >
-            <!--            [cdkDropListEnterPredicate]="check"-->
-            <!--          >-->
-            @if (board()[i][j]) {
-              <div
-                class="piece flex justify-center items-center"
-                cdkDrag
-                [cdkDragData]="{ x: i, y: j }"
-                (cdkDragStarted)="onPieceGrab($event)"
-              >
-                <!--                <div class="w-4 h-4 rounded-full bg-[#0ff5]"></div>-->
-                <img
-                  ngSrc="{{
-                    chessData.PIECE_IMG[board()[i][j]!.color ? 1 : 0][board()[i][j]!.piece]
-                  }}"
-                  alt="{{
-                    chessData.PIECE_IMG[board()[i][j]!.color ? 1 : 0][board()[i][j]!.piece]
-                  }}"
-                  [width]="config.tileSize"
-                  [height]="config.tileSize"
-                />
-              </div>
-              @if (moveMap()?.[i]?.[j]) {
-                <div class="mark-piece"></div>
+  <table
+    class="grid"
+    id="chessgrid"
+    cdkDropListGroup
+    [ngClass]="{ 'blur-sm': loader.isLoading(LoaderActions.GAME_REQUEST) }"
+  >
+    <thead>
+      @if (loader.isLoading(LoaderActions.GAME_REQUEST)) {
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      }
+    </thead>
+    <tbody>
+      @for (rank of board(); let i = $index; track i) {
+        <tr class="rank">
+          @for (tile of rank; let j = $index; track j) {
+            <td
+              class="tile"
+              [id]="'tile-' + i + '-' + j"
+              [ngClass]="{
+                dark: (i + j) % 2 === 1,
+                light: (i + j) % 2 === 0,
+              }"
+              cdkDropList
+              (cdkDropListDropped)="drop($event)"
+              [cdkDropListData]="{ x: i, y: j }"
+            >
+              <!--            [cdkDropListEnterPredicate]="check"-->
+              <!--          >-->
+              @if (board()[i][j]) {
+                <div
+                  class="piece flex justify-center items-center"
+                  cdkDrag
+                  [cdkDragData]="{ x: i, y: j }"
+                  (cdkDragStarted)="onPieceGrab($event)"
+                >
+                  <!--                  <div class="w-4 h-4 rounded-full bg-[#0ff5]"></div>-->
+                  <img
+                    ngSrc="{{
+                      chessData.PIECE_IMG[board()[i][j]!.color ? 1 : 0][board()[i][j]!.piece]
+                    }}"
+                    alt="{{
+                      chessData.PIECE_IMG[board()[i][j]!.color ? 1 : 0][board()[i][j]!.piece]
+                    }}"
+                    [width]="config.tileSize"
+                    [height]="config.tileSize"
+                  />
+                </div>
+                @if (moveMap()?.[i]?.[j]) {
+                  <div class="mark-piece"></div>
+                }
+              } @else {
+                @if (moveMap()?.[i]?.[j]) {
+                  <div class="mark"></div>
+                }
+                <!--              <div class="border border-red-200 w-full h-[50px] absolute" *cdkDragPlaceholder></div>-->
               }
-            } @else {
-              @if (moveMap()?.[i]?.[j]) {
-                <div class="mark"></div>
-              }
-              <!--              <div class="border border-red-200 w-full h-[50px] absolute" *cdkDragPlaceholder></div>-->
-            }
-          </td>
-        }
-      </tr>
-    }
+            </td>
+          }
+        </tr>
+      }
+    </tbody>
   </table>
-  <button matButton="filled" class="w-[120px] mt-2" (click)="startGame()">Start Game</button>
+  <button matFab extended class="mt-2" (click)="startGame()">🚀</button>
 </div>

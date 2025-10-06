@@ -6,6 +6,7 @@ import { ApiService } from './api.service';
 import APIConfig from '../config/api.config';
 import { UserService } from './user.service';
 import { ErrorResponse, SuccessResponse } from '../models/Response.model';
+import { GameMatch } from '../models/game/GameMatch.model';
 
 @Injectable({ providedIn: 'root' })
 export class GameService {
@@ -43,9 +44,9 @@ export class GameService {
     );
   }
   onMatch() {
-    return this.socket.on(Constants.MATCH_FOUND).pipe(
+    return this.socket.on<GameMatch>(Constants.MATCH_FOUND).pipe(
       tap({
-        next: (data) => {
+        next: (data: GameMatch) => {
           console.log(data);
         },
         error: (err) => {
