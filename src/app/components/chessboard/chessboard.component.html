@@ -42,8 +42,8 @@
                     alt="{{
                       chessData.PIECE_IMG[board()[i][j]!.color ? 1 : 0][board()[i][j]!.piece]
                     }}"
-                    [width]="config.tileSize"
-                    [height]="config.tileSize"
+                    [width]="config.TILE_SIZE"
+                    [height]="config.TILE_SIZE"
                   />
                 </div>
                 @if (moveMap()?.[i]?.[j]) {
