@@ -66,14 +66,7 @@ export class ChessboardComponent implements OnInit {
   }
 
   updateBoard(): boolean {
-    const newBoard = this.chessboard.board.map((rank: Tile[]) =>
-      rank.map((tile: Tile) =>
-        tile.piece
-          ? { color: tile.piece.getColor(), piece: tile.piece.getType() as PieceType }
-          : null,
-      ),
-    );
-    this.board.set(newBoard);
+    this.board.update((_b) => this.game.getPosition());
     return false;
   }
 
