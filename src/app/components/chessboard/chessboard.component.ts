@@ -4,7 +4,7 @@ import { Move } from '../../lib/chess/move';
 import { Chessboard, Tile } from '../../lib/chess/chessboard';
 import Config from '../../lib/chess/chess.config';
 import { CommonModule, isPlatformBrowser, NgOptimizedImage } from '@angular/common';
-import { Board, PiecePosition, PieceType } from '../../lib/chess/chess.types';
+import { IBoard, IPosition, IType } from '../../lib/chess/chess.types';
 import { ChessData, IChessData } from '../../data/chess.data';
 import { CdkDrag, CdkDragDrop, CdkDropList, CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { GameService } from '../../services/game.service';
@@ -34,7 +34,7 @@ export class ChessboardComponent implements OnInit {
   protected game!: Game;
   protected chessboard!: Chessboard;
   protected config = Config;
-  protected board = signal<Board>(this.config.random);
+  protected board = signal<IBoard>(this.config.random);
   protected orientation: boolean = true;
   protected chessData: IChessData = ChessData;
   protected moveMap = signal<boolean[][] | null>(null);
@@ -85,8 +85,8 @@ export class ChessboardComponent implements OnInit {
     return ret;
   }
   drop(event: CdkDragDrop<any>) {
-    const src: { x: PiecePosition; y: PiecePosition } = event.item.data;
-    const dest: { x: PiecePosition; y: PiecePosition } = event.container.data;
+    const src: { x: IPosition; y: IPosition } = event.item.data;
+    const dest: { x: IPosition; y: IPosition } = event.container.data;
     if (this.moveMap()?.[dest.x][dest.y]) {
       const color = this.board()[src.x][src.y]!.color;
       this.moveTo(new Move(color, src, dest));

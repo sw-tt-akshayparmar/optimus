@@ -13,7 +13,10 @@ export class LoaderService {
   }
 
   disable(key: string) {
-    this.loaders.update((curr) => ({ ...curr, [key]: false }));
+    this.loaders.update((curr) => {
+      delete curr[key];
+      return { ...curr };
+    });
   }
 
   isLoading(key: string) {
