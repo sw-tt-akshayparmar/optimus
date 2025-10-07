@@ -1,10 +1,10 @@
 import { Component, Inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { Game } from '../../lib/chess/game';
 import { Move } from '../../lib/chess/move';
-import { Chessboard, Tile } from '../../lib/chess/chessboard';
+import { Chessboard } from '../../lib/chess/chessboard';
 import Config from '../../lib/chess/chess.config';
 import { CommonModule, isPlatformBrowser, NgOptimizedImage } from '@angular/common';
-import { IBoard, IPosition, IType } from '../../lib/chess/chess.types';
+import { IBoard, IPosition } from '../../lib/chess/chess.types';
 import { ChessData, IChessData } from '../../data/chess.data';
 import { CdkDrag, CdkDragDrop, CdkDropList, CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { GameService } from '../../services/game.service';
@@ -34,7 +34,7 @@ export class ChessboardComponent implements OnInit {
   protected game!: Game;
   protected chessboard!: Chessboard;
   protected config = Config;
-  protected board = signal<IBoard>(this.config.random);
+  protected board = signal<IBoard>(this.config.INITIAL_POS);
   protected orientation: boolean = true;
   protected chessData: IChessData = ChessData;
   protected moveMap = signal<boolean[][] | null>(null);

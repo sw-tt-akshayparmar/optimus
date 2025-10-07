@@ -1,16 +1,11 @@
 <div class="chessboard">
-  <table
-    class="grid"
-    id="chessgrid"
-    cdkDropListGroup
-    [ngClass]="{ 'blur-sm': loader.isLoading(LoaderActions.GAME_REQUEST) }"
-  >
+  <table class="grid" id="chessgrid" cdkDropListGroup>
     <thead>
       @if (loader.isLoading(LoaderActions.GAME_REQUEST)) {
         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
       }
     </thead>
-    <tbody>
+    <tbody [ngClass]="{ 'blur-sm': loader.isLoading(LoaderActions.GAME_REQUEST) }">
       @for (rank of board(); let i = $index; track i) {
         <tr class="rank">
           @for (tile of rank; let j = $index; track j) {
@@ -42,8 +37,8 @@
                     alt="{{
                       chessData.PIECE_IMG[board()[i][j]!.color ? 1 : 0][board()[i][j]!.piece]
                     }}"
-                    [width]="config.TILE_SIZE"
-                    [height]="config.TILE_SIZE"
+                    [width]="config.BOARD.TILE_PX"
+                    [height]="config.BOARD.TILE_PX"
                   />
                 </div>
                 @if (moveMap()?.[i]?.[j]) {
