@@ -35,7 +35,7 @@ export const ChessData: IChessData = {
   bp: imgPath('bp'),
 
   PIECE_IMG: [
-    [imgPath('bp'), imgPath('bn'), imgPath('bb'), imgPath('br'), imgPath('bq'), imgPath('bk')],
-    [imgPath('wp'), imgPath('wn'), imgPath('wb'), imgPath('wr'), imgPath('wq'), imgPath('wk')],
+    ['', imgPath('bp'), imgPath('bn'), imgPath('bb'), imgPath('br'), imgPath('bq'), imgPath('bk')],
+    ['', imgPath('wp'), imgPath('wn'), imgPath('wb'), imgPath('wr'), imgPath('wq'), imgPath('wk')],
   ],
 };

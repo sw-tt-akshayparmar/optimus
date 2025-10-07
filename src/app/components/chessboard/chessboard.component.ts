@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { Game } from '../../lib/chess/game';
 import { Move } from '../../lib/chess/move';
-import { Move as MoveModel } from '../../models/game/Move.model';
 import Config from '../../lib/chess/chess.config';
 import { CommonModule, isPlatformBrowser, NgOptimizedImage } from '@angular/common';
 import { IBoard, IPosition } from '../../lib/chess/chess.types';

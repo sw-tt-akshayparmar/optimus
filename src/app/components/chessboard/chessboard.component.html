@@ -29,11 +29,11 @@
                   [cdkDragData]="{ x: i, y: j }"
                   (cdkDragStarted)="onPieceGrab($event)"
                 >
-                  <!--                  <div class="w-4 h-4 rounded-full bg-[#0ff5]"></div>-->
+                  <!--                                    <div class="w-4 h-4 rounded-full bg-[#0ff5]"></div>-->
                   <img
-                    ngSrc="{{
-                      chessData.PIECE_IMG[board()[i][j]!.color ? 1 : 0][board()[i][j]!.piece]
-                    }}"
+                    [ngSrc]="
+                      `${chessData.PIECE_IMG[board()[i][j]!.color ? 1 : 0][board()[i][j]!.piece]}`
+                    "
                     alt="{{
                       chessData.PIECE_IMG[board()[i][j]!.color ? 1 : 0][board()[i][j]!.piece]
                     }}"
