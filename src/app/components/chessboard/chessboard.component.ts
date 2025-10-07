@@ -69,9 +69,9 @@ export class ChessboardComponent implements OnInit {
     });
     this.gameService.onMoves().subscribe({
       next: (m: { game: GameModel; move: Move }) => {
-        console.log('move', m.move);
-        this.toast.success('Moved', '');
-        this.moveTo(m.move);
+        if (this.playAs !== m.move.player) {
+          this.moveTo(m.move);
+        }
       },
       error: (err) => {
         console.log(err);
@@ -80,26 +80,21 @@ export class ChessboardComponent implements OnInit {
   }
 
   updateBoard(): boolean {
-    this.board.set(this.game.getPosition());
+    this.board.set(this.game?.getPosition());
     return false;
   }
 
   onPieceGrab(event: any) {
     const src = event.source.data;
     const color = this.board()[src.x][src.y]!.color;
-    const map = this.game.getMoveMapFor(src.x, src.y, color);
-    console.log(src);
+    const map = this.game?.getMoveMapFor(src.x, src.y, color);
 
     this.moveMap.set(map);
   }
 
   moveTo(move: Move, send?: boolean): Move {
     const moved: Move = this.game.move(move);
-    if (
-      moved.type !== MoveType.ILLEGAL_MOVE &&
-      moved.type !== MoveType.NOT_APPLICABLE &&
-      moved.type !== MoveType.WRONG_PLAYER
-    ) {
+    if (moved.type !== MoveType.ILLEGAL_MOVE && moved.type !== MoveType.WRONG_PLAYER) {
       if (send)
         this.gameService.sendMove({
           game: this.match.game!,
@@ -107,8 +102,6 @@ export class ChessboardComponent implements OnInit {
         });
       this.turn.update((t) => !t);
     }
-    console.log(this);
-    console.log(this.turn());
     this.updateBoard();
     return moved;
   }
