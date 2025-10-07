@@ -62,11 +62,10 @@ export class ChessboardComponent implements OnInit {
     });
     this.game = new Game();
     this.chessboard = this.game.getBoard();
-    this.updateBoard();
   }
 
   updateBoard(): boolean {
-    this.board.update((_b) => this.game.getPosition());
+    this.board.set(this.game.getPosition());
     return false;
   }
 
