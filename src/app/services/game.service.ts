@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, tap } from 'rxjs';
+import { filter, Observable, of, tap } from 'rxjs';
 import { SocketService } from './socket.service';
 import Constants from '../constants/constants';
 import { ApiService } from './api.service';
@@ -22,8 +22,8 @@ export class GameService {
       })
       .pipe(
         tap({
-          next: (data: SuccessResponse) => {
-            console.log(data);
+          next: (res: SuccessResponse<GameMatch>) => {
+            console.log(res.data);
           },
           error: (err: ErrorResponse) => {
             console.log(err);
@@ -46,8 +46,8 @@ export class GameService {
   onMatch() {
     return this.socket.on<GameMatch>(Constants.MATCH_FOUND).pipe(
       tap({
-        next: (data: GameMatch) => {
-          console.log(data);
+        next: (match: GameMatch) => {
+          console.log(match);
         },
         error: (err) => {
           console.log(err);

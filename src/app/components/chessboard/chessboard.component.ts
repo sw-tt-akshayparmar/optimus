@@ -52,9 +52,9 @@ export class ChessboardComponent implements OnInit {
 
   ngOnInit() {
     this.gameService.onMatch().subscribe({
-      next: (game: GameMatch) => {
+      next: (match: GameMatch) => {
         this.loader.disable(LoaderActions.GAME_REQUEST);
-        this.toast.success('Success', game.opponentId!);
+        this.toast.success('Success', match.game?.id!);
       },
       error: (err) => {
         this.toast.error('Error', err.message);
