@@ -122,6 +122,7 @@ export class ChessboardComponent implements OnInit {
         console.log(data);
       },
       error: (err) => {
+        this.loader.disable(LoaderActions.GAME_REQUEST);
         console.log(err);
       },
     });
