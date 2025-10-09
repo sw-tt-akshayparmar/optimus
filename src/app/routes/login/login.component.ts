@@ -5,7 +5,7 @@ import { LoaderService } from '../../services/loader.service';
 import LoaderActions from '../../enums/loader.enum';
 import { ToastService } from '../../services/toast.service';
 import { Exception } from '../../exception/app.exception';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgOptimizedImage } from '@angular/common';
 import { MatError, MatFormField, MatLabel, MatPrefix } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
@@ -31,6 +31,7 @@ import { MatButton } from '@angular/material/button';
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  returnUrl: string = '/';
 
   constructor(
     private fb: FormBuilder,
@@ -38,7 +39,9 @@ export class LoginComponent {
     private toast: ToastService,
     protected loaders: LoaderService,
     protected router: Router,
+    private route: ActivatedRoute,
   ) {
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
@@ -54,7 +57,7 @@ export class LoginComponent {
             this.loaders.disable(LoaderActions.LOG_IN);
             this.toast.success(`Login Successful`, `Welcome back ${user.name}`);
             this.loginForm.reset();
-            this.router.navigate(['']);
+            this.router.navigateByUrl(this.returnUrl);
           },
           error: (error: Exception) => {
             this.loaders.disable(LoaderActions.LOG_IN);
