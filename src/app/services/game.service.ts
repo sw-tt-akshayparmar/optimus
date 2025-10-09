@@ -18,44 +18,43 @@ export class GameService {
     private userService: UserService,
   ) {}
   startMatch(): Observable<any> {
-    return this.apiService
-      .post(APIConfig.GAME_MATCH, null, null, {
-        connectionId: this.userService.getConnectionId()!,
-      })
-      .pipe(
-        tap({
-          next: (res: SuccessResponse<GameMatch>) => {
-            console.log(res.data);
-          },
-          error: (err: ErrorResponse) => {
-            console.log(err);
-          },
-        }),
-      );
+    return this.apiService.post(APIConfig.GAME_MATCH, null, null, {
+      connectionId: this.userService.getConnectionId()!,
+    });
+    // .pipe(
+    //   tap({
+    //     next: (res: SuccessResponse<GameMatch>) => {},
+    //     error: (err: ErrorResponse) => {
+    //       console.log(err);
+    //     },
+    //   }),
+    // );
   }
   onMoves() {
-    return this.socket.on<{ game: GameModel; move: Move }>(Constants.GAME_MOVE).pipe(
-      tap({
-        next: (m: { game: GameModel; move: Move }) => {
-          console.log(m);
-        },
-        error: (err) => {
-          console.log(err);
-        },
-      }),
-    );
+    return this.socket.on<{ game: GameModel; move: Move }>(Constants.GAME_MOVE);
+    // .pipe(
+    //   tap({
+    //     next: (m: { game: GameModel; move: Move }) => {
+    //       console.log(m);
+    //     },
+    //     error: (err) => {
+    //       console.log(err);
+    //     },
+    //   }),
+    // );
   }
   onMatch() {
-    return this.socket.on<GameMatch>(Constants.MATCH_FOUND).pipe(
-      tap({
-        next: (match: GameMatch) => {
-          console.log(match);
-        },
-        error: (err) => {
-          console.log(err);
-        },
-      }),
-    );
+    return this.socket.on<GameMatch>(Constants.MATCH_FOUND);
+    //   .pipe(
+    //   tap({
+    //     next: (match: GameMatch) => {
+    //       console.log(match);
+    //     },
+    //     error: (err) => {
+    //       console.log(err);
+    //     },
+    //   }),
+    // );
   }
   sendMove(move: { game: GameModel; move: Move }) {
     this.socket.emit(Constants.GAME_MOVE, move);

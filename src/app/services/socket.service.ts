@@ -27,7 +27,7 @@ export class SocketService {
         (
           res: ErrorResponse<{ connectionId: string }> | SuccessResponse<{ connectionId: string }>,
         ) => {
-          sessionStorage.setItem(storageConstants.CONNECTION_ID, res.data!.connectionId);
+          localStorage.setItem(storageConstants.CONNECTION_ID, res.data!.connectionId);
         },
       );
       this.socket.on(Constants.DISCONNECT, () => {});

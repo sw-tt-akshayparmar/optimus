@@ -59,7 +59,7 @@ export class UserService {
   }
 
   setConnectionId(connectionId: string) {
-    sessionStorage.setItem(storageConstants.CONNECTION_ID, connectionId);
+    localStorage.setItem(storageConstants.CONNECTION_ID, connectionId);
   }
   setUserData(user: User) {
     localStorage.setItem(storageConstants.USER_DATA, JSON.stringify(user));
@@ -71,7 +71,7 @@ export class UserService {
     localStorage.setItem(storageConstants.REFRESH_TOKEN, token);
   }
   getConnectionId() {
-    return sessionStorage.getItem(storageConstants.CONNECTION_ID);
+    return localStorage.getItem(storageConstants.CONNECTION_ID);
   }
   getUserData(): User | null {
     const userJSON = localStorage.getItem(storageConstants.USER_DATA);
