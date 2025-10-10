@@ -3,6 +3,7 @@ import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from
 import { isPlatformBrowser } from '@angular/common';
 import { Inject, PLATFORM_ID } from '@angular/core';
 import { UserService } from '../services/user.service';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -14,16 +15,15 @@ export class AuthGuard implements CanActivate {
     private userService: UserService,
   ) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     if (isPlatformBrowser(this.platformId)) {
       const user = this.userService.getUserData();
       if (!user) {
         this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
-        return false;
+        return of(false);
       }
-      return true;
-    } else {
-      return true;
+      return of(true);
     }
+    return of(true);
   }
 }
