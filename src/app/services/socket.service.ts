@@ -34,13 +34,17 @@ export class SocketService {
     }
   }
   connect(authorization: string, connectionId?: string) {
-    this.socket.emit(Constants.CLIENT_HELLO, {
-      authorization,
-      connectionId,
-    } satisfies ClientHello);
+    if (isPlatformBrowser(this.platformId)) {
+      this.socket.emit(Constants.CLIENT_HELLO, {
+        authorization,
+        connectionId,
+      } satisfies ClientHello);
+    }
   }
   emit(event: string, data: any) {
-    this.socket.emit(event, data);
+    if (isPlatformBrowser(this.platformId)) {
+      this.socket.emit(event, data);
+    }
   }
 
   on<T>(event: string) {

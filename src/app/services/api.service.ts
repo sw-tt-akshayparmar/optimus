@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SuccessResponse } from '../models/Response.model';
@@ -6,11 +6,13 @@ import environments from '../environments';
 import storageConstants from '../constants/storage.constants';
 import { Exception } from '../exception/app.exception';
 import ErrorCode from '../enums/error.enum';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
+  private platformId = inject(PLATFORM_ID);
   constructor(private http: HttpClient) {}
 
   get<Data = any, Error = any>(
@@ -71,7 +73,11 @@ export class ApiService {
     });
 
     if (api.auth) {
-      const auth_token = localStorage.getItem(storageConstants.AUTHORIZATION_TOKEN);
+      let auth_token: string | null = null;
+      if (isPlatformBrowser(this.platformId)) {
+        auth_token = localStorage.getItem(storageConstants.AUTHORIZATION_TOKEN);
+      }
+
       if (!auth_token)
         throw new Exception(
           ErrorCode.AUTH_NOT_FOUND,

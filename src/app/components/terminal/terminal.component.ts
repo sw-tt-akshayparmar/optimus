@@ -1,6 +1,14 @@
 // terminal.component.ts
-import { Component, ElementRef, effect, signal, viewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  ElementRef,
+  effect,
+  signal,
+  viewChild,
+  PLATFORM_ID,
+  inject,
+} from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { UserService } from '../../services/user.service';
@@ -35,14 +43,18 @@ export class TerminalComponent {
   container = viewChild<ElementRef<HTMLDivElement>>('container');
   inputEl = viewChild<ElementRef<HTMLInputElement>>('inputEl');
 
+  private platformId = inject(PLATFORM_ID);
+
   constructor(protected userService: UserService) {
     // auto-scroll on new lines
     effect(() => {
       this.lines();
-      queueMicrotask(() => {
-        const c = this.container()?.nativeElement;
-        if (c) c.scrollTop = c.scrollHeight;
-      });
+      if (isPlatformBrowser(this.platformId)) {
+        queueMicrotask(() => {
+          const c = this.container()?.nativeElement;
+          if (c) c.scrollTop = c.scrollHeight;
+        });
+      }
     });
 
     // subscribe shell output
@@ -54,10 +66,12 @@ export class TerminalComponent {
   }
 
   private appendLine(text: string, type: LineType = 'output', timestamp?: number) {
-    this.lines.update((prev) => {
-      const next = [...prev, { id: crypto.randomUUID(), text, type, timestamp }];
-      return next.length > this.maxLines ? next.slice(-this.maxLines) : next;
-    });
+    if (isPlatformBrowser(this.platformId)) {
+      this.lines.update((prev) => {
+        const next = [...prev, { id: crypto.randomUUID(), text, type, timestamp }];
+        return next.length > this.maxLines ? next.slice(-this.maxLines) : next;
+      });
+    }
   }
 
   private runCommand(raw: string) {

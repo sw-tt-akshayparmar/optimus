@@ -54,29 +54,31 @@ export class ChessboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.gameService.onMatch().subscribe({
-      next: (match: GameMatch) => {
-        this.match = match;
-        this.loader.disable(LoaderActions.GAME_REQUEST);
-        this.toast.success('Success', match.game?.id!);
-        this.game = new Game(Config.INITIAL_POS, match.turn);
-        this.playAs = match.game?.playerW === this.userService.getUserData()?.id;
-        this.turn.set(match.turn === PLAYER.WHITE);
-      },
-      error: (err) => {
-        this.toast.error('Error', err.message);
-      },
-    });
-    this.gameService.onMoves().subscribe({
-      next: (m: { game: GameModel; move: Move }) => {
-        if (this.playAs !== m.move.player) {
-          this.moveTo(m.move);
-        }
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    if (this.isBrowser) {
+      this.gameService.onMatch().subscribe({
+        next: (match: GameMatch) => {
+          this.match = match;
+          this.loader.disable(LoaderActions.GAME_REQUEST);
+          this.toast.success('Success', match.game?.id!);
+          this.game = new Game(Config.INITIAL_POS, match.turn);
+          this.playAs = match.game?.playerW === this.userService.getUserData()?.id;
+          this.turn.set(match.turn === PLAYER.WHITE);
+        },
+        error: (err) => {
+          this.toast.error('Error', err.message);
+        },
+      });
+      this.gameService.onMoves().subscribe({
+        next: (m: { game: GameModel; move: Move }) => {
+          if (this.playAs !== m.move.player) {
+            this.moveTo(m.move);
+          }
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+    }
   }
 
   updateBoard(): boolean {

@@ -1,12 +1,14 @@
+@import "tailwindcss";
 @import "primeicons/primeicons.css";
 @import "@angular/material/prebuilt-themes/cyan-orange.css";
 /*@import "./assets/theme.css";*/
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-@tailwind variants;
-@tailwind screens;
+@theme {
+  --color-primary: var(--color-primary);
+  --color-primary-foreground: var(--color-primary-foreground);
+  --color-secondary: var(--color-secondary);
+  --color-secondary-foreground: var(--color-secondary-foreground);
+}
 
 
 .mdc-notched-outline__notch {
