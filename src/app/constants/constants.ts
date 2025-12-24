@@ -14,6 +14,7 @@ const Constants = {
 
   GAME_MOVE: 'game-move',
   MATCH_FOUND: 'match-found',
+  AUTH: 'auth',
 };
 
 export default Constants;

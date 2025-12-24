@@ -1,7 +1,4 @@
-<div
-  class="flex flex-col h-full min-h-[320px] max-h-[720px] w-full rounded-t-xl border-t shadow-lg"
->
-  <!-- Top Bar -->
+<div class="flex flex-col h-full min-h-80 max-h-180 w-full rounded-t-xl border-t shadow-lg">
   <div class="flex items-center justify-between gap-2 px-3 py-2">
     <div class="flex items-center gap-2">
       <span class="h-3 w-3 rounded-full inline-block bg-[red]"></span>
@@ -12,7 +9,6 @@
     <div class="text-xs opacity-70">/ web • demo</div>
   </div>
 
-  <!-- Scrollable content -->
   <div #container class="flex-1 overflow-y-auto px-4 py-3">
     <div class="flex flex-col gap-2 font-mono text-sm">
       @if (lines().length === 0) {
@@ -32,7 +28,6 @@
     </div>
   </div>
 
-  <!-- Input row -->
   <form (ngSubmit)="handleSubmit()" class="px-3 py-2">
     <div class="flex items-center gap-3">
       <div class="font-mono text-sm text-teal-300">

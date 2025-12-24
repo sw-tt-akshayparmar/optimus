@@ -33,9 +33,9 @@ export class SocketService {
       this.socket.on(Constants.DISCONNECT, () => {});
     }
   }
-  connect(authorization: string, connectionId?: string) {
+  auth(authorization: string, connectionId?: string) {
     if (isPlatformBrowser(this.platformId)) {
-      this.socket.emit(Constants.CLIENT_HELLO, {
+      this.socket.emit(Constants.AUTH, {
         authorization,
         connectionId,
       } satisfies ClientHello);

@@ -22,7 +22,7 @@ export class UserService {
   login(data: { username: string; password: string }) {
     return this.apiService.post<AuthToken>(APIConfig.LOGIN, data).pipe(
       map<SuccessResponse<AuthToken>, User>((res) => {
-        this.socketService.connect(res.data.accessToken);
+        this.socketService.auth(res.data.accessToken, this.getConnectionId() ?? undefined);
         this.setAccessToken(res.data.accessToken);
         this.setRefreshToken(res.data.refreshToken);
         this.setUserData(res.data.user);
@@ -43,7 +43,7 @@ export class UserService {
   register(data: { name: string; username: string; password: string }) {
     return this.apiService.post<AuthToken>(APIConfig.REGISTER, data).pipe(
       map<SuccessResponse<AuthToken>, User>((res) => {
-        this.socketService.connect(res.data.accessToken);
+        this.socketService.auth(res.data.accessToken, this.getConnectionId() ?? undefined);
         this.setAccessToken(res.data.accessToken);
         this.setRefreshToken(res.data.refreshToken);
         this.setUserData(res.data.user);

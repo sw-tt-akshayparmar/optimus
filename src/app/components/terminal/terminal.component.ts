@@ -29,24 +29,19 @@ interface Line {
   templateUrl: './terminal.component.html',
 })
 export class TerminalComponent {
-  // --- Inputs / options
   maxLines = 1000;
 
-  // --- Signals
   lines = signal<Line[]>([]);
   history = signal<string[]>([]);
 
-  // --- FormControl for input
   inputCtrl = new FormControl('', { nonNullable: true });
 
-  // --- Refs
   container = viewChild<ElementRef<HTMLDivElement>>('container');
   inputEl = viewChild<ElementRef<HTMLInputElement>>('inputEl');
 
   private platformId = inject(PLATFORM_ID);
 
   constructor(protected userService: UserService) {
-    // auto-scroll on new lines
     effect(() => {
       this.lines();
       if (isPlatformBrowser(this.platformId)) {
