@@ -27,12 +27,12 @@ Strengths (Positive Aspects)
 Issues, Severity, and Actionable Improvements
 1) UserService: incorrect/misleading method contracts and missing returns (src/app/services/user.service.ts)
 - Problem:
-  - getConnectionId() never returns the value (missing return). 🟠
+  - getSocketId() never returns the value (missing return). 🟠
   - getUserData(user: User): User | null has an unused parameter and wrong signature; should not accept a parameter. 🟠
   - getRefreshToken(token: string): string | null accepts an unused parameter; wrong signature. 🟠
 - Impact: Confuses consumers and returns undefined where a value is expected; future bugs likely.
 - Fix:
-  - getConnectionId(): string | null { return localStorage.getItem(storageConstants.CONNECTION_ID); }
+  - getSocketId(): string | null { return localStorage.getItem(storageConstants.CONNECTION_ID); }
   - getUserData(): User | null { const j = localStorage.getItem(...); return j ? User.from(JSON.parse(j)) : null; }
   - getRefreshToken(): string | null { return localStorage.getItem(storageConstants.REFRESH_TOKEN); }
 

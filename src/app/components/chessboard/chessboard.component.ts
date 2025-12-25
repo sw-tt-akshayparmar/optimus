@@ -64,8 +64,8 @@ export class ChessboardComponent implements OnInit {
           this.playAs = match.game?.playerW === this.userService.getUserData()?.id;
           this.turn.set(match.turn === PLAYER.WHITE);
         },
-        error: (err) => {
-          this.toast.error('Error', err.message);
+        error: (err: any) => {
+          this.toast.error('Error', err.messsage);
         },
       });
       this.gameService.onMoves().subscribe({
@@ -74,7 +74,7 @@ export class ChessboardComponent implements OnInit {
             this.moveTo(m.move);
           }
         },
-        error: (err) => {
+        error: (err: any) => {
           console.log(err);
         },
       });

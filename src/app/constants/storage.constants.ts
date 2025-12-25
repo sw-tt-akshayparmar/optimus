@@ -1,7 +1,7 @@
 const storageConstants = {
   AUTHORIZATION_TOKEN: 'authorization-token',
   REFRESH_TOKEN: 'refresh-token',
-  CONNECTION_ID: 'connection-id',
+  SOCKET_ID: 'socket-id',
   USER_DATA: 'user-data',
 };
 

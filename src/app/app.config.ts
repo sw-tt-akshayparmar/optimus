@@ -29,6 +29,9 @@ export const appConfig: ApplicationConfig = {
     MessageService,
     provideSocketIo({
       url: environments.SERVER_SOCKETIO_URL,
+      options: {
+        autoConnect: false,
+      },
     }),
   ],
 };

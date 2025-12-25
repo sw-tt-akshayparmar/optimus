@@ -19,7 +19,7 @@ export class GameService {
   ) {}
   startMatch(): Observable<any> {
     return this.apiService.post(APIConfig.GAME_MATCH, null, null, {
-      connectionId: this.userService.getConnectionId()!,
+      socketId: this.userService.getSocketId()!,
     });
     // .pipe(
     //   tap({

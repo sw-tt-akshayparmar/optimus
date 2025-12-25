@@ -22,7 +22,7 @@ export class UserService {
   login(data: { username: string; password: string }) {
     return this.apiService.post<AuthToken>(APIConfig.LOGIN, data).pipe(
       map<SuccessResponse<AuthToken>, User>((res) => {
-        this.socketService.auth(res.data.accessToken, this.getConnectionId() ?? undefined);
+        this.socketService.auth(res.data.accessToken, this.getSocketId() ?? undefined);
         this.setAccessToken(res.data.accessToken);
         this.setRefreshToken(res.data.refreshToken);
         this.setUserData(res.data.user);
@@ -43,7 +43,7 @@ export class UserService {
   register(data: { name: string; username: string; password: string }) {
     return this.apiService.post<AuthToken>(APIConfig.REGISTER, data).pipe(
       map<SuccessResponse<AuthToken>, User>((res) => {
-        this.socketService.auth(res.data.accessToken, this.getConnectionId() ?? undefined);
+        this.socketService.auth(res.data.accessToken, this.getSocketId() ?? undefined);
         this.setAccessToken(res.data.accessToken);
         this.setRefreshToken(res.data.refreshToken);
         this.setUserData(res.data.user);
@@ -63,7 +63,7 @@ export class UserService {
 
   setConnectionId(connectionId: string) {
     if (isPlatformBrowser(this.platformId)) {
-      localStorage.setItem(storageConstants.CONNECTION_ID, connectionId);
+      localStorage.setItem(storageConstants.SOCKET_ID, connectionId);
     }
   }
   setUserData(user: User) {
@@ -81,9 +81,9 @@ export class UserService {
       localStorage.setItem(storageConstants.REFRESH_TOKEN, token);
     }
   }
-  getConnectionId() {
+  getSocketId() {
     if (isPlatformBrowser(this.platformId)) {
-      return localStorage.getItem(storageConstants.CONNECTION_ID);
+      return localStorage.getItem(storageConstants.SOCKET_ID);
     }
     return null;
   }
