@@ -84,7 +84,7 @@ Issues, Severity, and Actionable Improvements
   - Correct class to items-center.
 
 8) Buttons inside forms default to submit (login/register .html)
-- Problem: Raw <button> elements (social login buttons) inside the form have no type, so default type="submit" in HTML. 🟠
+- Problem: Raw `<button>` elements (social login buttons) inside the form have no type, so default type="submit" in HTML. 🟠
 - Impact: Clicking social icons can submit the form unexpectedly.
 - Fix: Add type="button" to those buttons. For PrimeNG <p-button>, default type is often "button"; still set explicitly for clarity.
 
