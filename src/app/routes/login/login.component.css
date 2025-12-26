@@ -1,0 +1,96 @@
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 90vh;
+  background-color: var(--bg-root);
+}
+
+.login-container {
+  width: 100%;
+  max-width: 420px;
+  padding: 3rem 2.5rem;
+  border-radius: 12px;
+  background-color: var(--bg-surface-1);
+  border: 1px solid var(--bg-surface-3);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.mat-mdc-form-field .mdc-notched-outline > * {
+  border-color: var(--bg-surface-3) !important;
+}
+
+.mat-mdc-form-field .mdc-floating-label {
+  color: var(--text-muted) !important;
+}
+
+.mat-mdc-input-element {
+  color: var(--text-primary) !important;
+}
+
+.mat-mdc-form-field:not(.mat-form-field-invalid) .mdc-notched-outline__leading,
+.mat-mdc-form-field:not(.mat-form-field-invalid) .mdc-notched-outline__notch,
+.mat-mdc-form-field:not(.mat-form-field-invalid) .mdc-notched-outline__trailing {
+  border-color: var(--bg-surface-3) !important;
+}
+
+.mat-mdc-form-field.mat-focused .mdc-notched-outline__leading,
+.mat-mdc-form-field.mat-focused .mdc-notched-outline__notch,
+.mat-mdc-form-field.mat-focused .mdc-notched-outline__trailing {
+  border-color: var(--neon-cyan) !important;
+  border-width: 2px !important;
+}
+
+.mat-mdc-form-field.mat-focused .mdc-floating-label {
+  color: var(--neon-cyan) !important;
+}
+
+mat-icon {
+  color: var(--text-muted);
+}
+
+.mat-mdc-button {
+  width: 100%;
+  padding: 1.25rem 0 !important;
+  font-size: 1rem !important;
+  letter-spacing: 1px !important;
+}
+
+.primary-btn {
+  background-color: var(--neon-cyan) !important;
+  color: var(--bg-root) !important;
+}
+
+.secondary-btn {
+  border-color: var(--neon-cyan) !important;
+  color: var(--neon-cyan) !important;
+}
+
+.or-divider {
+  text-align: center;
+  margin: 1.5rem 0;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.or-divider::before,
+.or-divider::after {
+  content: '';
+  flex-grow: 1;
+  height: 1px;
+  background-color: var(--bg-surface-3);
+}
+
+.social-login-btn {
+  transition: transform 0.2s ease;
+}
+
+.social-login-btn:hover {
+  transform: scale(1.1);
+}

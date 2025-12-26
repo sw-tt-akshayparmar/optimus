@@ -5,6 +5,8 @@ import { WorkspaceComponent } from './routes/workspace/workspace.component';
 import { LoginComponent } from './routes/login/login.component';
 import { RegisterComponent } from './routes/register/register.component';
 import { AuthGuard } from './auth/Authguard';
+import { DashboardComponent } from './routes/dashboard/dashboard.component';
+
 export const routes: Routes = [
   {
     path: '',
@@ -19,6 +21,11 @@ export const routes: Routes = [
   {
     path: 'workspace',
     component: WorkspaceComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
     canActivate: [AuthGuard],
   },
   {

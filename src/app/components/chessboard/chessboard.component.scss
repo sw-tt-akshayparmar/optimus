@@ -1,14 +1,21 @@
+@import "../../../assets/theme";
+
 .chessboard {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 90vh;
+  background-color: $bg-root;
 
   table.grid {
     border-spacing: 0;
     width: fit-content;
     height: fit-content;
+    border: 1px solid $bg-surface-2;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+    overflow: hidden;
 
     tr {
       td.tile {
@@ -24,6 +31,7 @@
           height: 100%;
           width: 100%;
           z-index: 1;
+          filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
 
           &:active {
             cursor: grabbing;
@@ -34,35 +42,37 @@
           justify-content: center;
           align-items: center;
           position: absolute;
-          top: 30%;
-          left: 30%;
+          top: 35%;
+          left: 35%;
           border-radius: 50%;
-          height: 40%;
-          width: 40%;
-          background-color: #473f3944;
+          height: 30%;
+          width: 30%;
+          background-color: rgba($neon-cyan, 0.4);
+          box-shadow: 0 0 8px rgba($neon-cyan, 0.2);
         }
 
         .mark-piece {
           justify-content: center;
           align-items: center;
           position: absolute;
-          top: 15%;
-          left: 15%;
-          border-radius: 50%;
-          height: 70%;
-          width: 70%;
-          border: solid 5px #473f3965;
+          top: 0;
+          left: 0;
+          height: 100%;
+          width: 100%;
+          border: solid 4px rgba($neon-red, 0.6);
+          box-shadow: inset 0 0 10px rgba($neon-red, 0.2);
         }
       }
 
       td.dark {
-        //background-color: #0000;
-        background-color: #b88762;
+        background-color: $bg-surface-2;
+        // Subtle gradient for depth
+        background-image: linear-gradient(to bottom right, rgba(255,255,255,0.03), transparent);
       }
 
       td.light {
-        //background-color: #0000;
-        background-color: #edd6b0;
+        background-color: $bg-surface-3;
+        color: $text-primary;
       }
     }
   }

@@ -1,0 +1,25 @@
+:host {
+  display: block;
+  background-color: var(--bg-root);
+  padding: 1.5rem;
+}
+
+.workspace-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+  gap: 1.5rem;
+  height: calc(100vh - 64px - 3rem); /* Full height minus navbar and padding */
+}
+
+app-projects {
+  background-color: var(--bg-surface-1);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid var(--bg-surface-3);
+}
+
+app-terminal {
+  /* The terminal has its own internal styling, so we just position it */
+  min-height: 400px;
+}

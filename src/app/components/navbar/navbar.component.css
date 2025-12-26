@@ -1,0 +1,61 @@
+nav {
+  background-color: var(--bg-surface-1);
+  border-bottom: 1px solid var(--bg-surface-3);
+  padding: 0 2rem;
+  height: 64px;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--neon-cyan);
+  text-shadow: 0 0 8px rgba(46, 242, 255, 0.5);
+}
+
+.nav-link {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-surface-2);
+}
+
+.nav-link.active {
+  color: var(--neon-cyan);
+  background-color: var(--bg-surface-3);
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 2px;
+  background-color: var(--neon-cyan);
+  box-shadow: 0 0 8px var(--neon-cyan);
+}
+
+.mat-mdc-button {
+  font-size: 0.875rem !important;
+  letter-spacing: 0.5px !important;
+}
+
+.login-btn {
+  background-color: var(--neon-cyan) !important;
+  color: var(--bg-root) !important;
+}
+
+.signup-btn {
+  border-color: var(--neon-cyan) !important;
+  color: var(--neon-cyan) !important;
+}

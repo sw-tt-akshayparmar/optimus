@@ -15,6 +15,7 @@ export class NavbarComponent {
 
   navLinks = [
     { to: '/', label: 'Home' },
+    { to: '/dashboard', label: 'Dashboard' },
     { to: '/chat', label: 'Chat' },
     { to: '/workspace', label: 'Workspace' },
   ];

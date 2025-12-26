@@ -5,7 +5,6 @@ import Constants from '../constants/constants';
 import { ApiService } from './api.service';
 import APIConfig from '../config/api.config';
 import { UserService } from './user.service';
-import { ErrorResponse, SuccessResponse } from '../models/Response.model';
 import { GameMatch } from '../models/game/GameMatch.model';
 import { Game as GameModel } from '../models/game/Game.model';
 import { Move } from '../lib/chess/move';

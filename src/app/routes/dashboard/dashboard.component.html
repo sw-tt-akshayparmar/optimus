@@ -1,0 +1,55 @@
+<div class="dashboard-container">
+  <!-- Socket Status Card -->
+  <div class="card">
+    <h2>Socket Status</h2>
+    <div class="metric">
+      <span>Status:</span>
+      <span>
+        <span
+          class="status-indicator"
+          [class.status-connected]="socketConnected"
+          [class.status-disconnected]="!socketConnected"
+        ></span>
+        {{ socketConnected ? 'CONNECTED' : 'DISCONNECTED' }}
+      </span>
+    </div>
+    <div class="metric">
+      <span>Socket ID:</span>
+      <span style="font-size: 0.8em; word-break: break-all;">{{ socketId || 'N/A' }}</span>
+    </div>
+    <div class="metric">
+      <span>Transport:</span>
+      <span>{{ transport }}</span>
+    </div>
+  </div>
+
+  <!-- Backend Monitoring Card -->
+  <div class="card">
+    <h2>Backend Monitoring</h2>
+    <div class="metric">
+      <span>Active Users:</span>
+      <span style="color: var(--neon-cyan)">{{ activeUsers }}</span>
+    </div>
+    <div class="metric">
+      <span>Server Uptime:</span>
+      <span style="color: var(--neon-green)">{{ uptime }}</span>
+    </div>
+    <div class="metric">
+      <span>Memory Usage:</span>
+      <span style="color: var(--neon-yellow)">{{ memoryUsage }}</span>
+    </div>
+  </div>
+
+  <!-- Live Logs Card -->
+  <div class="card" style="grid-column: 1 / -1">
+    <h2>Live Logs</h2>
+    <div class="log-console">
+      @for (log of logs; track $index) {
+        <div class="log-entry">
+          <span class="timestamp">[{{ log.timestamp | date: 'HH:mm:ss' }}]</span>
+          <span class="message">{{ log.message }}</span>
+        </div>
+      }
+    </div>
+  </div>
+</div>

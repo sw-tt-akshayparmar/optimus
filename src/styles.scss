@@ -1,0 +1,49 @@
+@import "tailwindcss";
+@import "primeicons/primeicons.css";
+@import "@angular/material/prebuilt-themes/cyan-orange.css";
+
+@import "assets/theme";
+
+@theme {
+  --color-primary: var(--neon-cyan);
+  --color-primary-foreground: var(--bg-root);
+  --color-secondary: var(--neon-purple);
+  --color-secondary-foreground: var(--text-primary);
+
+  --color-bg-root: var(--bg-root);
+  --color-bg-surface-1: var(--bg-surface-1);
+  --color-bg-surface-2: var(--bg-surface-2);
+  --color-bg-surface-3: var(--bg-surface-3);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+}
+
+
+.mdc-notched-outline__notch {
+  border-right: none;
+}
+
+html, body {
+  height: 100%;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+*, ::before, ::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: var(--bg-root);
+  color: var(--text-primary);
+}

@@ -1,78 +1,49 @@
-<div class="login w-full h-[90%] flex items-center justify-center">
-  <div
-    class="w-full h-[620px] max-w-[480px] border border-gray-500 rounded-lg flex justify-center items-center"
-  >
-    <form class="p-8 w-full max-w-[480px]" [formGroup]="loginForm">
-      <mat-form-field class="w-full mb-2" appearance="outline">
-        <mat-icon matPrefix>perm_identity</mat-icon>
-        <input name="username" id="username" matInput formControlName="username" type="text" />
-        <mat-label for="username"> Enter Username</mat-label>
+<div class="login-container">
+  <form [formGroup]="loginForm">
+    <div class="text-center mb-8">
+      <h1 class="text-2xl font-bold text-[var(--text-primary)] mb-2">Welcome Back</h1>
+      <p class="text-[var(--text-secondary)]">Sign in to access your dashboard</p>
+    </div>
 
-        @if (
-          loginForm.get('username')?.invalid &&
-          (loginForm.get('username')?.dirty || loginForm.get('username')?.touched)
-        ) {
-          <mat-error class="text-red-500">{{ this.getError('username') }}</mat-error>
-        }
-      </mat-form-field>
+    <mat-form-field appearance="outline" class="mb-4">
+      <mat-label>Username</mat-label>
+      <mat-icon matPrefix>perm_identity</mat-icon>
+      <input matInput formControlName="username" type="text" />
+      @if (loginForm.get('username')?.invalid && (loginForm.get('username')?.dirty || loginForm.get('username')?.touched)) {
+        <mat-error>{{ getError('username') }}</mat-error>
+      }
+    </mat-form-field>
 
-      <mat-form-field class="w-full mb-3" appearance="outline">
-        <mat-label for="password"> Enter Password</mat-label>
-        <mat-icon matPrefix>lock</mat-icon>
-        <input name="password" id="password" matInput formControlName="password" type="password" />
-        @if (
-          loginForm.get('password')?.invalid &&
-          (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)
-        ) {
-          <mat-error>{{ this.getError('password') }}</mat-error>
-        }
-      </mat-form-field>
-      <div class="flex flex-col w-full gap-3 mt-4">
-        <button matButton="filled" type="button" (click)="onSubmit()">
-          <mat-icon>perm_identity</mat-icon>
-          LOG IN
-        </button>
-        <button matButton="outlined" type="button" (click)="router.navigate(['register'])">
-          <mat-icon>person</mat-icon>
-          REGISTER
-        </button>
-      </div>
-      <div class="w-full text-center my-4">OR</div>
-      <div class="flex justify-center items-center w-full gap-2">
-        <div class="google">
-          <button type="button">
-            <img
-              class="w-[40px] h-[40px] rounded-full"
-              ngSrc="/images/google.svg"
-              alt="Google Login"
-              [height]="40"
-              [width]="40"
-            />
-          </button>
-        </div>
-        <div class="github">
-          <button type="button">
-            <img
-              class="w-[40px] h-[40px] rounded-full"
-              ngSrc="/images/github.svg"
-              alt="GitHub Login"
-              [height]="40"
-              [width]="40"
-            />
-          </button>
-        </div>
-        <i class="microsoft">
-          <button type="button">
-            <img
-              class="w-[40px] h-[40px] rounded-full"
-              ngSrc="/images/microsoft.svg"
-              alt="Microsoft Login"
-              [height]="40"
-              [width]="40"
-            />
-          </button>
-        </i>
-      </div>
-    </form>
-  </div>
+    <mat-form-field appearance="outline" class="mb-6">
+      <mat-label>Password</mat-label>
+      <mat-icon matPrefix>lock</mat-icon>
+      <input matInput formControlName="password" type="password" />
+      @if (loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)) {
+        <mat-error>{{ getError('password') }}</mat-error>
+      }
+    </mat-form-field>
+
+    <div class="flex flex-col gap-3">
+      <button mat-flat-button class="primary-btn" (click)="onSubmit()">
+        LOG IN
+      </button>
+      <button mat-stroked-button class="secondary-btn" (click)="router.navigate(['register'])">
+        CREATE ACCOUNT
+      </button>
+    </div>
+
+    <div class="or-divider">OR</div>
+
+    <div class="flex justify-center gap-4">
+      <button type="button" class="social-login-btn">
+        <img src="/images/google.svg" alt="Google" width="40" height="40" class="rounded-full opacity-80 hover:opacity-100" />
+      </button>
+      <button type="button" class="social-login-btn">
+        <img src="/images/github.svg" alt="GitHub" width="40" height="40" class="rounded-full opacity-80 hover:opacity-100" />
+      </button>
+      <button type="button" class="social-login-btn">
+        <img src="/images/microsoft.svg" alt="Microsoft" width="40" height="40" class="rounded-full opacity-80 hover:opacity-100" />
+      </button>
+    </div>
+  </form>
 </div>
