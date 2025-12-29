@@ -1,0 +1,89 @@
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { Message } from '../../models/chat.models';
+
+@Component({
+  selector: 'app-message-item',
+  standalone: true,
+  imports: [CommonModule, NgOptimizedImage],
+  template: `
+    <div
+      class="message-item py-1 px-4 flex flex-col group hover:bg-(--bg-surface-3) transition-colors duration-150"
+    >
+      @if (isFirstInGroup) {
+        <div class="message-header flex items-center mb-1 mt-3">
+          <div
+            class="avatar w-10 h-10 rounded-full bg-(--neon-purple) flex items-center justify-center text-(--bg-root) font-bold mr-3 overflow-hidden"
+          >
+            @if (message.senderAvatar) {
+              <img
+                [ngSrc]="message.senderAvatar"
+                [alt]="message.senderName"
+                class="w-full h-full object-cover"
+                fill
+              />
+            }
+            @if (!message.senderAvatar) {
+              <span>{{ message.senderName.charAt(0) }}</span>
+            }
+          </div>
+          <div class="flex items-baseline">
+            <span
+              class="sender-name font-bold text-(--neon-cyan) mr-2 cursor-pointer hover:underline"
+              >{{ message.senderName }}</span
+            >
+            <span class="timestamp text-xs text-(--text-muted)">{{
+              message.timestamp | date: 'shortTime'
+            }}</span>
+          </div>
+        </div>
+      }
+
+      <div class="message-content-wrapper flex items-start group">
+        ]
+        @if (!isFirstInGroup) {
+          <div
+            class="time-hover w-10 text-[10px] text-(--text-muted) opacity-0 group-hover:opacity-100 flex items-center justify-center mr-3 transition-opacity"
+          >
+            {{ message.timestamp | date: 'HH:mm' }}
+          </div>
+        }
+
+        <div
+          class="message-body flex-1 text-(--text-primary) leading-relaxed whitespace-pre-wrap wrap-break-word"
+          [class.pending]="message.status === 'pending'"
+          [class.failed]="message.status === 'failed'"
+        >
+          {{ message.content }}
+          @if (message.status === 'pending') {
+            <span class="status-indicator text-[10px] text-(--text-muted) ml-1 italic"
+              >(sending...)</span
+            >
+          }
+
+          @if (message.status === 'failed') {
+            <span class="status-indicator text-[10px] text-(--neon-red) ml-1 italic">(failed)</span>
+          }
+        </div>
+      </div>
+    </div>
+  `,
+  styles: [
+    `
+      :host {
+        display: block;
+      }
+      .pending {
+        opacity: 0.6;
+      }
+      .failed {
+        color: var(--neon-red);
+      }
+    `,
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class MessageItemComponent {
+  @Input({ required: true }) message!: Message;
+  @Input() isFirstInGroup = false;
+}

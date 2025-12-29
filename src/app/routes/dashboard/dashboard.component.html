@@ -15,7 +15,7 @@
     </div>
     <div class="metric">
       <span>Socket ID:</span>
-      <span style="font-size: 0.8em; word-break: break-all;">{{ socketId || 'N/A' }}</span>
+      <span style="font-size: 0.8em; word-break: break-all">{{ socketId || 'N/A' }}</span>
     </div>
     <div class="metric">
       <span>Transport:</span>
@@ -37,6 +37,22 @@
     <div class="metric">
       <span>Memory Usage:</span>
       <span style="color: var(--neon-yellow)">{{ memoryUsage }}</span>
+    </div>
+  </div>
+
+  <!-- Live Users Card -->
+  <div class="card">
+    <h2>Live Users</h2>
+    <div class="user-list">
+      @for (user of liveUsers; track user.id) {
+        <div class="user-entry">
+          <span class="user-status-online">●</span>
+          <span class="username">{{ user.username }}</span>
+          <span class="name">({{ user.name }})</span>
+        </div>
+      } @empty {
+        <div class="no-users">No users online</div>
+      }
     </div>
   </div>
 

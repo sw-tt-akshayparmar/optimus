@@ -25,7 +25,6 @@ import { MatButton } from '@angular/material/button';
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    NgOptimizedImage,
     MatFormField,
     MatIcon,
     MatInput,

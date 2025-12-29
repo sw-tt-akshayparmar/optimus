@@ -5,6 +5,8 @@ import { Subscription } from 'rxjs';
 import Constants from '../../constants/constants';
 import storageConstants from '../../constants/storage.constants';
 
+import { User } from '../../models/User.model';
+
 interface LogEntry {
   timestamp: Date;
   message: string;
@@ -22,6 +24,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   socketId: string | null = null;
   transport = 'Polling';
   activeUsers = 0;
+  liveUsers: User[] = [];
   uptime = '0h 0m';
   memoryUsage = '0 MB';
   logs: LogEntry[] = [];
@@ -73,6 +76,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.socketService.on('server-stats').subscribe((stats: any) => {
         if (stats) {
           this.activeUsers = stats.activeUsers || this.activeUsers;
+          this.liveUsers = (stats.users || []).map((u: any) => User.from(u));
           this.uptime = stats.uptime || this.uptime;
           this.memoryUsage = stats.memoryUsage || this.memoryUsage;
           this.cdr.detectChanges();

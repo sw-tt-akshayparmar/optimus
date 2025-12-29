@@ -95,3 +95,44 @@
 .message {
   color: var(--text-secondary);
 }
+
+.user-list {
+  max-height: 200px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.user-entry {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  background: var(--bg-surface-2);
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.user-status-online {
+  color: var(--neon-green);
+  font-size: 0.8rem;
+  text-shadow: 0 0 8px var(--neon-green);
+}
+
+.username {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.name {
+  color: var(--text-tertiary);
+  font-size: 0.8rem;
+}
+
+.no-users {
+  color: var(--text-tertiary);
+  font-style: italic;
+  text-align: center;
+  padding: 1rem;
+}
