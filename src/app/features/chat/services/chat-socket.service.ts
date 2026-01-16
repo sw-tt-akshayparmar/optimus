@@ -1,14 +1,13 @@
 import { Injectable, inject } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
-import { Observable, Subject, fromEvent } from 'rxjs';
-import { map, retryWhen, delay, take, filter } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Message, MessageAck, TypingIndicator, PresenceUpdate } from '../models/chat.models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChatSocketService {
-  private socket = inject(Socket);
+  private readonly socket = inject(Socket);
 
   // Connection State
   public connected$ = this.socket.fromEvent<void>('connect').pipe(map(() => true));
