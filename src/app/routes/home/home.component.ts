@@ -13,7 +13,7 @@ export class HomeComponent {
   match: any = null;
   opponentDisconnected = false;
 
-  constructor(private gameService: GameService) {}
+  constructor(private readonly gameService: GameService) {}
 
   handleStartMatch() {
     this.opponentDisconnected = false;

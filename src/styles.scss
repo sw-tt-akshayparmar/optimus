@@ -1,8 +1,9 @@
-@import "tailwindcss";
-@import "primeicons/primeicons.css";
-@import "@angular/material/prebuilt-themes/cyan-orange.css";
+@use "tailwindcss";
+@use "primeicons/primeicons.css";
+@use "@angular/material/prebuilt-themes/cyan-orange.css";
 
-@import "assets/theme";
+@use "assets/theme.scss";
+@use "assets/markdown.css";
 
 @theme {
   --color-primary: var(--neon-cyan);

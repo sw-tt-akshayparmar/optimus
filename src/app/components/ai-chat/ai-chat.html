@@ -1,29 +1,28 @@
 <div
-  class="gemini-chat-container p-4 rounded-xl bg-(--bg-surface-2) border border-white/5 shadow-lg flex flex-col h-[95%]"
+  class="gemini-chat-container p-4 rounded-xl bg-(--bg-surface-2) border border-white/5 shadow-lg flex flex-col h-[95%] w-full items-center"
 >
-  <div class="text-(--neon-purple) font-bold mb-4 border-b border-white/5 pb-2">AI Assistant</div>
-  <div #chatContainer class="message-list grow overflow-y-auto mb-4 space-y-4">
+  <div #chatContainer class="message-list grow overflow-y-auto mb-4 w-6xl space-y-4">
     @for (message of messages(); track $index) {
-        <div
+      <div
         class="message flex"
         [class.justify-end]="message.sender === 'user'"
         [class.justify-start]="message.sender === 'ai'"
-        >
+      >
         <div
-        class="message-content p-3 rounded-lg"
-        [class.max-w-xs]="message.sender === 'user'"
-        [class.w-full]="message.sender === 'ai'"
-        [class.bg-blue-600]="message.sender === 'user'"
-        [class.text-white]="message.sender === 'user'"
-        [class.bg-gray-700]="message.sender === 'ai'"
-        [class.text-gray-300]="message.sender === 'ai'"
+          class="message-content p-3 rounded-lg"
+          [class.max-w-xs]="message.sender === 'user'"
+          [class.w-full]="message.sender === 'ai'"
+          [class.bg-blue-600]="message.sender === 'user'"
+          [class.text-white]="message.sender === 'user'"
+          [class.bg-gray-700]="message.sender === 'ai'"
+          [class.text-gray-300]="message.sender === 'ai'"
         >
-        {{ message.text }}
+          {{ message.text }}
         </div>
-        </div>
+      </div>
     }
   </div>
-  <form class="message-form" [formGroup]="chatForm" (ngSubmit)="sendMessage()">
+  <form class="message-form w-6xl" [formGroup]="chatForm" (ngSubmit)="sendMessage()">
     <mat-form-field appearance="outline" class="w-full">
       <mat-label>Type your message...</mat-label>
       <input matInput formControlName="message" (keyup.enter)="sendMessage()" />
