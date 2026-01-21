@@ -14,6 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { SocketService } from '../../socket/socket.service';
 import { Events } from '../../socket/event.enum';
 import { Message } from '../../socket/message.model';
+import markdown from 'markdown-it';
 
 export interface AIChatMessage {
   prompt: string;
@@ -44,6 +45,7 @@ export class AIComponent implements OnInit {
   messages = signal<UIChatMessage[]>([{ text: 'Hello! How can I help you today?', sender: 'ai' }]);
   chatForm!: FormGroup;
   conversationId: string = crypto.randomUUID();
+  md = markdown();
 
   constructor(
     private readonly fb: FormBuilder,
@@ -61,6 +63,7 @@ export class AIComponent implements OnInit {
             text: message.data.response || '',
             sender: 'ai',
           };
+          console.log(this.md.render(aiMessage.text));
           this.messages.update((messages) => [...messages, aiMessage]);
           this.scrollToBottom();
         }

@@ -4,7 +4,7 @@
   <div #chatContainer class="message-list grow overflow-y-auto mb-4 w-6xl space-y-4">
     @for (message of messages(); track $index) {
       <div
-        class="message flex"
+        class="message flex markdown"
         [class.justify-end]="message.sender === 'user'"
         [class.justify-start]="message.sender === 'ai'"
       >
@@ -16,9 +16,8 @@
           [class.text-white]="message.sender === 'user'"
           [class.bg-gray-700]="message.sender === 'ai'"
           [class.text-gray-300]="message.sender === 'ai'"
-        >
-          {{ message.text }}
-        </div>
+          [innerHTML]="this.md.render(message.text)"
+        ></div>
       </div>
     }
   </div>

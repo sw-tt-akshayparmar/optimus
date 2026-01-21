@@ -1,10 +1,11 @@
+@import "theme.scss";
 
 .markdown {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   margin: 0;
-  color: #24292f;
-  background-color: #ffffff;
+  color: var(--text-primary);
+  background-color: transparent;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
   font-size: 16px;
   line-height: 1.5;
@@ -48,13 +49,18 @@
 
 .markdown a {
   background-color: transparent;
-  color: #0969da;
+  color: var(--neon-blue);
   text-decoration: none;
 }
 
 .markdown a:active,
 .markdown a:hover {
   outline-width: 0;
+}
+
+.markdown a:hover {
+  text-decoration: underline;
+  color: var(--neon-cyan);
 }
 
 .markdown abbr[title] {
@@ -65,6 +71,7 @@
 .markdown b,
 .markdown strong {
   font-weight: 600;
+  color: var(--text-primary);
 }
 
 .markdown dfn {
@@ -76,12 +83,13 @@
   font-weight: 600;
   padding-bottom: .3em;
   font-size: 2em;
-  border-bottom: 1px solid hsla(210, 18%, 87%, 1);
+  border-bottom: 1px solid var(--grid-line);
+  color: var(--text-primary);
 }
 
 .markdown mark {
-  background-color: #fff8c5;
-  color: #24292f;
+  background-color: var(--neon-yellow);
+  color: var(--bg-root);
 }
 
 .markdown small {
@@ -108,7 +116,7 @@
   border-style: none;
   max-width: 100%;
   box-sizing: content-box;
-  background-color: #ffffff;
+  background-color: var(--bg-surface-2);
 }
 
 .markdown code,
@@ -126,11 +134,11 @@
 .markdown hr {
   box-sizing: content-box;
   overflow: hidden;
-  border-bottom: 1px solid hsla(210, 18%, 87%, 1);
+  border-bottom: 1px solid var(--grid-line);
   height: .25em;
   padding: 0;
   margin: 24px 0;
-  background-color: #d0d7de;
+  background-color: var(--grid-line);
 }
 
 .markdown input {
@@ -190,10 +198,6 @@
   font: inherit;
 }
 
-.markdown a:hover {
-  text-decoration: underline;
-}
-
 .markdown hr::before {
   display: table;
   content: "";
@@ -232,12 +236,12 @@
   padding: 3px 5px;
   font: 11px ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
   line-height: 10px;
-  color: #24292f;
+  color: var(--text-primary);
   vertical-align: middle;
-  background-color: #f6f8fa;
-  border: 1px solid rgba(175, 184, 193, 0.2);
+  background-color: var(--bg-surface-3);
+  border: 1px solid var(--grid-line);
   border-radius: 6px;
-  box-shadow: inset 0 -1px 0 rgba(175, 184, 193, 0.2);
+  box-shadow: none;
 }
 
 .markdown h1,
@@ -250,13 +254,14 @@
   margin-bottom: 16px;
   font-weight: 600;
   line-height: 1.25;
+  color: var(--text-primary);
 }
 
 .markdown h2 {
   font-weight: 600;
   padding-bottom: .3em;
   font-size: 1.5em;
-  border-bottom: 1px solid hsla(210, 18%, 87%, 1);
+  border-bottom: 1px solid var(--grid-line);
 }
 
 .markdown h3 {
@@ -277,19 +282,20 @@
 .markdown h6 {
   font-weight: 600;
   font-size: .85em;
-  color: #57606a;
+  color: var(--text-secondary);
 }
 
 .markdown p {
   margin-top: 0;
   margin-bottom: 10px;
+  color: var(--text-secondary)
 }
 
 .markdown blockquote {
   margin: 0;
   padding: 0 1em;
-  color: #57606a;
-  border-left: .25em solid #d0d7de;
+  color: var(--text-secondary);
+  border-left: .25em solid var(--grid-line);
 }
 
 .markdown ul,
@@ -297,6 +303,7 @@
   margin-top: 0;
   margin-bottom: 0;
   padding-left: 2em;
+  color: var(--text-secondary);
 }
 
 .markdown ol ol,
@@ -337,7 +344,7 @@
 }
 
 .markdown ::placeholder {
-  color: #6e7781;
+  color: var(--text-muted);
   opacity: 1;
 }
 
@@ -348,31 +355,32 @@
   appearance: none;
 }
 
+/* Syntax highlighting styles */
 .markdown .pl-c {
-  color: #6e7781;
+  color: var(--text-muted);
 }
 
 .markdown .pl-c1,
 .markdown .pl-s .pl-v {
-  color: #0550ae;
+  color: var(--neon-blue);
 }
 
 .markdown .pl-e,
 .markdown .pl-en {
-  color: #8250df;
+  color: var(--neon-purple);
 }
 
 .markdown .pl-smi,
 .markdown .pl-s .pl-s1 {
-  color: #24292f;
+  color: var(--text-primary);
 }
 
 .markdown .pl-ent {
-  color: #116329;
+  color: var(--neon-green);
 }
 
 .markdown .pl-k {
-  color: #cf222e;
+  color: var(--neon-pink);
 }
 
 .markdown .pl-s,
@@ -382,91 +390,92 @@
 .markdown .pl-sr .pl-cce,
 .markdown .pl-sr .pl-sre,
 .markdown .pl-sr .pl-sra {
-  color: #0a3069;
+  color: var(--neon-cyan);
 }
 
 .markdown .pl-v,
 .markdown .pl-smw {
-  color: #953800;
+  color: var(--neon-orange);
 }
 
 .markdown .pl-bu {
-  color: #82071e;
+  color: var(--neon-red);
 }
 
 .markdown .pl-ii {
-  color: #f6f8fa;
-  background-color: #82071e;
+  color: var(--bg-root);
+  background-color: var(--neon-red);
 }
 
 .markdown .pl-c2 {
-  color: #f6f8fa;
-  background-color: #cf222e;
+  color: var(--bg-root);
+  background-color: var(--neon-red);
 }
 
 .markdown .pl-sr .pl-cce {
   font-weight: bold;
-  color: #116329;
+  color: var(--neon-green);
 }
 
 .markdown .pl-ml {
-  color: #3b2300;
+  color: var(--neon-yellow);
 }
 
 .markdown .pl-mh,
 .markdown .pl-mh .pl-en,
 .markdown .pl-ms {
   font-weight: bold;
-  color: #0550ae;
+  color: var(--neon-blue);
 }
 
 .markdown .pl-mi {
   font-style: italic;
-  color: #24292f;
+  color: var(--text-primary);
 }
 
 .markdown .pl-mb {
   font-weight: bold;
-  color: #24292f;
+  color: var(--text-primary);
 }
 
 .markdown .pl-md {
-  color: #82071e;
-  background-color: #FFEBE9;
+  color: var(--neon-red);
+  background-color: rgba(255, 82, 82, 0.1);
 }
 
 .markdown .pl-mi1 {
-  color: #116329;
-  background-color: #dafbe1;
+  color: var(--neon-green);
+  background-color: rgba(46, 160, 67, 0.1);
 }
 
 .markdown .pl-mc {
-  color: #953800;
-  background-color: #ffd8b5;
+  color: var(--neon-orange);
+  background-color: rgba(255, 140, 0, 0.1);
 }
 
 .markdown .pl-mi2 {
-  color: #eaeef2;
-  background-color: #0550ae;
+  color: var(--text-primary);
+  background-color: var(--bg-surface-3);
 }
 
 .markdown .pl-mdr {
   font-weight: bold;
-  color: #8250df;
+  color: var(--neon-purple);
 }
 
 .markdown .pl-ba {
-  color: #57606a;
+  color: var(--text-secondary);
 }
 
 .markdown .pl-sg {
-  color: #8c959f;
+  color: var(--text-muted);
 }
 
 .markdown .pl-corl {
   text-decoration: underline;
-  color: #0a3069;
+  color: var(--neon-cyan);
 }
+
 
 .markdown [data-catalyst] {
   display: block;
@@ -511,7 +520,7 @@
 }
 
 .markdown .absent {
-  color: #cf222e;
+  color: var(--neon-red);
 }
 
 .markdown .anchor {
@@ -559,7 +568,7 @@
 .markdown h4 .octicon-link,
 .markdown h5 .octicon-link,
 .markdown h6 .octicon-link {
-  color: #24292f;
+  color: var(--text-primary);
   vertical-align: middle;
   visibility: hidden;
 }
@@ -646,30 +655,33 @@
   font-size: 1em;
   font-style: italic;
   font-weight: 600;
+  color: var(--text-primary);
 }
 
 .markdown dl dd {
   padding: 0 16px;
   margin-bottom: 16px;
+  color: var(--text-secondary);
 }
 
 .markdown table th {
   font-weight: 600;
+  color: var(--text-primary);
 }
 
 .markdown table th,
 .markdown table td {
   padding: 6px 13px;
-  border: 1px solid #d0d7de;
+  border: 1px solid var(--grid-line);
 }
 
 .markdown table tr {
-  background-color: #ffffff;
-  border-top: 1px solid hsla(210, 18%, 87%, 1);
+  background-color: var(--bg-surface-1);
+  border-top: 1px solid var(--grid-line);
 }
 
 .markdown table tr:nth-child(2n) {
-  background-color: #f6f8fa;
+  background-color: var(--bg-surface-2);
 }
 
 .markdown table img {
@@ -702,7 +714,7 @@
   padding: 7px;
   margin: 13px 0 0;
   overflow: hidden;
-  border: 1px solid #d0d7de;
+  border: 1px solid var(--grid-line);
 }
 
 .markdown span.frame span img {
@@ -714,7 +726,7 @@
   display: block;
   padding: 5px 0 0;
   clear: both;
-  color: #24292f;
+  color: var(--text-primary);
 }
 
 .markdown span.align-center {
@@ -783,8 +795,9 @@
   padding: .2em .4em;
   margin: 0;
   font-size: 85%;
-  background-color: rgba(175, 184, 193, 0.2);
+  background-color: var(--bg-surface-3);
   border-radius: 6px;
+  color: var(--text-secondary);
 }
 
 .markdown code br,
@@ -824,7 +837,7 @@
   overflow: auto;
   font-size: 85%;
   line-height: 1.45;
-  background-color: #f6f8fa;
+  background-color: var(--bg-surface-1);
   border-radius: 6px;
 }
 
@@ -854,7 +867,7 @@
 .markdown .csv-data .blob-num {
   padding: 10px 8px 9px;
   text-align: right;
-  background: #ffffff;
+  background: var(--bg-surface-2);
   border: 0;
 }
 
@@ -864,14 +877,14 @@
 
 .markdown .csv-data th {
   font-weight: 600;
-  background: #f6f8fa;
+  background: var(--bg-surface-3);
   border-top: 0;
 }
 
 .markdown .footnotes {
   font-size: 12px;
-  color: #57606a;
-  border-top: 1px solid #d0d7de;
+  color: var(--text-secondary);
+  border-top: 1px solid var(--grid-line);
 }
 
 .markdown .footnotes ol {
@@ -890,12 +903,12 @@
   left: -24px;
   pointer-events: none;
   content: "";
-  border: 2px solid #0969da;
+  border: 2px solid var(--neon-blue);
   border-radius: 6px;
 }
 
 .markdown .footnotes li:target {
-  color: #24292f;
+  color: var(--text-primary);
 }
 
 .markdown .footnotes .data-footnote-backref g-emoji {
