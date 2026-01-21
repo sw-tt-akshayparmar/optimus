@@ -2,22 +2,22 @@ import { Injectable, inject, PLATFORM_ID } from '@angular/core';
 import { User } from '../models/User.model';
 import { ApiService } from './api.service';
 import APIConfig from '../config/api.config';
-import { catchError, map, of, throwError } from 'rxjs';
+import { catchError, map, throwError } from 'rxjs';
 import { SuccessResponse } from '../models/Response.model';
 import { AuthToken } from '../models/Auth.model';
 import storageConstants from '../constants/storage.constants';
 import { Exception } from '../exception/app.exception';
 import ErrorCode from '../enums/error.enum';
-import { SocketService } from './socket.service';
 import { isPlatformBrowser } from '@angular/common';
+import { SocketService } from '../socket/socket.service';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-  private platformId = inject(PLATFORM_ID);
+  private readonly platformId = inject(PLATFORM_ID);
 
   constructor(
-    private apiService: ApiService,
-    private socketService: SocketService,
+    private readonly apiService: ApiService,
+    private readonly socketService: SocketService,
   ) {}
   login(data: { username: string; password: string }) {
     return this.apiService.post<AuthToken>(APIConfig.LOGIN, data).pipe(
@@ -26,7 +26,7 @@ export class UserService {
         this.setAccessToken(res.data.accessToken);
         this.setRefreshToken(res.data.refreshToken);
         this.setUserData(res.data.user);
-        return res.data.user!;
+        return res.data.user;
       }),
       catchError((err) => {
         let exception: Exception;
@@ -47,7 +47,7 @@ export class UserService {
         this.setAccessToken(res.data.accessToken);
         this.setRefreshToken(res.data.refreshToken);
         this.setUserData(res.data.user);
-        return res.data.user!;
+        return res.data.user;
       }),
       catchError((err) => {
         let exception: Exception;

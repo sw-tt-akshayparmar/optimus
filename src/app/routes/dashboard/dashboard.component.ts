@@ -1,11 +1,9 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SocketService } from '../../services/socket.service';
 import { Subscription } from 'rxjs';
-import Constants from '../../constants/constants';
-import storageConstants from '../../constants/storage.constants';
-
 import { User } from '../../models/User.model';
+import { SocketService } from '../../socket/socket.service';
+import { Events } from '../../socket/event.enum';
 
 interface LogEntry {
   timestamp: Date;
@@ -29,18 +27,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
   memoryUsage = '0 MB';
   logs: LogEntry[] = [];
 
-  private subscriptions: Subscription[] = [];
+  private readonly subscriptions: Subscription[] = [];
 
   constructor(
-    private socketService: SocketService,
-    private cdr: ChangeDetectorRef,
+    private readonly socketService: SocketService,
+    private readonly cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit() {
     this.checkSocketStatus();
     this.subscribeToSocketEvents();
 
-    // Simulate some initial logs
     this.addLog('Dashboard initialized');
   }
 
@@ -49,14 +46,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   private checkSocketStatus() {
-    // In a real app, we might need to expose the socket instance or status from SocketService
-    // For now, we'll rely on events and local storage
     this.socketConnected = !!this.socketId;
   }
 
   private subscribeToSocketEvents() {
     this.subscriptions.push(
-      this.socketService.on(Constants.CONNECT).subscribe(() => {
+      this.socketService.on(Events.CONNECT).subscribe(() => {
         this.socketConnected = true;
         this.transport = 'WebSocket'; // Assumption
         this.addLog('Socket connected');
@@ -65,7 +60,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     );
 
     this.subscriptions.push(
-      this.socketService.on(Constants.DISCONNECT).subscribe(() => {
+      this.socketService.on(Events.DISCONNECT).subscribe(() => {
         this.socketConnected = false;
         this.addLog('Socket disconnected');
         this.cdr.detectChanges();
@@ -84,9 +79,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
       }),
     );
 
-    // Listen for general messages to log
     this.subscriptions.push(
-      this.socketService.on(Constants.MESSAGE_EVENT).subscribe((msg: any) => {
+      this.socketService.on(Events.MESSAGE_EVENT).subscribe((msg: any) => {
         this.addLog(`Message received: ${JSON.stringify(msg)}`);
       }),
     );

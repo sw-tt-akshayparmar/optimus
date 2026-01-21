@@ -1,9 +1,10 @@
 import { Injectable, inject, PLATFORM_ID } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { isPlatformBrowser } from '@angular/common';
-import Constants from '../constants/constants';
 import storageConstants from '../constants/storage.constants';
-import { ToastService } from './toast.service';
+import { ToastService } from '../services/toast.service';
+import { Events } from './event.enum';
+import { Message } from './message.model';
 
 interface ClientHello {
   socketId?: string;
@@ -11,12 +12,12 @@ interface ClientHello {
 }
 @Injectable({ providedIn: 'root' })
 export class SocketService {
-  private socket = inject(Socket);
-  private platformId = inject(PLATFORM_ID);
+  private readonly socket = inject(Socket);
+  private readonly platformId = inject(PLATFORM_ID);
 
   private initialized = false;
 
-  constructor(private toastService: ToastService) {
+  constructor(private readonly toastService: ToastService) {
     this.init();
   }
 
@@ -33,39 +34,39 @@ export class SocketService {
   private registerListeners() {
     this.socket.removeAllListeners();
 
-    this.socket.on(Constants.CONNECT, () => {
+    this.socket.on(Events.CONNECT, () => {
       const id = this.socket.ioSocket.id!;
       localStorage.setItem(storageConstants.SOCKET_ID, id);
       console.log('Socket Connected: ', this.socket.id);
 
       const auth = localStorage.getItem(storageConstants.AUTHORIZATION_TOKEN);
       if (auth) {
-        this.socket.emit(Constants.AUTH, {
+        this.socket.emit(Events.AUTH, {
           socketId: id,
           authorization: auth,
         } satisfies ClientHello);
       }
     });
 
-    this.socket.on(Constants.SERVER_AUTH_SUCCESS, () => {
+    this.socket.on(Events.SERVER_AUTH_SUCCESS, () => {
       this.toastService.success('Socket Auth Successful', '');
     });
 
-    this.socket.on(Constants.SERVER_AUTH_FAILED, () => {
+    this.socket.on(Events.SERVER_AUTH_FAILED, () => {
       this.toastService.error('Socket Auth Failed', '');
     });
 
-    this.socket.on(Constants.DISCONNECT, () => {});
+    this.socket.on(Events.DISCONNECT, () => {});
   }
   auth(authorization: string, socketId?: string) {
     if (isPlatformBrowser(this.platformId)) {
-      this.socket.emit(Constants.AUTH, {
+      this.socket.emit(Events.AUTH, {
         authorization,
         socketId,
       } satisfies ClientHello);
     }
   }
-  emit(event: string, data: any) {
+  emit(event: string, data: Message) {
     if (isPlatformBrowser(this.platformId)) {
       this.socket.emit(event, data);
     }

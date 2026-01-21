@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
-import { SocketService } from './socket.service';
-import Constants from '../constants/constants';
 import { ApiService } from './api.service';
 import APIConfig from '../config/api.config';
 import { UserService } from './user.service';
 import { GameMatch } from '../models/game/GameMatch.model';
 import { Game as GameModel } from '../models/game/Game.model';
 import { Move } from '../lib/chess/move';
+import { Events } from '../socket/event.enum';
+import { SocketService } from '../socket/socket.service';
 
 @Injectable({ providedIn: 'root' })
 export class GameService {
   constructor(
-    private socket: SocketService,
-    private apiService: ApiService,
-    private userService: UserService,
+    private readonly socket: SocketService,
+    private readonly apiService: ApiService,
+    private readonly userService: UserService,
   ) {}
   startMatch(): Observable<any> {
     return this.apiService.post(APIConfig.GAME_MATCH, null, null, {
@@ -30,7 +30,7 @@ export class GameService {
     // );
   }
   onMoves() {
-    return this.socket.on<{ game: GameModel; move: Move }>(Constants.GAME_MOVE);
+    return this.socket.on<{ game: GameModel; move: Move }>(Events.GAME_MOVE);
     // .pipe(
     //   tap({
     //     next: (m: { game: GameModel; move: Move }) => {
@@ -43,7 +43,7 @@ export class GameService {
     // );
   }
   onMatch() {
-    return this.socket.on<GameMatch>(Constants.MATCH_FOUND);
+    return this.socket.on<GameMatch>(Events.MATCH_FOUND);
     //   .pipe(
     //   tap({
     //     next: (match: GameMatch) => {
@@ -56,6 +56,8 @@ export class GameService {
     // );
   }
   sendMove(move: { game: GameModel; move: Move }) {
-    this.socket.emit(Constants.GAME_MOVE, move);
+    // TODO Temporary @ts-ignore
+    // @ts-ignore
+    this.socket.emit(Events.GAME_MOVE, move);
   }
 }
