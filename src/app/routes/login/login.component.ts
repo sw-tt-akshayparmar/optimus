@@ -24,6 +24,7 @@ import { MatButton } from '@angular/material/button';
     MatIcon,
     MatButton,
     MatError,
+    NgOptimizedImage,
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
@@ -33,12 +34,12 @@ export class LoginComponent {
   returnUrl: string = '/';
 
   constructor(
-    private fb: FormBuilder,
-    private userService: UserService,
-    private toast: ToastService,
+    private readonly fb: FormBuilder,
+    private readonly userService: UserService,
+    private readonly toast: ToastService,
     protected loaders: LoaderService,
     protected router: Router,
-    private route: ActivatedRoute,
+    private readonly route: ActivatedRoute,
   ) {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     this.loginForm = this.fb.group({

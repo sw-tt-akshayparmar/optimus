@@ -1,10 +1,10 @@
 # Optimus (Angular + SSR)
 
-Optimus is an Angular 20 application with Server-Side Rendering (SSR) powered by @angular/ssr and an Express server. It
+Optimus is an Angular 21 application with Server-Side Rendering (SSR) powered by @angular/ssr and an Express server. It
 is designed to work with a separate backend service for authentication and real-time features (Socket.IO).
 
 Backend project (pair this frontend with):
-https://github.com/vitaminncpp/bun-project
+https://github.com/vitaminncpp/optimus-m
 
 - Start the backend by following its README.
 - Configure this frontend to point to the backend API and Socket.IO URLs (see Configuration section below).
@@ -45,6 +45,7 @@ npm install
 ```bash
 npm run start
 ```
+
 - The app will be served with SSL. See the SSL notes below if you need to change the certificate or disable SSL.
 
 Typical local setup:
@@ -73,10 +74,12 @@ Typical local setup:
 
 ## Development
 
-- Start dev server: 
+- Start dev server:
+
 ```bash
 npm run start
 ```
+
 - By default, SSL is enabled. Angular.json points to:
     - sslKey: `D:\ssl certificates\server-ec.key`
     - sslCert: `D:\ssl certificates\server-ec.crt`
@@ -87,15 +90,19 @@ npm run start
 ## Building and Running with SSR (Production-like)
 
 1) Build the application
+
 ```bash 
 npm run build
 ```
 
 2) Run the SSR server
+
 ```bash 
 npm run serve:ssr:optimus
 ```
-- The Express server (`src/server.ts`) will serve static assets from the browser build and render routes via Angular SSR.
+
+- The Express server (`src/server.ts`) will serve static assets from the browser build and render routes via Angular
+  SSR.
   By default, it listens on PORT=4000 (configurable via env var PORT).
 
 Note: The server enables security and performance middlewares (helmet, compression, morgan). In development mode (
@@ -121,6 +128,7 @@ If you change your backend `host/port/protocol`, update `environments.ts` accord
 `dev/prod`), you can introduce separate environment files or a runtime configuration mechanism if required.
 
 ## Project Structure (high level)
+
 ```textmate
 - src/
     - app/
@@ -137,22 +145,28 @@ If you change your backend `host/port/protocol`, update `environments.ts` accord
 
 ## Linting and Formatting
 
-- Lint: 
+- Lint:
+
 ```bash
 npm run lint
 ```
-- Auto-fix: 
+
+- Auto-fix:
+
  ```bash
 npm run lint:fix
 ````
-- Format: 
+
+- Format:
+
 ```bash
 npm run format
 ````
 
 ## Testing
 
-- Unit tests: 
+- Unit tests:
+
 ```bash
 npm run test
 ```
@@ -160,7 +174,8 @@ npm run test
 ## Troubleshooting
 
 - SSL certificate issues in dev
-    - If ng serve fails due to SSL paths, update `angular.json` `serve.options.sslKey` and `sslCert`, or remove them and use
+    - If ng serve fails due to SSL paths, update `angular.json` `serve.options.sslKey` and `sslCert`, or remove them and
+      use
       `ng serve --ssl` with a locally trusted Angular CLI certificate.
 - CORS or network errors
     - Ensure the backend is running, reachable, and CORS is configured if the frontend and backend are on different

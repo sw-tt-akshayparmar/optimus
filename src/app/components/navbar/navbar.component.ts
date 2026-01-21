@@ -18,6 +18,7 @@ export class NavbarComponent {
     { to: '/dashboard', label: 'Dashboard' },
     { to: '/chat', label: 'Chat' },
     { to: '/workspace', label: 'Workspace' },
+    { to: '/ai', label: 'AI' },
   ];
 
   isActive(link: string) {
