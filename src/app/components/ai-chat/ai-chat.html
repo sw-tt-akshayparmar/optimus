@@ -4,23 +4,23 @@
   <div class="text-(--neon-purple) font-bold mb-4 border-b border-white/5 pb-2">AI Assistant</div>
   <div #chatContainer class="message-list grow overflow-y-auto mb-4 space-y-4">
     @for (message of messages(); track $index) {
-      <div
-        class="message"
-        [class.user-message]="message.sender === 'user'"
-        [class.ai-message]="message.sender === 'ai'"
-      >
         <div
-          class="message-content p-3 rounded-lg max-w-xs"
-          [class.bg-blue-600]="message.sender === 'user'"
-          [class.text-white]="message.sender === 'user'"
-          [class.self-end]="message.sender === 'user'"
-          [class.bg-gray-700]="message.sender === 'ai'"
-          [class.text-gray-300]="message.sender === 'ai'"
-          [class.self-start]="message.sender === 'ai'"
+        class="message flex"
+        [class.justify-end]="message.sender === 'user'"
+        [class.justify-start]="message.sender === 'ai'"
         >
-          {{ message.text }}
+        <div
+        class="message-content p-3 rounded-lg"
+        [class.max-w-xs]="message.sender === 'user'"
+        [class.w-full]="message.sender === 'ai'"
+        [class.bg-blue-600]="message.sender === 'user'"
+        [class.text-white]="message.sender === 'user'"
+        [class.bg-gray-700]="message.sender === 'ai'"
+        [class.text-gray-300]="message.sender === 'ai'"
+        >
+        {{ message.text }}
         </div>
-      </div>
+        </div>
     }
   </div>
   <form class="message-form" [formGroup]="chatForm" (ngSubmit)="sendMessage()">
