@@ -37,7 +37,8 @@ export interface UIChatMessage {
     MatIconModule,
   ],
   templateUrl: './ai-chat.html',
-      styleUrl: './ai-chat.css',  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrl: './ai-chat.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AIComponent implements OnInit {
   @ViewChild('chatContainer') private readonly chatContainer!: ElementRef;
@@ -45,16 +46,14 @@ export class AIComponent implements OnInit {
   chatForm!: FormGroup;
   conversationId: string = crypto.randomUUID();
   md = markdown();
-
   constructor(
     private readonly fb: FormBuilder,
     private readonly socketService: SocketService,
-  ) {
+  ) {}
+  ngOnInit(): void {
     this.chatForm = this.fb.group({
       message: ['', Validators.required],
     });
-  }
-  ngOnInit(): void {
     this.socketService.on<Message<AIChatMessage>>(Events.SIO_RES).subscribe({
       next: (message) => {
         if (message.success) {
