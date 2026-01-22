@@ -1,7 +1,7 @@
 import { Injectable, inject, PLATFORM_ID } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { isPlatformBrowser } from '@angular/common';
-import storageConstants from '../constants/storage.constants';
+import Keys from '../enums/keys.enum';
 import { ToastService } from '../services/toast.service';
 import { Events } from './event.enum';
 import { Message } from './message.model';
@@ -36,9 +36,9 @@ export class SocketService {
 
     this.socket.on(Events.CONNECT, () => {
       const id = this.socket.ioSocket.id!;
-      localStorage.setItem(storageConstants.SOCKET_ID, id);
+      localStorage.setItem(Keys.SOCKET_ID, id);
 
-      const auth = localStorage.getItem(storageConstants.AUTHORIZATION_TOKEN);
+      const auth = localStorage.getItem(Keys.AUTHORIZATION_TOKEN);
       if (auth) {
         this.socket.emit(Events.AUTH, {
           socketId: id,

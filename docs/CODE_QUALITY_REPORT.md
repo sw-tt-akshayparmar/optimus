@@ -32,9 +32,9 @@ Issues, Severity, and Actionable Improvements
   - getRefreshToken(token: string): string | null accepts an unused parameter; wrong signature. 🟠
 - Impact: Confuses consumers and returns undefined where a value is expected; future bugs likely.
 - Fix:
-  - getSocketId(): string | null { return localStorage.getItem(storageConstants.CONNECTION_ID); }
+  - getSocketId(): string | null { return localStorage.getItem(KeysEnum.SocketId); }
   - getUserData(): User | null { const j = localStorage.getItem(...); return j ? User.from(JSON.parse(j)) : null; }
-  - getRefreshToken(): string | null { return localStorage.getItem(storageConstants.REFRESH_TOKEN); }
+  - getRefreshToken(): string | null { return localStorage.getItem(KeysEnum.REFRESH_TOKEN); }
 
 2) UserService: register() placeholder implementation
 - Problem: register(...) returns of(new User()) without using ApiService or APIConfig.REGISTER. 🟠

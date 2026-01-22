@@ -5,11 +5,11 @@ import APIConfig from '../config/api.config';
 import { catchError, map, throwError } from 'rxjs';
 import { SuccessResponse } from '../models/Response.model';
 import { AuthToken } from '../models/Auth.model';
-import storageConstants from '../constants/storage.constants';
 import { Exception } from '../exception/app.exception';
 import ErrorCode from '../enums/error.enum';
 import { isPlatformBrowser } from '@angular/common';
 import { SocketService } from '../socket/socket.service';
+import Keys from '../enums/keys.enum';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -61,48 +61,43 @@ export class UserService {
     );
   }
 
-  setConnectionId(connectionId: string) {
-    if (isPlatformBrowser(this.platformId)) {
-      localStorage.setItem(storageConstants.SOCKET_ID, connectionId);
-    }
-  }
   setUserData(user: User) {
     if (isPlatformBrowser(this.platformId)) {
-      localStorage.setItem(storageConstants.USER_DATA, JSON.stringify(user));
+      localStorage.setItem(Keys.USER_DATA, JSON.stringify(user));
     }
   }
   setAccessToken(token: string) {
     if (isPlatformBrowser(this.platformId)) {
-      localStorage.setItem(storageConstants.AUTHORIZATION_TOKEN, token);
+      localStorage.setItem(Keys.AUTHORIZATION_TOKEN, token);
     }
   }
   setRefreshToken(token: string) {
     if (isPlatformBrowser(this.platformId)) {
-      localStorage.setItem(storageConstants.REFRESH_TOKEN, token);
+      localStorage.setItem(Keys.REFRESH_TOKEN, token);
     }
   }
   getSocketId() {
     if (isPlatformBrowser(this.platformId)) {
-      return localStorage.getItem(storageConstants.SOCKET_ID);
+      return localStorage.getItem(Keys.SOCKET_ID);
     }
     return null;
   }
   getUserData(): User | null {
     if (isPlatformBrowser(this.platformId)) {
-      const userJSON = localStorage.getItem(storageConstants.USER_DATA);
+      const userJSON = localStorage.getItem(Keys.USER_DATA);
       return userJSON ? User.from(JSON.parse(userJSON)) : null;
     }
     return null;
   }
   getAccessToken(): string | null {
     if (isPlatformBrowser(this.platformId)) {
-      return localStorage.getItem(storageConstants.AUTHORIZATION_TOKEN);
+      return localStorage.getItem(Keys.AUTHORIZATION_TOKEN);
     }
     return null;
   }
   getRefreshToken(): string | null {
     if (isPlatformBrowser(this.platformId)) {
-      return localStorage.getItem(storageConstants.REFRESH_TOKEN);
+      return localStorage.getItem(Keys.REFRESH_TOKEN);
     }
     return null;
   }

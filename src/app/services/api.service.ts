@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SuccessResponse } from '../models/Response.model';
 import environments from '../environments';
-import storageConstants from '../constants/storage.constants';
+import Keys from '../enums/keys.enum';
 import { Exception } from '../exception/app.exception';
 import ErrorCode from '../enums/error.enum';
 import { isPlatformBrowser } from '@angular/common';
@@ -12,8 +12,8 @@ import { isPlatformBrowser } from '@angular/common';
   providedIn: 'root',
 })
 export class ApiService {
-  private platformId = inject(PLATFORM_ID);
-  constructor(private http: HttpClient) {}
+  private readonly platformId = inject(PLATFORM_ID);
+  constructor(private readonly http: HttpClient) {}
 
   get<Data = any, Error = any>(
     api: { path: string; auth?: boolean },
@@ -75,7 +75,7 @@ export class ApiService {
     if (api.auth) {
       let auth_token: string | null = null;
       if (isPlatformBrowser(this.platformId)) {
-        auth_token = localStorage.getItem(storageConstants.AUTHORIZATION_TOKEN);
+        auth_token = localStorage.getItem(Keys.AUTHORIZATION_TOKEN);
       }
 
       if (!auth_token)
@@ -87,7 +87,7 @@ export class ApiService {
       httpHeaders = httpHeaders.set('Authorization', 'Bearer ' + auth_token);
     }
 
-    const paramPath = params && params.length ? '/' + params.map(encodeURIComponent).join('/') : '';
+    const paramPath = params?.length ? '/' + params.map(encodeURIComponent).join('/') : '';
     const url = `${environments.API_BASE_URL}${api.path}${paramPath}`;
 
     return { url, headers: httpHeaders, params: query };
