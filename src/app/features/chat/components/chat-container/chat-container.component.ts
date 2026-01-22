@@ -174,7 +174,6 @@ export class ChatContainerComponent implements OnInit, OnDestroy {
     const m = [...this.messages(), optimisticMsg];
     // Update UI instantly
     this.messages.set(m);
-    console.log(m);
 
     // Emit to socket
     this.chatService.sendMessage(this.roomId, content, nonce);

@@ -37,7 +37,6 @@ export class SocketService {
     this.socket.on(Events.CONNECT, () => {
       const id = this.socket.ioSocket.id!;
       localStorage.setItem(storageConstants.SOCKET_ID, id);
-      console.log('Socket Connected: ', this.socket.id);
 
       const auth = localStorage.getItem(storageConstants.AUTHORIZATION_TOKEN);
       if (auth) {
