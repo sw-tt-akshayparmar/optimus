@@ -53,7 +53,6 @@ export class AIComponent implements OnInit, AfterViewInit {
   chatForm!: FormGroup;
   conversationId: string = crypto.randomUUID();
   md = markdown();
-  private view: any;
   constructor(
     private readonly fb: FormBuilder,
     private readonly socketService: SocketService,
@@ -77,15 +76,7 @@ export class AIComponent implements OnInit, AfterViewInit {
       },
     });
   }
-  async ngAfterViewInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      const result = await embed(this.vega.nativeElement, BAR_CHART_SPEC as any, {
-        actions: false,
-        renderer: 'canvas',
-      });
-      this.view = result.view;
-    }
-  }
+  async ngAfterViewInit() {}
 
   sendMessage() {
     if (this.chatForm.valid && this.chatForm.value.message) {
