@@ -5,6 +5,9 @@ import {
   signal,
   ViewChild,
   ElementRef,
+  AfterViewInit,
+  PLATFORM_ID,
+  Inject,
 } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -15,6 +18,9 @@ import { SocketService } from '../../socket/socket.service';
 import { Events } from '../../socket/event.enum';
 import { Message } from '../../socket/message.model';
 import markdown from 'markdown-it';
+import embed, { VisualizationSpec } from 'vega-embed';
+import { BAR_CHART_SPEC } from './vega.json';
+import { isPlatformBrowser } from '@angular/common';
 
 export interface AIChatMessage {
   prompt: string;
@@ -40,15 +46,18 @@ export interface UIChatMessage {
   styleUrl: './ai-chat.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AIComponent implements OnInit {
+export class AIComponent implements OnInit, AfterViewInit {
   @ViewChild('chatContainer') private readonly chatContainer!: ElementRef;
+  @ViewChild('vega', { static: true }) vega!: ElementRef;
   messages = signal<UIChatMessage[]>([{ text: 'Hello! How can I help you today?', sender: 'ai' }]);
   chatForm!: FormGroup;
   conversationId: string = crypto.randomUUID();
   md = markdown();
+  private view: any;
   constructor(
     private readonly fb: FormBuilder,
     private readonly socketService: SocketService,
+    @Inject(PLATFORM_ID) private readonly platformId: Object,
   ) {}
   ngOnInit(): void {
     this.chatForm = this.fb.group({
@@ -67,6 +76,15 @@ export class AIComponent implements OnInit {
         }
       },
     });
+  }
+  async ngAfterViewInit() {
+    if (isPlatformBrowser(this.platformId)) {
+      const result = await embed(this.vega.nativeElement, BAR_CHART_SPEC as any, {
+        actions: false,
+        renderer: 'canvas',
+      });
+      this.view = result.view;
+    }
   }
 
   sendMessage() {
