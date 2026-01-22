@@ -37,8 +37,7 @@ export interface UIChatMessage {
     MatIconModule,
   ],
   templateUrl: './ai-chat.html',
-  styleUrl: './ai-chat.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+      styleUrl: './ai-chat.css',  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AIComponent implements OnInit {
   @ViewChild('chatContainer') private readonly chatContainer!: ElementRef;
