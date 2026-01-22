@@ -101,4 +101,15 @@ export class UserService {
     }
     return null;
   }
+  isLoggedIn() {
+    return !!this.getAccessToken();
+  }
+  logout() {
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem(Keys.AUTHORIZATION_TOKEN);
+      localStorage.removeItem(Keys.REFRESH_TOKEN);
+      localStorage.removeItem(Keys.SOCKET_ID);
+      localStorage.removeItem(Keys.USER_DATA);
+    }
+  }
 }

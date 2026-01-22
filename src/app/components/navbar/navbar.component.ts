@@ -1,7 +1,8 @@
-import { Component, inject } from '@angular/core';
-import { Router, RouterLinkActive, RouterModule } from '@angular/router';
+import { Component } from '@angular/core';
+import { Router, RouterLinkActive, RouterModule, isActive } from '@angular/router';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-navbar',
@@ -11,7 +12,10 @@ import { MatIcon } from '@angular/material/icon';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent {
-  protected router = inject(Router);
+  constructor(
+    protected readonly userService: UserService,
+    protected readonly router: Router,
+  ) {}
 
   navLinks = [
     { to: '/', label: 'Home' },
@@ -22,11 +26,22 @@ export class NavbarComponent {
   ];
 
   isActive(link: string) {
-    return this.router.isActive(link, {
+    return isActive(link, this.router, {
       paths: 'exact',
       queryParams: 'ignored',
       fragment: 'ignored',
       matrixParams: 'ignored',
     });
+  }
+
+  login() {
+    this.router.navigate(['login']);
+  }
+  register() {
+    this.router.navigate(['register']);
+  }
+  logout() {
+    this.userService.logout();
+    this.router.navigate(['login']);
   }
 }

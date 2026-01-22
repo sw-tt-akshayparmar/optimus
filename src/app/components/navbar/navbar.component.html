@@ -21,14 +21,23 @@
   </ul>
 
   <!-- Action Buttons -->
-  <div class="flex items-center gap-3">
-    <button mat-flat-button class="login-btn" (click)="router.navigate(['login'])">
-      <mat-icon>login</mat-icon>
-      LOG IN
-    </button>
-    <button mat-stroked-button class="signup-btn" (click)="router.navigate(['register'])">
-      <mat-icon>person_add</mat-icon>
-      SIGN UP
-    </button>
-  </div>
+  @if (userService.isLoggedIn()) {
+    <div class="flex items-center gap-3">
+      <button mat-flat-button class="login-btn" (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
+        LOG OUT
+      </button>
+    </div>
+  } @else {
+    <div class="flex items-center gap-3">
+      <button mat-flat-button class="login-btn" (click)="login()">
+        <mat-icon>login</mat-icon>
+        LOG IN
+      </button>
+      <button mat-stroked-button class="signup-btn" (click)="register()">
+        <mat-icon>person_add</mat-icon>
+        SIGN UP
+      </button>
+    </div>
+  }
 </nav>
