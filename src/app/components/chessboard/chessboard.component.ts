@@ -21,7 +21,7 @@ import { Game as GameModel } from '../../models/game/Game.model';
   selector: 'app-chessboard',
   standalone: true,
   templateUrl: './chessboard.component.html',
-  styleUrl: './chessboard.component.scss',
+  styleUrl: './chessboard.component.css',
   imports: [
     CommonModule,
     CdkDrag,
@@ -45,9 +45,9 @@ export class ChessboardComponent implements OnInit {
   protected match!: GameMatch;
   constructor(
     @Inject(PLATFORM_ID) platformId: Object,
-    private gameService: GameService,
-    private toast: ToastService,
-    private userService: UserService,
+    private readonly gameService: GameService,
+    private readonly toast: ToastService,
+    private readonly userService: UserService,
     protected loader: LoaderService,
   ) {
     this.isBrowser = isPlatformBrowser(platformId);

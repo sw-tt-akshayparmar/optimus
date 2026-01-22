@@ -1,0 +1,46 @@
+/* ===============================
+   DARK BACKGROUND SYSTEM
+   =============================== */
+/* ===============================
+   TEXT & GRID COLORS
+   =============================== */
+/* ===============================
+   NEON DATA COLORS
+   =============================== */
+/* Core neon spectrum (balanced luminance) */
+/* ===============================
+   SEMANTIC DATA MAPPING
+   =============================== */
+/* ===============================
+   BAR CHART COLORS
+   =============================== */
+/* ===============================
+   LINE CHART STYLES
+   =============================== */
+/* ===============================
+   FILLED AREA COLORS
+   =============================== */
+/* ===============================
+   NEON GLOW (SUBTLE)
+   =============================== */
+/* ===============================
+   CSS VARIABLES EXPORT
+   =============================== */
+:root {
+  --bg-root: #0b1020;
+  --bg-surface-1: #11172b;
+  --bg-surface-2: #161d3a;
+  --bg-surface-3: #1d2550;
+  --text-primary: #e8ebff;
+  --text-secondary: rgba(232, 235, 255, 0.65);
+  --text-muted: rgba(232, 235, 255, 0.45);
+  --neon-cyan: #2ef2ff;
+  --neon-blue: #4d7cff;
+  --neon-purple: #a855f7;
+  --neon-pink: #ff4ecd;
+  --neon-green: #3dffb2;
+  --neon-yellow: #ffd166;
+  --neon-orange: #ff8a3d;
+  --neon-red: #ff5c5c;
+  --grid-line: rgba(120, 140, 255, 0.12);
+}
