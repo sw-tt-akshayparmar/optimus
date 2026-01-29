@@ -3,7 +3,7 @@ import { Socket } from 'ngx-socket-io';
 import { isPlatformBrowser } from '@angular/common';
 import Keys from '../enums/keys.enum';
 import { ToastService } from '../services/toast.service';
-import { Events } from './event.enum';
+import { Events } from './events.enum';
 import { Message } from './message.model';
 
 interface ClientHello {

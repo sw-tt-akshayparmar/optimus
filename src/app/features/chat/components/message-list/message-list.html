@@ -1,0 +1,29 @@
+<div class="message-list-container flex-1 relative flex flex-col overflow-hidden">
+  <div #viewport class="flex-1 h-full w-full" (scroll)="onScroll($event)">
+    <div class="flex-1 min-h-2.5"></div>
+    <!-- Spacer -->
+    @for (message of messages; track message.id) {
+      <div class="message-wrapper">
+        <app-message-item
+          [message]="message"
+          [isFirstInGroup]="isFirstInGroup($index)"
+        ></app-message-item>
+      </div>
+    }
+    @if (typingUsers.length > 0) {
+      <div class="typing-indicator px-12 py-2 text-xs text-(--text-muted) animate-pulse">
+        {{ getTypingText() }}
+      </div>
+    }
+  </div>
+
+  <!-- New Messages Toast -->
+  @if (showNewMessageToast) {
+    <div
+      (click)="scrollToBottom()"
+      class="absolute bottom-6 left-1/2 -translate-x-1/2 px-4 py-2 bg-(--neon-blue) text-white rounded-full shadow-lg cursor-pointer hover:bg-(--neon-cyan) transition-colors z-10 text-sm font-medium"
+    >
+      New messages below
+    </div>
+  }
+</div>

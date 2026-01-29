@@ -116,7 +116,7 @@ Never bind socket listeners directly inside components
 5. COMPONENT ARCHITECTURE
    Design the following standalone Angular components:
 
-ChatContainerComponent
+ChatContainer
 
 Owns room state
 
@@ -124,7 +124,7 @@ Subscribes to socket streams
 
 Passes data downward only
 
-MessageListComponent
+MessageList
 
 Virtualized rendering (large message lists)
 
@@ -132,7 +132,7 @@ Grouping logic
 
 Scroll management
 
-MessageItemComponent
+MessageItem
 
 Pure presentational
 
@@ -140,7 +140,7 @@ OnPush
 
 No socket logic
 
-MessageInputComponent
+MessageInput
 
 Handles typing
 

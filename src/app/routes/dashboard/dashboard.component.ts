@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { User } from '../../models/User.model';
 import { SocketService } from '../../socket/socket.service';
-import { Events } from '../../socket/event.enum';
+import { Events } from '../../socket/events.enum';
 
 interface LogEntry {
   timestamp: Date;

@@ -1,0 +1,9 @@
+:host {
+  display: block;
+}
+.pending {
+  opacity: 0.6;
+}
+.failed {
+  color: var(--neon-red);
+}

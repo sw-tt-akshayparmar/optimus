@@ -10,64 +10,19 @@ import {
 import { CommonModule } from '@angular/common';
 import { ChatSocketService } from '../../services/chat-socket.service';
 import { Message, TypingIndicator } from '../../models/chat.models';
-import { MessageListComponent } from '../message-list/message-list.component';
-import { MessageInputComponent } from '../message-input/message-input.component';
+import { MessageList } from '../message-list/message-list';
+import { MessageInput } from '../message-input/message-input';
 import { Subscription, interval } from 'rxjs';
 
 @Component({
   selector: 'app-chat-container',
   standalone: true,
-  imports: [CommonModule, MessageListComponent, MessageInputComponent],
-  template: `
-    <div
-      class="chat-container flex flex-col h-full bg-(--bg-root) border-l border-(--bg-surface-3)"
-    >
-      <!-- Header -->
-      <div
-        class="chat-header h-12 flex items-center px-4 bg-(--bg-surface-1) border-b border-(--bg-surface-3) shadow-sm"
-      >
-        <i class="pi pi-hashtag text-(--text-muted) mr-2"></i>
-        <h2 class="text-(--text-primary) font-bold text-sm">{{ channelName }}</h2>
-        <div class="flex-1"></div>
-        <div class="flex items-center space-x-4 text-(--text-muted)">
-          <i class="pi pi-bell hover:text-(--text-primary) cursor-pointer"></i>
-          <i class="pi pi-users hover:text-(--text-primary) cursor-pointer"></i>
-          <div class="relative">
-            <input
-              type="text"
-              placeholder="Search"
-              class="bg-(--bg-root) border-none rounded px-2 py-1 text-xs focus:ring-1 focus:ring-(--neon-cyan) outline-none"
-            />
-          </div>
-        </div>
-      </div>
-
-      <!-- Message List -->
-      <app-message-list
-        [messages]="messages()"
-        [typingUsers]="typingUsers()"
-        class="flex-1 min-h-0"
-      ></app-message-list>
-
-      <!-- Message Input -->
-      <app-message-input
-        (send)="onSendMessage($event)"
-        (typing)="onTyping($event)"
-      ></app-message-input>
-    </div>
-  `,
-  styles: [
-    `
-      :host {
-        display: block;
-        height: 100%;
-        width: 100%;
-      }
-    `,
-  ],
+  imports: [CommonModule, MessageList, MessageInput],
+  templateUrl: 'chat-container.html',
+  styleUrls: ['chat-container.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChatContainerComponent implements OnInit, OnDestroy {
+export class ChatContainer implements OnInit, OnDestroy {
   @Input({ required: true }) roomId!: string;
   @Input() channelName = 'general';
 
@@ -76,7 +31,6 @@ export class ChatContainerComponent implements OnInit, OnDestroy {
   // Local State (Signals)
   messages = signal<Message[]>([]);
   typingUsers = signal<{ userId: string; username: string; lastActive: number }[]>([]);
-
   private subs = new Subscription();
 
   // Mock User (In a real app, this would come from an AuthService)

@@ -15,12 +15,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { SocketService } from '../../socket/socket.service';
-import { Events } from '../../socket/event.enum';
+import { Events } from '../../socket/events.enum';
 import { Message } from '../../socket/message.model';
 import markdown from 'markdown-it';
-import embed, { VisualizationSpec } from 'vega-embed';
-import { BAR_CHART_SPEC } from './vega.json';
-import { isPlatformBrowser } from '@angular/common';
 
 export interface AIChatMessage {
   prompt: string;
@@ -94,7 +91,7 @@ export class AIComponent implements OnInit, AfterViewInit {
         },
         messageId: crypto.randomUUID(),
         event: Events.SIO_REQ,
-        roomId: '',
+        room: '',
       });
       this.messages.update((messages) => [...messages, userMessage]);
       this.chatForm.reset();

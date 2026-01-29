@@ -1,11 +1,16 @@
-import { Events } from './event.enum';
+import { Events } from './events.enum';
 
 export interface Message<Data = any> {
-  clientId: string | null;
-  roomId: string | null;
-  messageId: string;
   event: Events;
+  code?: CodeEnum;
+  room?: string | string[];
+  clientId: string;
+  messageId: string;
   success: boolean;
   message: string;
   data: Data;
 }
+
+export enum CodeEnum {}
+
+export default CodeEnum;

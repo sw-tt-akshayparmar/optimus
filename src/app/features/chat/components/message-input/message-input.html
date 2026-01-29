@@ -1,0 +1,28 @@
+<div class="message-input-container p-4 bg-(--bg-surface-1)">
+  <div
+    class="relative flex items-end bg-(--bg-surface-2) rounded-lg p-2 border border-(--bg-surface-3) focus-within:border-(--neon-cyan) transition-colors"
+  >
+    <textarea
+      #textarea
+      [(ngModel)]="messageContent"
+      (keydown.enter)="onEnter($event)"
+      (ngModelChange)="onTyping()"
+      placeholder="Message #channel"
+      class="flex-1 bg-transparent border-none outline-none text-(--text-primary) resize-none max-h-40 min-h-11 py-2 px-2"
+      rows="1"
+    ></textarea>
+
+    <div class="flex items-center space-x-2 px-2 pb-1">
+      <button class="text-(--text-muted) hover:text-(--neon-cyan) transition-colors">
+        <i class="pi pi-plus-circle text-xl"></i>
+      </button>
+      <button
+        [disabled]="!messageContent().trim()"
+        (click)="sendMessage()"
+        class="text-(--text-muted) hover:text-(--neon-cyan) disabled:opacity-30 disabled:hover:text-(--text-muted) transition-colors"
+      >
+        <i class="pi pi-send text-xl"></i>
+      </button>
+    </div>
+  </div>
+</div>

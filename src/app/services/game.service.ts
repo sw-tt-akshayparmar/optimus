@@ -6,7 +6,7 @@ import { UserService } from './user.service';
 import { GameMatch } from '../models/game/GameMatch.model';
 import { Game as GameModel } from '../models/game/Game.model';
 import { Move } from '../lib/chess/move';
-import { Events } from '../socket/event.enum';
+import { Events } from '../socket/events.enum';
 import { SocketService } from '../socket/socket.service';
 
 @Injectable({ providedIn: 'root' })

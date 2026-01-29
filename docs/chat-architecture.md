@@ -41,9 +41,9 @@ export interface TypingIndicator {
 
 ```mermaid
 graph TD
-    ChatContainer[ChatContainerComponent] -->|Signals| MessageList[MessageListComponent]
-    ChatContainer -->|Signals| MessageInput[MessageInputComponent]
-    MessageList -->|For| MessageItem[MessageItemComponent]
+    ChatContainer[ChatContainer] -->|Signals| MessageList[MessageList]
+    ChatContainer -->|Signals| MessageInput[MessageInput]
+    MessageList -->|For| MessageItem[MessageItem]
     MessageInput -->|Events| ChatContainer
     ChatContainer <--> ChatSocketService((ChatSocketService))
 ```

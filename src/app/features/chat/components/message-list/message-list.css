@@ -1,0 +1,12 @@
+:host {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+cdk-virtual-scroll-viewport {
+  scrollbar-width: thin;
+  scrollbar-color: var(--bg-surface-3) transparent;
+}
+.message-wrapper {
+  min-height: 20px;
+}

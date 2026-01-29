@@ -10,64 +10,17 @@ import {
 import { CommonModule } from '@angular/common';
 import { ScrollingModule, CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { Message } from '../../models/chat.models';
-import { MessageItemComponent } from '../message-item/message-item.component';
+import { MessageItem } from '../message-item/message-item';
 
 @Component({
   selector: 'app-message-list',
   standalone: true,
-  imports: [CommonModule, MessageItemComponent, ScrollingModule],
-  template: `
-    <div class="message-list-container flex-1 relative flex flex-col overflow-hidden">
-      <div #viewport class="flex-1 h-full w-full" (scroll)="onScroll($event)">
-        <div class="flex-1 min-h-2.5"></div>
-        <!-- Spacer -->
-        @for (message of messages; track message.id) {
-          <div class="message-wrapper">
-            <app-message-item
-              [message]="message"
-              [isFirstInGroup]="isFirstInGroup($index)"
-            ></app-message-item>
-          </div>
-        }
-        @if (typingUsers.length > 0) {
-          <div class="typing-indicator px-12 py-2 text-xs text-(--text-muted) animate-pulse">
-            {{ getTypingText() }}
-          </div>
-        }
-      </div>
-
-      <!-- New Messages Toast -->
-      @if (showNewMessageToast) {
-        <div
-          (click)="scrollToBottom()"
-          class="absolute bottom-6 left-1/2 -translate-x-1/2 px-4 py-2
-          bg-(--neon-blue) text-white rounded-full shadow-lg cursor-pointer hover:bg-(--neon-cyan)
-          transition-colors z-10 text-sm font-medium"
-        >
-          New messages below
-        </div>
-      }
-    </div>
-  `,
-  styles: [
-    `
-      :host {
-        display: block;
-        height: 100%;
-        width: 100%;
-      }
-      cdk-virtual-scroll-viewport {
-        scrollbar-width: thin;
-        scrollbar-color: var(--bg-surface-3) transparent;
-      }
-      .message-wrapper {
-        min-height: 20px;
-      }
-    `,
-  ],
+  imports: [CommonModule, MessageItem, ScrollingModule],
+  templateUrl: 'message-list.html',
+  styleUrls: ['message-list.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MessageListComponent implements AfterViewChecked, OnChanges {
+export class MessageList implements AfterViewChecked, OnChanges {
   @Input({ required: true }) messages: Message[] = [];
   @Input() typingUsers: { userId: string; username: string }[] = [];
 
