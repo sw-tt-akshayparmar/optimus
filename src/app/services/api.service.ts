@@ -16,17 +16,17 @@ export class ApiService {
   constructor(private readonly http: HttpClient) {}
 
   get<Data = any, Error = any>(
-    api: { path: string; auth?: boolean },
+    api: { path: string; noAuth?: boolean },
     params?: Array<string> | null,
-    query?: Record<string, string>,
-    headers?: Record<string, string>,
+    query?: Record<string, string | number | undefined>,
+    headers?: Record<string, string | number | undefined>,
   ): Observable<SuccessResponse<Data>> {
     const options = this.prepareAPI(api, params, query, headers);
     return this.http.get<SuccessResponse<Data>>(options.url, options);
   }
 
   post<Data = any, Error = any>(
-    api: { path: string; auth?: boolean },
+    api: { path: string; noAuth?: boolean },
     data?: any,
     params?: Array<string> | null,
     query?: Record<string, string>,
@@ -37,7 +37,7 @@ export class ApiService {
   }
 
   put<Data = any, Error = any>(
-    api: { path: string; auth?: boolean },
+    api: { path: string; noAuth?: boolean },
     data?: any,
     params?: Array<string> | null,
     query?: Record<string, string>,
@@ -48,7 +48,7 @@ export class ApiService {
   }
 
   delete<Data = any, Error = any>(
-    api: { path: string; auth?: boolean },
+    api: { path: string; noAuth?: boolean },
     params?: Array<string> | null,
     query?: Record<string, string>,
     headers?: Record<string, string>,
@@ -58,10 +58,10 @@ export class ApiService {
   }
 
   private prepareAPI(
-    api: { path: string; auth?: boolean },
+    api: { path: string; noAuth?: boolean },
     params?: Array<string> | null,
-    query?: Record<string, string>,
-    headers: Record<string, string> = {},
+    query?: Record<string, string | number | undefined>,
+    headers: Record<string, string | number | undefined> = {},
   ): {
     url: string;
     headers: HttpHeaders;
@@ -72,7 +72,7 @@ export class ApiService {
       ...headers,
     });
 
-    if (api.auth) {
+    if (!api.noAuth) {
       let auth_token: string | null = null;
       if (isPlatformBrowser(this.platformId)) {
         auth_token = localStorage.getItem(Keys.AUTHORIZATION_TOKEN);
@@ -89,7 +89,15 @@ export class ApiService {
 
     const paramPath = params?.length ? '/' + params.map(encodeURIComponent).join('/') : '';
     const url = `${environments.API_BASE_URL}${api.path}${paramPath}`;
+    let p: Record<string, string> = {};
+    if (query) {
+      Object.entries(query).forEach(([k, v]) => {
+        if (v) {
+          p[k] = v.toString();
+        }
+      });
+    }
 
-    return { url, headers: httpHeaders, params: query };
+    return { url, headers: httpHeaders, params: p };
   }
 }

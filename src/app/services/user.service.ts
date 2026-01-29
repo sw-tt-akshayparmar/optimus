@@ -10,6 +10,8 @@ import ErrorCode from '../enums/error.enum';
 import { isPlatformBrowser } from '@angular/common';
 import { SocketService } from '../socket/socket.service';
 import Keys from '../enums/keys.enum';
+import { RecordModel } from '../models/record.model';
+import { Utils } from '../utils/utils';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -18,6 +20,7 @@ export class UserService {
   constructor(
     private readonly apiService: ApiService,
     private readonly socketService: SocketService,
+    private readonly utils: Utils,
   ) {}
   login(data: { username: string; password: string }) {
     return this.apiService.post<AuthToken>(APIConfig.LOGIN, data).pipe(
@@ -59,6 +62,11 @@ export class UserService {
         return throwError(() => exception);
       }),
     );
+  }
+
+  getAllUsers(pageNumber?: number, pageSize?: number, search?: string) {
+    const { page, size } = this.utils.page(pageNumber, pageSize);
+    return this.apiService.get<RecordModel<User>>(APIConfig.USERS, null, { page, size, search });
   }
 
   setUserData(user: User) {

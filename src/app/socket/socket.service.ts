@@ -5,6 +5,7 @@ import Keys from '../enums/keys.enum';
 import { ToastService } from '../services/toast.service';
 import { Events } from './events.enum';
 import { Message } from './message.model';
+import { Subject } from 'rxjs';
 
 interface Auth {
   socketId?: string;
@@ -14,6 +15,9 @@ interface Auth {
 export class SocketService {
   private readonly socket = inject(Socket);
   private readonly platformId = inject(PLATFORM_ID);
+  private isAuthCompleted = false;
+  private isAuthenticated = false;
+  private readonly ready: Subject<boolean> = new Subject<boolean>();
 
   private initialized = false;
 
@@ -40,26 +44,22 @@ export class SocketService {
 
       const auth = localStorage.getItem(Keys.AUTHORIZATION_TOKEN);
       if (auth) {
-        this.socket.emit(Events.SIO_AUTH, {
-          data: {
-            socketId: id,
-            authorization: auth,
-          },
-          event: Events.SIO_AUTH,
-          clientId: '',
-          messageId: crypto.randomUUID(),
-          success: true,
-          message: 'Authentication Request',
-        } satisfies Message<Auth>);
+        this.auth(auth, id);
       }
     });
 
     this.socket.on(Events.SERVER_AUTH_SUCCESS, () => {
+      this.isAuthenticated = true;
       this.toastService.success('Socket Auth Successful', '');
+      this.ready.next(true);
+      this.isAuthCompleted = true;
+      this.isAuthenticated = true;
     });
 
     this.socket.on(Events.SERVER_AUTH_FAILED, () => {
       this.toastService.error('Socket Auth Failed', '');
+      this.ready.next(false);
+      this.isAuthCompleted = true;
     });
 
     this.socket.on(Events.DISCONNECT, () => {});
@@ -67,14 +67,29 @@ export class SocketService {
   auth(authorization: string, socketId?: string) {
     if (isPlatformBrowser(this.platformId)) {
       this.socket.emit(Events.SIO_AUTH, {
-        authorization,
-        socketId,
-      } satisfies Auth);
+        data: {
+          socketId,
+          authorization,
+        },
+        event: Events.SIO_AUTH,
+        clientId: '',
+        messageId: crypto.randomUUID(),
+        success: true,
+        message: 'Authentication Request',
+      } satisfies Message);
     }
   }
   emit(event: string, data: Message) {
     if (isPlatformBrowser(this.platformId)) {
-      this.socket.emit(event, data);
+      if (!this.isAuthCompleted) {
+        this.ready.subscribe({
+          next: (auth) => {
+            auth && this.socket.emit(event, data);
+          },
+        });
+      } else if (this.isAuthenticated) {
+        this.socket.emit(event, data);
+      }
     }
   }
 

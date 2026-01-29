@@ -1,3 +1,5 @@
-const Constants = {};
-
-export default Constants;
+export default {
+  PAGINATION_DEFAULT_PAGE: 1,
+  PAGINATION_DEFAULT_SIZE: 10,
+  PAGINATION_MAX_SIZE: 100,
+};

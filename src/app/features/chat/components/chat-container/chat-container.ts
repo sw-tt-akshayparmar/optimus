@@ -8,7 +8,7 @@ import {
   inject,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ChatSocketService } from '../../services/chat-socket.service';
+import { ChatService } from '../../services/chat.service';
 import { Message, TypingIndicator } from '../../models/chat.models';
 import { MessageList } from '../message-list/message-list';
 import { MessageInput } from '../message-input/message-input';
@@ -26,7 +26,7 @@ export class ChatContainer implements OnInit, OnDestroy {
   @Input({ required: true }) roomId!: string;
   @Input() channelName = 'general';
 
-  private chatService = inject(ChatSocketService);
+  private chatService = inject(ChatService);
 
   // Local State (Signals)
   messages = signal<Message[]>([]);
@@ -54,62 +54,64 @@ export class ChatContainer implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.chatService.joinRoom(this.roomId);
     this.setupListeners();
   }
 
   ngOnDestroy(): void {
-    this.chatService.leaveRoom(this.roomId);
     this.subs.unsubscribe();
   }
 
   private setupListeners(): void {
     // Listen for new messages
-    this.subs.add(
-      this.chatService.messageReceived$.subscribe((msg) => {
-        if (msg.roomId === this.roomId) {
-          // Check if this is a message we sent optimistically
-          const current = this.messages();
-          const index = current.findIndex((m) => m.nonce === msg.nonce);
-
-          if (index !== -1) {
-            const updated = [...current];
-            updated[index] = { ...msg, status: 'delivered' };
-            this.messages.set(updated);
-          } else {
-            this.messages.update((prev) => [...prev, { ...msg, status: 'delivered' }]);
-          }
-        }
-      }),
-    );
+    this.subs
+      .add
+      // this.chatService.messageReceived$.subscribe((msg) => {
+      //   if (msg.roomId === this.roomId) {
+      //     // Check if this is a message we sent optimistically
+      //     const current = this.messages();
+      //     const index = current.findIndex((m) => m.nonce === msg.nonce);
+      //
+      //     if (index !== -1) {
+      //       const updated = [...current];
+      //       updated[index] = { ...msg, status: 'delivered' };
+      //       this.messages.set(updated);
+      //     } else {
+      //       this.messages.update((prev) => [...prev, { ...msg, status: 'delivered' }]);
+      //     }
+      //   }
+      // }),
+      ();
 
     // Listen for acknowledgments
-    this.subs.add(
-      this.chatService.messageAck$.subscribe((ack) => {
-        this.messages.update((prev) =>
-          prev.map((m) =>
-            m.nonce === ack.nonce ? { ...m, status: ack.status, id: ack.message?.id || m.id } : m,
-          ),
-        );
-      }),
-    );
+    this.subs
+      .add
+      // this.chatService.messageAck$.subscribe((ack) => {
+      //   this.messages.update((prev) =>
+      //     prev.map((m) =>
+      //       m.nonce === ack.nonce ? { ...m, status: ack.status, id: ack.message?.id || m.id } : m,
+      //     ),
+      //   );
+      // }),
+      ();
 
     // Typing Indicators
-    this.subs.add(
-      this.chatService.typingStart$.subscribe((t) => {
-        if (t.userId === this.currentUser.id) return;
-        this.typingUsers.update((prev) => {
-          const filtered = prev.filter((u) => u.userId !== t.userId);
-          return [...filtered, { ...t, lastActive: Date.now() }];
-        });
-      }),
-    );
+    this.subs
+      .add
+      // this.chatService.typingStart$.subscribe((t) => {
+      //   if (t.userId === this.currentUser.id) return;
+      //   this.typingUsers.update((prev) => {
+      //     const filtered = prev.filter((u) => u.userId !== t.userId);
+      //     return [...filtered, { ...t, lastActive: Date.now() }];
+      //   });
+      // }),
+      ();
 
-    this.subs.add(
-      this.chatService.typingStop$.subscribe((t) => {
-        this.typingUsers.update((prev) => prev.filter((u) => u.userId !== t.userId));
-      }),
-    );
+    this.subs
+      .add
+      // this.chatService.typingStop$.subscribe((t) => {
+      //   this.typingUsers.update((prev) => prev.filter((u) => u.userId !== t.userId));
+      // }),
+      ();
   }
 
   onSendMessage(content: string): void {

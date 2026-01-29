@@ -45,7 +45,7 @@ graph TD
     ChatContainer -->|Signals| MessageInput[MessageInput]
     MessageList -->|For| MessageItem[MessageItem]
     MessageInput -->|Events| ChatContainer
-    ChatContainer <--> ChatSocketService((ChatSocketService))
+    ChatContainer <--> ChatService((ChatService))
 ```
 
 #### 4. Message Flow (Optimistic UI)
@@ -54,7 +54,7 @@ graph TD
 sequenceDiagram
     participant UI as MessageInput
     participant CC as ChatContainer
-    participant CSS as ChatSocketService
+    participant CSS as ChatService
     participant S as Server
 
     UI->>CC: Send Content

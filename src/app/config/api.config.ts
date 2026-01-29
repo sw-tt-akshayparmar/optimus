@@ -4,21 +4,30 @@ const APIConfig = {
   },
   REGISTER: {
     path: '/auth/register',
+    noAuth: true,
   },
   LOGIN: {
     path: '/auth/login',
+    noAuth: true,
   },
   GAME_MATCH: {
     path: '/game/match',
-    auth: true,
   },
   SHELL: {
     path: '/shell',
-    auth: true,
   },
   PROJECTS: {
     path: '/projects',
-    auth: true,
+  },
+  CHAT: {
+    path: '/chat',
+  },
+
+  CHAT_REQUEST: {
+    path: '/chat/request',
+  },
+  USERS: {
+    path: '/users',
   },
 };
 

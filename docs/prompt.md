@@ -89,7 +89,7 @@ Preserve scroll position when loading older messages
 4. SOCKET ARCHITECTURE REQUIREMENTS
    You MUST:
 
-Centralize socket logic in a ChatSocketService
+Centralize socket logic in a ChatService
 
 Handle:
 
@@ -194,7 +194,7 @@ Socket event contract (event names + payloads)
 
 Angular component code (TypeScript + template snippets)
 
-ChatSocketService implementation
+ChatService implementation
 
 State flow explanation
 
