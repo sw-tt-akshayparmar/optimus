@@ -6,7 +6,7 @@ import { ToastService } from '../services/toast.service';
 import { Events } from './events.enum';
 import { Message } from './message.model';
 
-interface ClientHello {
+interface Auth {
   socketId?: string;
   authorization?: string;
 }
@@ -40,10 +40,17 @@ export class SocketService {
 
       const auth = localStorage.getItem(Keys.AUTHORIZATION_TOKEN);
       if (auth) {
-        this.socket.emit(Events.AUTH, {
-          socketId: id,
-          authorization: auth,
-        } satisfies ClientHello);
+        this.socket.emit(Events.SIO_AUTH, {
+          data: {
+            socketId: id,
+            authorization: auth,
+          },
+          event: Events.SIO_AUTH,
+          clientId: '',
+          messageId: crypto.randomUUID(),
+          success: true,
+          message: 'Authentication Request',
+        } satisfies Message<Auth>);
       }
     });
 
@@ -59,10 +66,10 @@ export class SocketService {
   }
   auth(authorization: string, socketId?: string) {
     if (isPlatformBrowser(this.platformId)) {
-      this.socket.emit(Events.AUTH, {
+      this.socket.emit(Events.SIO_AUTH, {
         authorization,
         socketId,
-      } satisfies ClientHello);
+      } satisfies Auth);
     }
   }
   emit(event: string, data: Message) {
