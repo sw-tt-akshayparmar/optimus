@@ -31,9 +31,15 @@
   --bg-surface-1: #11172b;
   --bg-surface-2: #161d3a;
   --bg-surface-3: #1d2550;
+  --bg-overlay: rgba(15, 22, 55, 0.85);
+  --bg-glass: rgba(255, 255, 255, 0.04);
+
   --text-primary: #e8ebff;
   --text-secondary: rgba(232, 235, 255, 0.65);
   --text-muted: rgba(232, 235, 255, 0.45);
+  --grid-line: rgba(120, 140, 255, 0.12);
+  --axis-line: rgba(160, 180, 255, 0.22);
+
   --neon-cyan: #2ef2ff;
   --neon-blue: #4d7cff;
   --neon-purple: #a855f7;
@@ -42,5 +48,32 @@
   --neon-yellow: #ffd166;
   --neon-orange: #ff8a3d;
   --neon-red: #ff5c5c;
-  --grid-line: rgba(120, 140, 255, 0.12);
+
+
+  --chart-primary: var(--neon-cyan);
+  --chart-secondary: var(--neon-purple);
+  --chart-tertiary: var(--neon-pink);
+  --chart-success: var(--neon-green);
+  --chart-warning: var(--neon-yellow);
+  --chart-danger: var(--neon-red);
+  --chart-info: var(--neon-blue);
+
+  --bar-set-1: var(--neon-cyan);
+  --bar-set-2: var(--neon-purple);
+  --bar-set-3: var(--neon-pink);
+  --bar-set-4: var(--neon-green);
+  --bar-set-5: var(--neon-orange);
+
+  --line-width: 2.5px;
+  --line-join: round;
+  --line-cap: round;
+
+  --fill-opacity-soft: 0.18;
+  --fill-cyan: rgba(46, 242, 255, var(--fill-opacity-soft));
+  --fill-blue: rgba(77, 124, 255, var(--fill-opacity-soft));
+  --fill-purple: rgba(168, 85, 247, var(--fill-opacity-soft));
+  --fill-pink: rgba(255, 78, 205, var(--fill-opacity-soft));
+  --fill-green: rgba(61, 255, 178, var(--fill-opacity-soft));
+
 }
+

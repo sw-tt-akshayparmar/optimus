@@ -1,31 +1,20 @@
-<div class="chat-container flex flex-col h-full bg-(--bg-root) border-l border-(--bg-surface-3)">
-  <!-- Header -->
-  <div
-    class="chat-header h-12 flex items-center px-4 bg-(--bg-surface-1) border-b border-(--bg-surface-3) shadow-sm"
-  >
-    <i class="pi pi-hashtag text-(--text-muted) mr-2"></i>
-    <h2 class="text-(--text-primary) font-bold text-sm">{{ channelName }}</h2>
-    <div class="flex-1"></div>
-    <div class="flex items-center space-x-4 text-(--text-muted)">
-      <i class="pi pi-bell hover:text-(--text-primary) cursor-pointer"></i>
-      <i class="pi pi-users hover:text-(--text-primary) cursor-pointer"></i>
-      <div class="relative">
-        <input
-          type="text"
-          placeholder="Search"
-          class="bg-(--bg-root) border-none rounded px-2 py-1 text-xs focus:ring-1 focus:ring-(--neon-cyan) outline-none"
-        />
-      </div>
+<div class="chat-container flex h-full w-full bg-(--bg-root) border-l border-(--bg-surface-3)">
+  <div class="side-pane w-100 h-full">
+    <div class="request">
+      <button
+        class="ms-2 mt-2"
+        color="primary"
+        matFab
+        extended
+        (click)="router.navigate(['request'], { relativeTo: route })"
+      >
+        <mat-icon>create</mat-icon>
+        New
+      </button>
     </div>
+    <div></div>
   </div>
-
-  <!-- Message List -->
-  <app-message-list
-    [messages]="messages()"
-    [typingUsers]="typingUsers()"
-    class="flex-1 min-h-0"
-  ></app-message-list>
-
-  <!-- Message Input -->
-  <app-message-input (send)="onSendMessage($event)" (typing)="onTyping($event)"></app-message-input>
+  <div class="main-pane flex-1 h-full w-full">
+    <router-outlet />
+  </div>
 </div>

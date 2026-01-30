@@ -7,6 +7,8 @@ import { AuthGuard } from './auth/Authguard';
 import { DashboardComponent } from './routes/dashboard/dashboard.component';
 import { ChatContainer } from './features/chat/components/chat-container/chat-container';
 import { AIComponent } from './components/ai-chat/ai-chat';
+import { Conversation } from './features/chat/components/conversation/conversation';
+import { Request } from './features/chat/components/request/request';
 
 export const routes: Routes = [
   {
@@ -18,6 +20,16 @@ export const routes: Routes = [
     path: 'chat',
     component: ChatContainer,
     canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'request',
+        component: Request,
+      },
+      {
+        path: ':conversationId',
+        component: Conversation,
+      },
+    ],
   },
   {
     path: 'workspace',

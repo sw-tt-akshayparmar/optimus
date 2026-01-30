@@ -1,8 +1,10 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { SocketService } from '../../../socket/socket.service';
 import { Events } from '../../../socket/events.enum';
 import { ApiService } from '../../../services/api.service';
 import APIConfig from '../../../config/api.config';
+import { tap } from 'rxjs';
+import { Message } from '../../../socket/message.model';
 
 @Injectable({
   providedIn: 'root',
@@ -25,10 +27,9 @@ export class ChatService {
   sendTypingStatus(room: string | [], userId: string, username: string, isTyping: boolean): void {}
 
   sendRequest(userId: string) {
-    this.apiService.post(APIConfig.CHAT_REQUEST, null, null, { receiver: userId }).subscribe({
-      next: (data) => {
-        console.log(data);
-      },
-    });
+    return this.apiService.post(APIConfig.CHAT_REQUEST, null, null, { receiver: userId });
+  }
+  onMessage() {
+    return this.socketService.on<Message>(Events.CHAT_DOWN);
   }
 }

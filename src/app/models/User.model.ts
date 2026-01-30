@@ -1,5 +1,5 @@
 export class User {
-  public id?: string;
+  public id!: string;
   public username: string;
   public name: string;
   public password?: string;
@@ -16,7 +16,7 @@ export class User {
 
   static from(
     userObj: {
-      id?: string;
+      id: string;
       username: string;
       name: string;
       password?: string;

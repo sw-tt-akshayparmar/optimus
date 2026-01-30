@@ -1,0 +1,44 @@
+<div class="w-full flex flex-col items-center">
+  <div class="mt-4">
+    <form [formGroup]="form" class="">
+      <mat-form-field appearance="outline" class="w-2xl">
+        <mat-label>Search</mat-label>
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput formControlName="search" type="text" (input)="searchUsers($event)" />
+      </mat-form-field>
+    </form>
+
+    <div class="mt-2">
+      @for (record of records(); let idx = $index; track $index) {
+        <div class="flex mt-2 p-2 w-2xl">
+          <div>
+            <img
+              ngSrc="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/discord-round-color-icon.png"
+              alt=""
+              width="50"
+              height="50"
+              class=""
+            />
+          </div>
+          <div class="flex flex-col ml-3 w-full">
+            <div class="text-xl font-medium">{{ record.user.name }}</div>
+            <div class="">{{ record.user.username }}</div>
+          </div>
+          <div>
+            @if (record.invited) {
+              <button matButton="outlined" disabled>
+                <mat-icon>check</mat-icon>
+                Invited
+              </button>
+            } @else {
+              <button matButton="outlined" (click)="inviteUser(record.user, idx)">
+                <mat-icon>create</mat-icon>
+                Invite
+              </button>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

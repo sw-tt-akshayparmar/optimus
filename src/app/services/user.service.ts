@@ -64,7 +64,7 @@ export class UserService {
     );
   }
 
-  getAllUsers(pageNumber?: number, pageSize?: number, search?: string) {
+  getAllUsers(search?: string, pageNumber?: number, pageSize?: number) {
     const { page, size } = this.utils.page(pageNumber, pageSize);
     return this.apiService.get<RecordModel<User>>(APIConfig.USERS, null, { page, size, search });
   }

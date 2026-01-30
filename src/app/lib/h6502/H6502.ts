@@ -89,7 +89,7 @@ export class H6502 {
     this.flags.B = false;
   }
 
-  fertch(): number {
+  fetch(): number {
     this.IR = this.memory.read(this.PC++);
     this.cycles++;
     return this.IR;
@@ -123,13 +123,11 @@ export class H6502 {
   }
   //zero page X
   zpx() {
-    const addr = (this.memory.read(this.PC++) + this.X) & 0xff;
-    return addr;
+    return (this.memory.read(this.PC++) + this.X) & 0xff;
   }
   //zero page Y
   zpy() {
-    const addr = (this.memory.read(this.PC++) + this.Y) & 0xff;
-    return addr;
+    return (this.memory.read(this.PC++) + this.Y) & 0xff;
   }
   //absolute
   abs() {
