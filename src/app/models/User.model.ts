@@ -46,11 +46,20 @@ export class User {
     user.deleted_at = userObj.deleted_at ?? null;
     user.is_deleted = userObj.is_deleted ?? false;
 
-    user.projects = userObj.projects;
-    user.messages = userObj.messages;
-    user.requests_sent = userObj.requests_sent;
-    user.requests_received = userObj.requests_received;
+    if (userObj.projects && userObj.projects.length > 0) {
+      user.projects = userObj.projects.map((p) => Project.from(p));
+    }
 
+    if (userObj.messages && userObj.messages.length > 0) {
+      user.messages = userObj.messages.map((m) => Message.from(m));
+    }
+
+    if (userObj.requests_sent && userObj.requests_sent.length > 0) {
+      user.requests_sent = userObj.requests_sent.map((r) => Request.from(r));
+    }
+    if (userObj.requests_received && userObj.requests_received.length > 0) {
+      user.requests_received = userObj.requests_received.map((r) => Request.from(r));
+    }
     return user;
   }
   getCopy(): User {
