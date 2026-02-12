@@ -1,18 +1,24 @@
+import { Project } from './Project.model';
+import { Message, Request } from '../features/chat/models/chat.models';
+
 export class User {
   public id!: string;
-  public username: string;
-  public name: string;
+  public username!: string;
+  public name!: string;
   public password?: string;
-  public createdAt: Date | null;
-  public updatedAt: Date | null;
-  public metaInfo?: any;
-  constructor() {
-    this.username = '';
-    this.name = '';
-    this.createdAt = null;
-    this.updatedAt = null;
-    this.metaInfo = undefined;
-  }
+  public created_at!: Date;
+  public deleted_at!: Date | null;
+  public is_deleted!: boolean;
+
+  // Related fields fields
+  projects?: Project[];
+  messages?: Message[];
+  requests_sent?: Request[];
+  requests_received?: Request[];
+
+  // games_as_white?: Game[];
+  // games_as_black?: Game[];
+  private constructor() {}
 
   static from(
     userObj: {
@@ -20,9 +26,14 @@ export class User {
       username: string;
       name: string;
       password?: string;
-      createdAt?: Date | null;
-      updatedAt?: Date | null;
-      metaInfo?: any;
+      created_at: Date;
+      deleted_at?: Date | null;
+      is_deleted?: boolean;
+
+      projects?: Project[];
+      messages?: Message[];
+      requests_sent?: Request[];
+      requests_received?: Request[];
     },
     password?: boolean,
   ): User {
@@ -31,9 +42,15 @@ export class User {
     user.username = userObj.username;
     user.name = userObj.name;
     user.password = password ? userObj.password : undefined;
-    user.createdAt = userObj.createdAt ?? null;
-    user.updatedAt = userObj.updatedAt ?? null;
-    user.metaInfo = userObj.metaInfo;
+    user.created_at = userObj.created_at;
+    user.deleted_at = userObj.deleted_at ?? null;
+    user.is_deleted = userObj.is_deleted ?? false;
+
+    user.projects = userObj.projects;
+    user.messages = userObj.messages;
+    user.requests_sent = userObj.requests_sent;
+    user.requests_received = userObj.requests_received;
+
     return user;
   }
   getCopy(): User {
@@ -42,9 +59,17 @@ export class User {
       username: this.username,
       name: this.name,
       password: this.password,
-      createdAt: this.createdAt,
-      updatedAt: this.updatedAt,
-      metaInfo: this.metaInfo,
+      created_at: this.created_at,
+      deleted_at: this.deleted_at,
+      is_deleted: this.is_deleted,
+
+      // profile: this.profile,
+      projects: this.projects,
+      messages: this.messages,
+      requests_sent: this.requests_sent,
+      requests_received: this.requests_received,
+      // games_as_white: this.games_as_white,
+      // games_as_black: this.games_as_black,
     });
   }
 }

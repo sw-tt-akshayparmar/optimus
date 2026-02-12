@@ -46,7 +46,7 @@ export class Request implements OnInit, OnDestroy {
   ngOnDestroy(): void {}
 
   searchUsers(event: any) {
-    this.userService.getAllUsers(event.target.value).subscribe({
+    this.userService.getAllUsers(event.target.value.trim()).subscribe({
       next: (res) => {
         this.records.set(res.data.records.map((user: User) => ({ user, invited: false })));
       },

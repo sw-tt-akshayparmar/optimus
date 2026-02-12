@@ -1,3 +1,6 @@
+import { RequestStatus } from './chat.enum';
+import { User } from '../../../models/User.model';
+
 export class Message {
   public id!: string;
   public conversation_id!: string;
@@ -29,7 +32,7 @@ export class Message {
     return message;
   }
   getCopy(): Message {
-    const copy = Message.from({
+    return Message.from({
       id: this.id,
       conversation_id: this.conversation_id,
       sender: this.sender,
@@ -38,6 +41,51 @@ export class Message {
       deleted_at: this.deleted_at,
       is_deleted: this.is_deleted,
     });
-    return copy;
+  }
+}
+
+export class Request {
+  public id!: string;
+  public sender!: string;
+  public receiver!: string;
+  public status!: RequestStatus;
+  public description?: string;
+
+  public sender_user?: User;
+  public receiver_user?: User;
+
+  private constructor() {}
+
+  static from(rObj: {
+    id: string;
+    sender: string;
+    receiver: string;
+    status: RequestStatus;
+    description?: string | null;
+    sender_user?: User;
+    receiver_user?: User;
+  }): Request {
+    const request = new Request();
+    request.id = rObj.id;
+    request.sender = rObj.sender;
+    request.receiver = rObj.receiver;
+    request.status = rObj.status;
+    request.receiver = rObj.receiver;
+    request.sender_user = rObj.sender_user ? User.from(rObj.sender_user) : rObj.sender_user;
+    request.receiver_user = rObj.receiver_user ? User.from(rObj.receiver_user) : rObj.receiver_user;
+
+    return request;
+  }
+
+  getCopy(): Request {
+    return Request.from({
+      id: this.id,
+      sender: this.sender,
+      receiver: this.receiver,
+      status: this.status,
+      description: this.description,
+      sender_user: this.sender_user,
+      receiver_user: this.receiver_user,
+    });
   }
 }
