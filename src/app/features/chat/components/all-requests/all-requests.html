@@ -1,0 +1,39 @@
+<div>
+  @for (request of requests(); track request.id) {
+    <div class="flex mt-2 p-2 w-2xl">
+      <div>
+        <img
+          ngSrc="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/discord-round-color-icon.png"
+          alt=""
+          width="50"
+          height="50"
+          class=""
+        />
+      </div>
+      <div class="flex flex-col ml-3 w-full">
+        <div
+          class="text-xl font-medium">{{ request.sender === this.userService.getUserData().id ? request.receiver_user?.name : request.sender_user?.name }}
+        </div>
+        <div
+          class="">{{ request.sender === this.userService.getUserData().id ? request.receiver_user?.username : request.sender_user?.username }}
+        </div>
+      </div>
+      <div>
+        @if (request.sender === userService.getUserData().id) {
+          <button matFab>
+            <mat-icon>close</mat-icon>
+          </button>
+        } @else {
+          <button matFab>
+            <mat-icon>check</mat-icon>
+          </button>
+          <button matFab>
+            <mat-icon>close</mat-icon>
+          </button>
+        }
+      </div>
+
+
+    </div>
+  }
+</div>

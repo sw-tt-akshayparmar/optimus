@@ -2,12 +2,12 @@ import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Route, Router, RouterOutlet } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
-import { MatFabButton } from '@angular/material/button';
+import { MatButton, MatFabButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-chat-container',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, MatFabButton, MatIcon],
+  imports: [CommonModule, RouterOutlet, MatFabButton, MatIcon, MatButton],
   templateUrl: 'chat-container.html',
   styleUrls: ['chat-container.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,

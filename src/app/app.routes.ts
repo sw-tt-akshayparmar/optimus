@@ -9,6 +9,7 @@ import { ChatContainer } from './features/chat/components/chat-container/chat-co
 import { AIComponent } from './components/ai-chat/ai-chat';
 import { Conversation } from './features/chat/components/conversation/conversation';
 import { Request } from './features/chat/components/request/request';
+import { AllRequests } from './features/chat/components/all-requests/all-requests';
 
 export const routes: Routes = [
   {
@@ -22,8 +23,12 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       {
-        path: 'request',
+        path: 'new',
         component: Request,
+      },
+      {
+        path: 'all',
+        component: AllRequests,
       },
       {
         path: ':conversationId',

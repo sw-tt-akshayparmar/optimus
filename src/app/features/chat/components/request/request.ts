@@ -9,7 +9,7 @@ import { MatFormField, MatInput, MatLabel, MatPrefix } from '@angular/material/i
 import { ChatService } from '../../services/chat.service';
 import { ToastService } from '../../../../services/toast.service';
 @Component({
-  selector: 'app-chat-container',
+  selector: 'app-request',
   standalone: true,
   imports: [
     CommonModule,

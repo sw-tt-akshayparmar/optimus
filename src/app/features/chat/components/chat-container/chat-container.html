@@ -3,15 +3,19 @@
     <div class="request">
       <button
         class="ms-2 mt-2"
-        color="primary"
         matFab
-        extended
-        (click)="router.navigate(['request'], { relativeTo: route })"
+        (click)="router.navigate(['new'], { relativeTo: route })"
       >
         <mat-icon>create</mat-icon>
-        New
+      </button>
+      <button class="ms-2" matFab extended
+              (click)="router.navigate(['all'], { relativeTo: route })"
+      >
+        <mat-icon>mark_chat_unread</mat-icon>
+        REQUESTS
       </button>
     </div>
+
     <div></div>
   </div>
   <div class="main-pane flex-1 h-full w-full">

@@ -90,12 +90,12 @@ export class UserService {
     }
     return null;
   }
-  getUserData(): User | null {
+  getUserData(): User {
     if (isPlatformBrowser(this.platformId)) {
       const userJSON = localStorage.getItem(Keys.USER_DATA);
-      return userJSON ? User.from(JSON.parse(userJSON)) : null;
+      return userJSON ? User.from(JSON.parse(userJSON)) : User.from({} as any);
     }
-    return null;
+    return User.from({} as any);
   }
   getAccessToken(): string | null {
     if (isPlatformBrowser(this.platformId)) {

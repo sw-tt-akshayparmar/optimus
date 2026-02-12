@@ -3,8 +3,11 @@ import { SocketService } from '../../../socket/socket.service';
 import { Events } from '../../../socket/events.enum';
 import { ApiService } from '../../../services/api.service';
 import APIConfig from '../../../config/api.config';
-import { tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { Message } from '../../../socket/message.model';
+import { SuccessResponse } from '../../../models/Response.model';
+import { RecordModel } from '../../../models/record.model';
+import { Request } from '../models/chat.models';
 
 @Injectable({
   providedIn: 'root',
@@ -31,5 +34,11 @@ export class ChatService {
   }
   onMessage() {
     return this.socketService.on<Message>(Events.CHAT_DOWN);
+  }
+
+  getAlRequests(
+    type: 'all' | 'sent' | 'received' = 'received',
+  ): Observable<SuccessResponse<RecordModel<Request>>> {
+    return this.apiService.get(APIConfig.CHAT_REQUEST, null, { type });
   }
 }
