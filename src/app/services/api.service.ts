@@ -76,14 +76,13 @@ export class ApiService {
       let auth_token: string | null = null;
       if (isPlatformBrowser(this.platformId)) {
         auth_token = localStorage.getItem(Keys.AUTHORIZATION_TOKEN);
+        if (!auth_token)
+          throw new Exception(
+            ErrorCode.AUTH_NOT_FOUND,
+            'Authentication token is missing, Please login',
+            api,
+          );
       }
-
-      if (!auth_token)
-        throw new Exception(
-          ErrorCode.AUTH_NOT_FOUND,
-          'Authentication token is missing, Please login',
-          api,
-        );
       httpHeaders = httpHeaders.set('Authorization', 'Bearer ' + auth_token);
     }
 

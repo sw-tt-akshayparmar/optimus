@@ -1,0 +1,26 @@
+/* enter */
+.p-toast-message {
+  animation: slideIn 200ms ease-out;
+}
+
+/* leave */
+.p-toast-message-leave {
+  animation: fadeOut 120ms ease-in;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-12px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+  }
+}

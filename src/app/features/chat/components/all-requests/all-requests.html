@@ -1,38 +1,71 @@
-<div class="flex flex-col gap-2">
+<div class="flex flex-col gap-2 p-2">
+
+
   @for (request of requests(); track request.id) {
-    <div class="flex items-center gap-4 p-3 w-full max-w-l bg-(--bg-surface-1) rounded-xl">
-
-      <div class="shrink-0">
-        <img
-          ngSrc="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/discord-round-color-icon.png"
-          alt=""
-          width="50"
-          height="50"
-          class="rounded-full"
-        />
-      </div>
-
+    @let isSent = request.sender === userService.getUserData().id;
+    <div
+      class="group relative flex items-center gap-3 px-4 py-2.5 rounded-xl
+             transition-all duration-200
+             bg-(--bg-surface-1)
+             hover:bg-(--bg-surface-2)"
+      [class]="{
+      'bg-green-600/10':isSent,
+      'bg-blue-600/10':!isSent,
+      }"
+    >
+      <span
+        class="absolute left-0 top-0 h-full w-1 rounded-l-xl"
+        [class]="{
+          'bg-(--neon-blue)': isSent,
+          'bg-(--neon-green)': !isSent
+        }"
+      ></span>
+      <img
+        ngSrc="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/discord-round-color-icon.png"
+        width="38"
+        height="38"
+        class="rounded-full shrink-0 ring-1 ring-(--grid-line)"
+        alt="Avatar"
+      />
       <div class="flex flex-col flex-1 min-w-0">
-        <div class="text-xl font-medium truncate">
-          {{ request.sender === this.userService.getUserData().id ? request.receiver_user?.name : request.sender_user?.name }}
-        </div>
-
-        <div class="text-sm opacity-70 truncate">
-          {{ request.sender === this.userService.getUserData().id ? request.receiver_user?.username : request.sender_user?.username }}
-        </div>
+        <span
+          class="text-sm font-medium truncate text-(--text-primary)"
+        >
+          {{ isSent ? request.receiver_user?.name : request.sender_user?.name }}
+        </span>
+        <span class="text-xs text-(--text-muted) truncate">
+          {{ isSent ? request.receiver_user?.username : request.sender_user?.username }}
+        </span>
       </div>
-
-      <div class="flex items-center gap-2 shrink-0">
-        @if (request.sender === userService.getUserData().id) {
-          <button matMiniFab (click)="cancelRequest(request)">
-            <mat-icon>close</mat-icon>
+      <div class="flex items-center gap-1 opacity-60 group-hover:opacity-100 transition">
+        @if (isSent) {
+          <button
+            mat-icon-button
+            class="h-7 w-7 rounded-md text-(--neon-red)
+                   hover:bg-(--fill-pink)
+                   transition flex justify-center items-center"
+            (click)="cancelRequest(request)"
+          >
+            <mat-icon class="text-[17px]">close</mat-icon>
           </button>
         } @else {
-          <button matMiniFab (click)="acceptRequest(request)">
-            <mat-icon>check</mat-icon>
+          <button
+            mat-icon-button
+            class="h-7 w-7 rounded-md text-(--neon-green)
+                   hover:bg-(--fill-green)
+                   transition flex justify-center items-center"
+            (click)="acceptRequest(request)"
+          >
+            <mat-icon class="text-[17px]">check</mat-icon>
           </button>
-          <button matMiniFab (click)="rejectRequest(request)">
-            <mat-icon>close</mat-icon>
+          <button
+            mat-icon-button
+            class="h-7 w-7 rounded-md text-(--neon-red)
+                   hover:bg-(--fill-pink)
+                   transition flex justify-center items-center"
+            (click)="rejectRequest(request)"
+          >
+            <mat-icon class="text-[17px]">close</mat-icon>
           </button>
         }
       </div>

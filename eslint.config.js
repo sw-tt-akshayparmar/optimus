@@ -1,52 +1,39 @@
-import tsParser from "@typescript-eslint/parser";
-import angularPlugin from "@angular-eslint/eslint-plugin";
-import angularTemplatePlugin from "@angular-eslint/eslint-plugin-template";
-import angularTemplateParser from "@angular-eslint/template-parser";
-import prettierPlugin from "eslint-plugin-prettier";
-import eslintConfigPrettier from "eslint-config-prettier";
+import tsParser from '@typescript-eslint/parser';
+import angularPlugin from '@angular-eslint/eslint-plugin';
+import angularTemplatePlugin from '@angular-eslint/eslint-plugin-template';
+import angularTemplateParser from '@angular-eslint/template-parser';
+import prettierPlugin from 'eslint-plugin-prettier';
 
 export default [
   {
-    files: ["**/*.ts"],
+    files: ['**/*.ts'],
     languageOptions: {
       parser: tsParser,
       parserOptions: {
-        project: "./tsconfig.eslint.json",
+        project: './tsconfig.eslint.json',
         tsconfigRootDir: process.cwd(),
       },
     },
     plugins: {
-      "@angular-eslint": angularPlugin,
+      '@angular-eslint': angularPlugin,
       prettier: prettierPlugin,
     },
     rules: {
-      "@angular-eslint/directive-selector": [
-        "error",
-        { type: "attribute", prefix: "app", style: "camelCase" },
-      ],
-      "@angular-eslint/component-selector": [
-        "error",
-        { type: "element", prefix: "app", style: "kebab-case" },
-      ],
-      "prettier/prettier": ["error", { endOfLine: "auto" }], // Prettier rule
+      'prettier/prettier': 'error',
     },
   },
 
-  // HTML template files
   {
-    files: ["**/*.html"],
+    files: ['**/*.html'],
     languageOptions: {
       parser: angularTemplateParser,
     },
     plugins: {
-      "@angular-eslint/template": angularTemplatePlugin,
+      '@angular-eslint/template': angularTemplatePlugin,
       prettier: prettierPlugin,
     },
     rules: {
-      "prettier/prettier": ["error", { endOfLine: "auto" }],
+      'prettier/prettier': 'error',
     },
   },
-
-  // Make sure this is last so it turns off conflicting rules
-  eslintConfigPrettier,
 ];
