@@ -34,10 +34,10 @@
 
   <form
     (ngSubmit)="handleSubmit()"
-    class="px-3 py-2 border-t border-white/5 bg-[var(--bg-surface-1)]"
+    class="px-3 py-2 border-t border-white/5 bg-(--bg-surface-1)"
   >
     <div class="flex items-center gap-3">
-      <div class="font-mono text-sm text-[var(--neon-cyan)] font-bold">
+      <div class="font-mono text-sm text-(--neon-cyan) font-bold">
         {{ this.userService.getUserData()?.username }}
       </div>
       <input
@@ -46,7 +46,7 @@
         [formControl]="inputCtrl"
         (keydown)="handleKeyDown($event)"
         placeholder="type a command..."
-        class="p-2 bg-transparent font-[consolas] w-full text-[var(--text-primary)] border-none outline-none placeholder:text-[var(--text-muted)]"
+        class="p-2 bg-transparent font-[consolas] w-full text-(--text-primary) border-none outline-none placeholder:text-[var(--text-muted)]"
         autocomplete="off"
         spellcheck="false"
         aria-label="Terminal input"

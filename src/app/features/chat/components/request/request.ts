@@ -56,6 +56,7 @@ export class Request implements OnInit, OnDestroy {
   inviteUser(user: User, index: number) {
     this.chatService.sendRequest(user.id).subscribe({
       next: (res) => {
+        this.toastService.success(res.success, 'Invite sent successfully');
         this.records.update((records) => {
           records[index].invited = true;
           return [...records];

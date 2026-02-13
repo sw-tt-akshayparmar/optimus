@@ -3,7 +3,7 @@ import { SocketService } from '../../../socket/socket.service';
 import { Events } from '../../../socket/events.enum';
 import { ApiService } from '../../../services/api.service';
 import APIConfig from '../../../config/api.config';
-import { Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Message } from '../../../socket/message.model';
 import { SuccessResponse } from '../../../models/Response.model';
 import { RecordModel } from '../../../models/record.model';
@@ -40,5 +40,9 @@ export class ChatService {
     type: 'all' | 'sent' | 'received' = 'received',
   ): Observable<SuccessResponse<RecordModel<Request>>> {
     return this.apiService.get(APIConfig.CHAT_REQUEST, null, { type });
+  }
+
+  processRequest(request: Request, process: 'accept' | 'reject' | 'cancel') {
+    return this.apiService.put(APIConfig.CHAT_REQUEST, null, [request.id], { process });
   }
 }
