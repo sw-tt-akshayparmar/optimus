@@ -1,24 +1,31 @@
 <div class="chat-container flex h-full w-full bg-(--bg-root) border-l border-(--bg-surface-3)">
-  <div class="side-pane w-100 h-full">
-    <div class="request">
+  <aside class="side-pane w-72 h-full flex flex-col bg-(--bg-surface-1) border-r border-(--bg-surface-3)">
+    <div class="px-4 py-4 border-b border-(--bg-surface-3)">
+      <h2 class="text-lg font-semibold text-white tracking-wide">
+        Chats
+      </h2>
+    </div>
+    <div class="flex flex-col gap-2 p-4">
       <button
-        class="ms-2 mt-2"
-        matFab
+        mat-flat-button
+        color="primary"
+        class="w-full justify-start"
         (click)="router.navigate(['new'], { relativeTo: route })"
       >
-        <mat-icon>create</mat-icon>
+        <mat-icon class="mr-2">create</mat-icon>
+        New Chat
       </button>
-      <button class="ms-2" matFab extended
-              (click)="router.navigate(['all'], { relativeTo: route })"
+      <button
+        mat-stroked-button class="w-full justify-start" (click)="router.navigate(['all'], { relativeTo: route })"
       >
-        <mat-icon>mark_chat_unread</mat-icon>
-        REQUESTS
+        <mat-icon class="mr-2">mark_chat_unread</mat-icon>
+        Requests
       </button>
     </div>
-
-    <div></div>
-  </div>
-  <div class="main-pane flex-1 h-full w-full">
+    <div class="flex-1 overflow-y-auto px-2 pb-4">
+    </div>
+  </aside>
+  <main class="main-pane flex-1 h-full w-full bg-(--bg-surface-2)">
     <router-outlet />
-  </div>
+  </main>
 </div>

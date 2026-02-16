@@ -1,29 +1,29 @@
 <div
-  class="flex flex-col h-full min-h-80 max-h-180 w-full rounded-t-xl border-t border-white/10 shadow-2xl bg-[var(--bg-surface-1)]"
+  class="flex flex-col h-full min-h-80 max-h-180 w-full rounded-t-xl border-t border-white/10 shadow-2xl bg-(--bg-surface-1)"
 >
   <div
-    class="flex items-center justify-between gap-2 px-3 py-2 bg-[var(--bg-surface-2)] rounded-t-xl border-b border-white/5"
+    class="flex items-center justify-between gap-2 px-3 py-2 bg-(--bg-surface-2) rounded-t-xl border-b border-white/5"
   >
     <div class="flex items-center gap-2">
-      <span class="h-3 w-3 rounded-full inline-block bg-[var(--neon-red)] opacity-80"></span>
-      <span class="h-3 w-3 rounded-full inline-block bg-[var(--neon-yellow)] opacity-80"></span>
-      <span class="h-3 w-3 rounded-full inline-block bg-[var(--neon-green)] opacity-80"></span>
-      <div class="ml-2 text-sm font-medium text-[var(--text-secondary)]">terminal</div>
+      <span class="h-3 w-3 rounded-full inline-block bg-(--neon-red) opacity-80"></span>
+      <span class="h-3 w-3 rounded-full inline-block bg-(--neon-yellow) opacity-80"></span>
+      <span class="h-3 w-3 rounded-full inline-block bg-(--neon-green) opacity-80"></span>
+      <div class="ml-2 text-sm font-medium text-(--text-secondary)">terminal</div>
     </div>
-    <div class="text-xs text-[var(--text-muted)]">/ web • demo</div>
+    <div class="text-xs text-(--text-muted)">/ web • demo</div>
   </div>
 
   <div #container class="flex-1 overflow-y-auto px-4 py-3 font-mono text-sm">
     <div class="flex flex-col gap-1">
       @if (lines().length === 0) {
-        <div class="text-[var(--text-muted)] italic">(cleared)</div>
+        <div class="text-(--text-muted) italic">(cleared)</div>
       }
       @for (ln of lines(); track ln.id) {
         <div
           [class]="{
-            'text-[var(--neon-cyan)]': ln.type === 'input',
-            'text-[var(--text-primary)]': ln.type === 'output',
-            'text-[var(--neon-yellow)] italic': ln.type === 'system',
+            'text-(--neon-cyan)': ln.type === 'input',
+            'text-(--text-primary)': ln.type === 'output',
+            'text-(--neon-yellow) italic': ln.type === 'system',
           }"
         >
           {{ ln.text }}
@@ -38,7 +38,7 @@
   >
     <div class="flex items-center gap-3">
       <div class="font-mono text-sm text-(--neon-cyan) font-bold">
-        {{ this.userService.getUserData()?.username }}
+        {{ this.userService.getUserData().username }}
       </div>
       <input
         #inputEl
