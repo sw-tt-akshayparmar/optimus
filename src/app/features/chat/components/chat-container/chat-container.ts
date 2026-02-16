@@ -5,6 +5,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MatButton } from '@angular/material/button';
 import { Conversation } from '../../models/chat.models';
 import { ChatService } from '../../services/chat.service';
+import { UserService } from '../../../../services/user.service';
 
 @Component({
   selector: 'app-chat-container',
@@ -20,11 +21,17 @@ export class ChatContainer implements OnInit, OnDestroy {
     protected readonly router: Router,
     protected readonly route: ActivatedRoute,
     private readonly chatService: ChatService,
+    private readonly userService: UserService,
   ) {}
 
   ngOnInit(): void {
     this.chatService.getAlConversations().subscribe({
       next: (res) => {
+        res.data.forEach((c: Conversation) => {
+          c.title = c.participations?.find((p) => {
+            return p.user_id !== this.userService.getUserData().id;
+          })?.user.name;
+        });
         this.conversations.set(res.data);
       },
     });

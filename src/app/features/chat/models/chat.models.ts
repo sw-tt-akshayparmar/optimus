@@ -98,7 +98,7 @@ export class Conversation {
   public is_deleted!: boolean;
 
   public messages?: Message[];
-  public participants?: User[];
+  public participations?: any[];
 
   private constructor() {}
 
@@ -109,7 +109,7 @@ export class Conversation {
     deleted_at?: Date | null;
     is_deleted?: boolean;
     messages?: Message[];
-    participants?: any[];
+    participations?: any[];
   }): Conversation {
     const conversation = new Conversation();
     conversation.id = conversationObj.id;
@@ -122,10 +122,8 @@ export class Conversation {
       conversation.messages = conversationObj.messages.map((m) => Message.from(m));
     }
 
-    if (conversationObj.participants) {
-      conversation.participants = conversationObj.participants
-        .filter((p) => p.users)
-        .map((p) => User.from(p.users));
+    if (conversationObj.participations) {
+      conversation.participations = conversationObj.participations;
     }
 
     return conversation;
@@ -142,8 +140,8 @@ export class Conversation {
     if (this.messages) {
       copy.messages = this.messages.map((m) => m.getCopy());
     }
-    if (this.participants) {
-      copy.participants = this.participants.map((u) => u.getCopy());
+    if (this.participations) {
+      copy.participations = this.participations.map((u) => u.getCopy());
     }
     return copy;
   }
