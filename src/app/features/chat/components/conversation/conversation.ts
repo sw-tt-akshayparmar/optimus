@@ -8,11 +8,12 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChatService } from '../../services/chat.service';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
-import { Message } from '../../models/chat.models';
+import { Message as ChatMessage } from '../../models/chat.models';
 import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../../../../services/user.service';
+import { Message as SockMessage } from '../../../../socket/message.model';
 
 @Component({
   selector: 'app-chat-container',
@@ -23,7 +24,7 @@ import { UserService } from '../../../../services/user.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Conversation implements OnInit, OnDestroy {
-  messages = signal<Message[]>([]);
+  messages = signal<ChatMessage[]>([]);
   input!: FormControl;
   conversation_id!: string;
   constructor(
@@ -31,9 +32,11 @@ export class Conversation implements OnInit, OnDestroy {
     private readonly chatService: ChatService,
     private readonly fb: FormBuilder,
     protected readonly userService: UserService,
+    private readonly route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
+    this.conversation_id = this.route.snapshot.params['conversationId'];
     this.input = this.fb.control('');
     this.router.events
       .pipe(
@@ -43,26 +46,27 @@ export class Conversation implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (event) => {
-          const convId = event.url.split('/')[2];
-          if (convId) {
-            this.conversation_id = convId;
-            this.chatService.getAllMessages(convId).subscribe({
-              next: (res) => {
-                this.messages.set(res.data.records);
-              },
-            });
-          } else {
-            this.conversation_id = '';
+          const route = event.url.split('/').at(-1);
+          if (route && !['all', 'new'].includes(route)) {
+            this.getAllConversations(route);
           }
         },
       });
     this.chatService.onMessage().subscribe({
-      next: (sockMsg) => {
+      next: (sockMsg: SockMessage<ChatMessage>) => {
         this.messages.update((prev) => [...prev, sockMsg.data]);
       },
     });
   }
-
+  getAllConversations(convId: string): void {
+    this.conversation_id = convId;
+    console.log('getAllConversations ', this.conversation_id);
+    this.chatService.getAllMessages(convId).subscribe({
+      next: (res) => {
+        this.messages.set(res.data.records);
+      },
+    });
+  }
   ngOnDestroy(): void {}
 
   sendMessage(): void {
