@@ -18,6 +18,7 @@ import { SocketService } from '../../socket/socket.service';
 import { Events } from '../../socket/events.enum';
 import { Message } from '../../socket/message.model';
 import markdown from 'markdown-it';
+import { v4 } from 'uuid';
 
 export interface AIChatMessage {
   prompt: string;
@@ -48,7 +49,7 @@ export class AIComponent implements OnInit, AfterViewInit {
   @ViewChild('vega', { static: true }) vega!: ElementRef;
   messages = signal<UIChatMessage[]>([{ text: 'Hello! How can I help you today?', sender: 'ai' }]);
   chatForm!: FormGroup;
-  conversationId: string = crypto.randomUUID();
+  conversationId: string = v4();
   md = markdown();
   constructor(
     private readonly fb: FormBuilder,
@@ -89,7 +90,7 @@ export class AIComponent implements OnInit, AfterViewInit {
           prompt: this.chatForm.value.message,
           conversationId: this.conversationId,
         },
-        messageId: crypto.randomUUID(),
+        messageId: v4(),
         event: Events.SIO_REQ,
         room: '',
       });

@@ -8,20 +8,18 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChatService } from '../../services/chat.service';
-import { Message } from '../../models/chat.models';
+import { MessageList } from '../message-list/message-list';
 
 @Component({
   selector: 'app-chat-container',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MessageList],
   templateUrl: 'conversation.html',
   styleUrls: ['conversation.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Conversation implements OnInit, OnDestroy {
   private chatService = inject(ChatService);
-
-  messages = signal<Message[]>([]);
 
   constructor() {}
 

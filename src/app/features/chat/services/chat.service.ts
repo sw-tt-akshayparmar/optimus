@@ -4,11 +4,10 @@ import { Events } from '../../../socket/events.enum';
 import { ApiService } from '../../../services/api.service';
 import APIConfig from '../../../config/api.config';
 import { Observable } from 'rxjs';
-import { Message } from '../../../socket/message.model';
+import { Message as SockMessage } from '../../../socket/message.model';
 import { SuccessResponse } from '../../../models/Response.model';
 import { RecordModel } from '../../../models/record.model';
-import { Conversation, Request } from '../models/chat.models';
-import { type } from 'node:os';
+import { Conversation, Message as ChatMessage, Request } from '../models/chat.models';
 
 @Injectable({
   providedIn: 'root',
@@ -34,7 +33,7 @@ export class ChatService {
     return this.apiService.post(APIConfig.CHAT_REQUEST, null, null, { receiver: userId });
   }
   onMessage() {
-    return this.socketService.on<Message>(Events.CHAT_DOWN);
+    return this.socketService.on<SockMessage>(Events.CHAT_DOWN);
   }
 
   getAlRequests(
@@ -49,5 +48,8 @@ export class ChatService {
 
   getAlConversations() {
     return this.apiService.get<Conversation[]>(APIConfig.CHAT);
+  }
+  getAllMessages(convId: string) {
+    return this.apiService.get<RecordModel<ChatMessage>>(APIConfig.CHAT);
   }
 }

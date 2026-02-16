@@ -12,6 +12,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { UserService } from '../../services/user.service';
+import { v4 } from 'uuid';
 
 type LineType = 'input' | 'output' | 'system';
 
@@ -63,7 +64,7 @@ export class TerminalComponent {
   private appendLine(text: string, type: LineType = 'output', timestamp?: number) {
     if (isPlatformBrowser(this.platformId)) {
       this.lines.update((prev) => {
-        const next = [...prev, { id: crypto.randomUUID(), text, type, timestamp }];
+        const next = [...prev, { id: v4(), text, type, timestamp }];
         return next.length > this.maxLines ? next.slice(-this.maxLines) : next;
       });
     }

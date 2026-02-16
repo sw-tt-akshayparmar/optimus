@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, signal } from '@
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
-import { MatButton, MatFabButton } from '@angular/material/button';
+import { MatButton } from '@angular/material/button';
 import { Conversation } from '../../models/chat.models';
 import { ChatService } from '../../services/chat.service';
 
@@ -25,11 +25,13 @@ export class ChatContainer implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.chatService.getAlConversations().subscribe({
       next: (res) => {
-        console.log(res);
         this.conversations.set(res.data);
       },
     });
   }
 
   ngOnDestroy(): void {}
+  openConv(c: Conversation) {
+    this.router.navigate(['chat', c.id]);
+  }
 }

@@ -6,6 +6,7 @@ import { ToastService } from '../services/toast.service';
 import { Events } from './events.enum';
 import { Message } from './message.model';
 import { Subject } from 'rxjs';
+import { v4 } from 'uuid';
 
 interface Auth {
   socketId?: string;
@@ -73,7 +74,7 @@ export class SocketService {
         },
         event: Events.SIO_AUTH,
         clientId: '',
-        messageId: crypto.randomUUID(),
+        messageId: v4(),
         success: true,
         message: 'Authentication Request',
       } satisfies Message);
