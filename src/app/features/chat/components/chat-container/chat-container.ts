@@ -9,7 +9,7 @@ import { ChatService } from '../../services/chat.service';
 @Component({
   selector: 'app-chat-container',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, MatIcon, MatFabButton, MatButton, NgOptimizedImage],
+  imports: [CommonModule, RouterOutlet, MatIcon, MatButton, NgOptimizedImage],
   templateUrl: 'chat-container.html',
   styleUrls: ['chat-container.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,

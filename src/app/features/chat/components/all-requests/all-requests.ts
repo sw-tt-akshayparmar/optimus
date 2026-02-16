@@ -2,15 +2,14 @@ import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, signal } from '@
 import { Request } from '../../models/chat.models';
 import { ChatService } from '../../services/chat.service';
 import { UserService } from '../../../../services/user.service';
-import { NgClass, NgOptimizedImage } from '@angular/common';
+import { NgOptimizedImage } from '@angular/common';
 import { ToastService } from '../../../../services/toast.service';
 import { MatIcon } from '@angular/material/icon';
-import { MatFabButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-all-requests',
   standalone: true,
-  imports: [NgOptimizedImage, MatIcon, MatFabButton, NgClass],
+  imports: [NgOptimizedImage, MatIcon],
   templateUrl: 'all-requests.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
