@@ -89,3 +89,62 @@ export class Request {
     });
   }
 }
+
+export class Conversation {
+  public id!: string;
+  public title!: string;
+  public created_at!: Date;
+  public deleted_at!: Date | null;
+  public is_deleted!: boolean;
+
+  public messages?: Message[];
+  public participants?: User[];
+
+  private constructor() {}
+
+  static from(conversationObj: {
+    id: string;
+    title: string;
+    created_at: Date;
+    deleted_at?: Date | null;
+    is_deleted?: boolean;
+    messages?: Message[];
+    participants?: any[];
+  }): Conversation {
+    const conversation = new Conversation();
+    conversation.id = conversationObj.id;
+    conversation.title = conversationObj.title;
+    conversation.created_at = conversationObj.created_at;
+    conversation.deleted_at = conversationObj.deleted_at ?? null;
+    conversation.is_deleted = conversationObj.is_deleted ?? false;
+
+    if (conversationObj.messages) {
+      conversation.messages = conversationObj.messages.map((m) => Message.from(m));
+    }
+
+    if (conversationObj.participants) {
+      conversation.participants = conversationObj.participants
+        .filter((p) => p.users)
+        .map((p) => User.from(p.users));
+    }
+
+    return conversation;
+  }
+
+  getCopy(): Conversation {
+    const copy = Conversation.from({
+      id: this.id,
+      title: this.title,
+      created_at: this.created_at,
+      deleted_at: this.deleted_at,
+      is_deleted: this.is_deleted,
+    });
+    if (this.messages) {
+      copy.messages = this.messages.map((m) => m.getCopy());
+    }
+    if (this.participants) {
+      copy.participants = this.participants.map((u) => u.getCopy());
+    }
+    return copy;
+  }
+}

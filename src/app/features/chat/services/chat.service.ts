@@ -7,7 +7,8 @@ import { Observable } from 'rxjs';
 import { Message } from '../../../socket/message.model';
 import { SuccessResponse } from '../../../models/Response.model';
 import { RecordModel } from '../../../models/record.model';
-import { Request } from '../models/chat.models';
+import { Conversation, Request } from '../models/chat.models';
+import { type } from 'node:os';
 
 @Injectable({
   providedIn: 'root',
@@ -44,5 +45,9 @@ export class ChatService {
 
   processRequest(request: Request, process: 'accept' | 'reject' | 'cancel') {
     return this.apiService.put(APIConfig.CHAT_REQUEST, null, [request.id], { process });
+  }
+
+  getAlConversations() {
+    return this.apiService.get<Conversation[]>(APIConfig.CHAT);
   }
 }
