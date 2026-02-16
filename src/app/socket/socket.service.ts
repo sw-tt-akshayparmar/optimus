@@ -94,7 +94,10 @@ export class SocketService {
     }
   }
 
-  on<T>(event: string) {
-    return this.socket.fromEvent<T>(event);
+  on<T>(event: string, callback: (data: T) => void) {
+    return this.socket.on(event, callback);
+  }
+  off(event: string) {
+    this.socket.off(event);
   }
 }

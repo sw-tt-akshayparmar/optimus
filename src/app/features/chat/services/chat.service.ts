@@ -43,10 +43,13 @@ export class ChatService {
   sendRequest(userId: string) {
     return this.apiService.post(APIConfig.CHAT_REQUEST, null, null, { receiver: userId });
   }
-  onMessage() {
-    return this.socketService.on<SockMessage>(Events.CHAT_DOWN);
+  onMessage(callback: (data: SockMessage<ChatMessage>) => void) {
+    return this.socketService.on<SockMessage<ChatMessage>>(Events.CHAT_DOWN, callback);
   }
 
+  offMessage() {
+    this.socketService.off(Events.CHAT_DOWN);
+  }
   getAlRequests(
     type: 'all' | 'sent' | 'received' = 'received',
   ): Observable<SuccessResponse<RecordModel<Request>>> {

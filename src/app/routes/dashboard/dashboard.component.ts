@@ -36,7 +36,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.checkSocketStatus();
-    this.subscribeToSocketEvents();
+    // this.subscribeToSocketEvents();
 
     this.addLog('Dashboard initialized');
   }
@@ -49,42 +49,42 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.socketConnected = !!this.socketId;
   }
 
-  private subscribeToSocketEvents() {
-    this.subscriptions.push(
-      this.socketService.on(Events.CONNECT).subscribe(() => {
-        this.socketConnected = true;
-        this.transport = 'WebSocket'; // Assumption
-        this.addLog('Socket connected');
-        this.cdr.detectChanges();
-      }),
-    );
-
-    this.subscriptions.push(
-      this.socketService.on(Events.DISCONNECT).subscribe(() => {
-        this.socketConnected = false;
-        this.addLog('Socket disconnected');
-        this.cdr.detectChanges();
-      }),
-    );
-
-    this.subscriptions.push(
-      this.socketService.on('server-stats').subscribe((stats: any) => {
-        if (stats) {
-          this.activeUsers = stats.activeUsers || this.activeUsers;
-          this.liveUsers = (stats.users || []).map((u: any) => User.from(u));
-          this.uptime = stats.uptime || this.uptime;
-          this.memoryUsage = stats.memoryUsage || this.memoryUsage;
-          this.cdr.detectChanges();
-        }
-      }),
-    );
-
-    this.subscriptions.push(
-      this.socketService.on(Events.MESSAGE_EVENT).subscribe((msg: any) => {
-        this.addLog(`Message received: ${JSON.stringify(msg)}`);
-      }),
-    );
-  }
+  // private subscribeToSocketEvents() {
+  //   this.subscriptions.push(
+  //     this.socketService.on(Events.CONNECT).subscribe(() => {
+  //       this.socketConnected = true;
+  //       this.transport = 'WebSocket'; // Assumption
+  //       this.addLog('Socket connected');
+  //       this.cdr.detectChanges();
+  //     }),
+  //   );
+  //
+  //   this.subscriptions.push(
+  //     this.socketService.on(Events.DISCONNECT).subscribe(() => {
+  //       this.socketConnected = false;
+  //       this.addLog('Socket disconnected');
+  //       this.cdr.detectChanges();
+  //     }),
+  //   );
+  //
+  //   this.subscriptions.push(
+  //     this.socketService.on('server-stats').subscribe((stats: any) => {
+  //       if (stats) {
+  //         this.activeUsers = stats.activeUsers || this.activeUsers;
+  //         this.liveUsers = (stats.users || []).map((u: any) => User.from(u));
+  //         this.uptime = stats.uptime || this.uptime;
+  //         this.memoryUsage = stats.memoryUsage || this.memoryUsage;
+  //         this.cdr.detectChanges();
+  //       }
+  //     }),
+  //   );
+  //
+  //   this.subscriptions.push(
+  //     this.socketService.on(Events.MESSAGE_EVENT).subscribe((msg: any) => {
+  //       this.addLog(`Message received: ${JSON.stringify(msg)}`);
+  //     }),
+  //   );
+  // }
 
   private addLog(message: string) {
     this.logs.unshift({

@@ -60,19 +60,19 @@ export class AIComponent implements OnInit, AfterViewInit {
     this.chatForm = this.fb.group({
       message: ['', Validators.required],
     });
-    this.socketService.on<Message<AIChatMessage>>(Events.SIO_RES).subscribe({
-      next: (message) => {
-        if (message.success) {
-          const aiMessage: UIChatMessage = {
-            text: message.data.response || '',
-            sender: 'ai',
-          };
-          console.log(this.md.render(aiMessage.text));
-          this.messages.update((messages) => [...messages, aiMessage]);
-          this.scrollToBottom();
-        }
-      },
-    });
+    // this.socketService.on<Message<AIChatMessage>>(Events.SIO_RES).subscribe({
+    //   next: (message) => {
+    //     if (message.success) {
+    //       const aiMessage: UIChatMessage = {
+    //         text: message.data.response || '',
+    //         sender: 'ai',
+    //       };
+    //       console.log(this.md.render(aiMessage.text));
+    //       this.messages.update((messages) => [...messages, aiMessage]);
+    //       this.scrollToBottom();
+    //     }
+    //   },
+    // });
   }
   async ngAfterViewInit() {}
 
