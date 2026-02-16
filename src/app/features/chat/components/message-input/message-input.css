@@ -1,7 +1,0 @@
-:host {
-  display: block;
-}
-textarea {
-  scrollbar-width: thin;
-  scrollbar-color: var(--bg-surface-3) transparent;
-}
