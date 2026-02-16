@@ -8,6 +8,8 @@ import { Message as SockMessage } from '../../../socket/message.model';
 import { SuccessResponse } from '../../../models/Response.model';
 import { RecordModel } from '../../../models/record.model';
 import { Conversation, Message as ChatMessage, Request } from '../models/chat.models';
+import { v4 } from 'uuid';
+import { UserService } from '../../../services/user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,18 +18,27 @@ export class ChatService {
   constructor(
     private readonly socketService: SocketService,
     private readonly apiService: ApiService,
+    private readonly userService: UserService,
   ) {
     this.socketService.emit(Events.CHAT_JOIN, {} as any);
-    this.socketService.on(Events.CHAT_DOWN).subscribe({
-      next: (data) => {
-        console.log(data);
-      },
-    });
   }
 
-  sendMessage(room: string | string[], content: string, nonce: string): void {}
-
-  sendTypingStatus(room: string | [], userId: string, username: string, isTyping: boolean): void {}
+  sendMessage(conversationId: string | string[], content: string): void {
+    const sockMsg: SockMessage<ChatMessage> = {
+      clientId: '',
+      messageId: v4(),
+      success: true,
+      event: Events.CHAT_UP,
+      message: 'Chat Message',
+      room: conversationId,
+      data: {
+        conversation_id: conversationId,
+        sender: this.userService.getUserData().id,
+        content,
+      } as ChatMessage,
+    };
+    this.socketService.emit(Events.CHAT_UP, sockMsg);
+  }
 
   sendRequest(userId: string) {
     return this.apiService.post(APIConfig.CHAT_REQUEST, null, null, { receiver: userId });
@@ -50,6 +61,6 @@ export class ChatService {
     return this.apiService.get<Conversation[]>(APIConfig.CHAT);
   }
   getAllMessages(convId: string) {
-    return this.apiService.get<RecordModel<ChatMessage>>(APIConfig.CHAT);
+    return this.apiService.get<RecordModel<ChatMessage>>(APIConfig.CHAT, [convId]);
   }
 }

@@ -32,6 +32,6 @@ export class ChatContainer implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {}
   openConv(c: Conversation) {
-    this.router.navigate(['chat', c.id]);
+    this.router.navigate([c.id], { relativeTo: this.route });
   }
 }
