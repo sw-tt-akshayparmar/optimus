@@ -66,7 +66,7 @@ export class Request {
   public status!: RequestStatus;
   public description?: string;
 
-  public user?: User;
+  public sender_user?: User;
   public receiver_user?: User;
 
   private constructor() {}
@@ -77,7 +77,7 @@ export class Request {
     receiver: string;
     status: RequestStatus;
     description?: string | null;
-    user?: User;
+    sender_user?: User;
     receiver_user?: User;
   }): Request {
     const request = new Request();
@@ -86,7 +86,7 @@ export class Request {
     request.receiver = rObj.receiver;
     request.status = rObj.status;
     request.receiver = rObj.receiver;
-    request.user = rObj.user ? User.from(rObj.user) : rObj.user;
+    request.sender_user = rObj.sender_user ? User.from(rObj.sender_user) : rObj.sender_user;
     request.receiver_user = rObj.receiver_user ? User.from(rObj.receiver_user) : rObj.receiver_user;
 
     return request;
@@ -99,7 +99,7 @@ export class Request {
       receiver: this.receiver,
       status: this.status,
       description: this.description,
-      user: this.user,
+      sender_user: this.sender_user,
       receiver_user: this.receiver_user,
     });
   }
