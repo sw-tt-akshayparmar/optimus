@@ -23,7 +23,6 @@ import { ToastService } from '../../../../services/toast.service';
     NgOptimizedImage,
   ],
   templateUrl: 'request.html',
-  styleUrls: ['request.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Request implements OnInit, OnDestroy {

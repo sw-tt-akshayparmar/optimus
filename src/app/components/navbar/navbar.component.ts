@@ -3,13 +3,13 @@ import { Router, RouterLinkActive, RouterModule, isActive } from '@angular/route
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { UserService } from '../../services/user.service';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterModule, RouterLinkActive, MatButton, MatIcon],
+  imports: [RouterModule, RouterLinkActive, MatButton, MatIcon, NgOptimizedImage],
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent {
   constructor(

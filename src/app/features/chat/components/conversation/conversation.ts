@@ -1,11 +1,4 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  ChangeDetectionStrategy,
-  signal,
-  Input,
-} from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChatService } from '../../services/chat.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -20,7 +13,6 @@ import { Message as SockMessage } from '../../../../socket/message.model';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: 'conversation.html',
-  styleUrls: ['conversation.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Conversation implements OnInit, OnDestroy {

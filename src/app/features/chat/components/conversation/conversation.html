@@ -1,5 +1,5 @@
 <div class="flex flex-col h-full bg-(--bg-surface-2)">
-  <div class="flex-1 overflow-y-auto px-6 py-4 space-y-4">
+  <div class="flex-1 overflow-y-auto px-6 py-5 space-y-5">
     @for (message of messages(); track message.id) {
       <div
         class="flex flex-col max-w-[75%]"
@@ -9,36 +9,40 @@
         }"
       >
         <div
-          class="px-4 py-3 rounded-2xl text-sm shadow-sm wrap-break-word transition-all duration-150"
+          class="px-4 py-3 rounded-2xl text-sm shadow-(--shadow-sm) wrap-break-word transition-all duration-200"
           [ngClass]="{
-            'bg-(--neon-blue-300) text-(--text-inverse) rounded-br-md':
+            'bg-(--neon-blue-500) text-(--text-inverse) rounded-br-md hover:bg-(--neon-blue-700)':
               message.sender === userService.getUserData().id,
-            'bg-(--bg-surface-3) text-(--text-primary) rounded-bl-md':
+
+            'bg-(--bg-surface-3) text-(--text-primary) rounded-bl-md border border-(--border-soft)':
               message.sender !== userService.getUserData().id,
           }"
         >
           {{ message.content }}
         </div>
         <div class="mt-1 text-[11px] text-(--text-muted) flex gap-2">
-          <span>{{ message.user?.name || message.sender }}</span>
+          <span class="truncate">
+            {{ message.user?.name || message.sender }}
+          </span>
           <span>•</span>
-          <span>{{ getDateFormat(message.created_at) }}</span>
+          <span>
+            {{ getDateFormat(message.created_at) }}
+          </span>
         </div>
       </div>
     }
   </div>
-
-  <div class="border-t border-(--border-soft) bg-(--bg-surface-1) px-4 py-3">
+  <div class="border-t border-(--border-soft) bg-(--bg-surface-1) px-5 py-4">
     <div class="flex items-center gap-3">
       <input
         type="text"
         [formControl]="input"
         placeholder="Type a message..."
-        class="flex-1 px-4 py-2 rounded-full bg-(--bg-surface-3) text-(--text-primary) text-sm outline-none focus:ring-2 focus:ring-(--neon-blue-700) transition-all duration-200"
         (keyup.enter)="sendMessage()"
+        class="flex-1 px-4 py-2 rounded-full bg-(--bg-surface-3) text-(--text-primary) text-sm border border-(--border-soft) outline-none transition-all duration-200 focus:border-(--neon-blue-500) focus:ring-2 focus:ring-(--neon-blue-300)/40"
       />
       <button
-        class="send-btn px-4 py-2 rounded-full bg-(--color-primary) text-(--text-inverse) text-sm transition-all duration-150"
+        class="px-5 py-2 rounded-full text-sm bg-(--neon-blue-500) text-(--text-inverse) transition-all duration-200 hover:bg-(--neon-blue-700) active:bg-(--neon-blue-900) hover:shadow-(--glow-blue)"
         (click)="sendMessage()"
       >
         Send

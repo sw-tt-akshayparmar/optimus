@@ -12,7 +12,6 @@ import { UserService } from '../../../../services/user.service';
   standalone: true,
   imports: [CommonModule, RouterOutlet, MatIcon, MatButton, NgOptimizedImage],
   templateUrl: 'chat-container.html',
-  styleUrls: ['chat-container.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChatContainer implements OnInit, OnDestroy {

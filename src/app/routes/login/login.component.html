@@ -1,70 +1,85 @@
-<div class="login-container">
-  <form [formGroup]="loginForm">
-    <div class="text-center mb-8">
-      <h1 class="text-2xl font-bold text-(--text-primary) mb-2">Welcome Back</h1>
-      <p class="text-(--text-secondary)">Sign in to access your dashboard</p>
-    </div>
+<div class="h-full flex items-center justify-center bg-(--bg-root) px-4">
+  <div class="w-full max-w-md bg-(--bg-surface-1) p-8 rounded-2xl shadow-xl border border-white/5">
+    <form [formGroup]="loginForm" class="flex flex-col gap-5">
+      <div class="text-center">
+        <h1 class="text-2xl text-(--text-primary)">Welcome Back</h1>
+        <p class="text-sm text-(--text-secondary) mt-1">Sign in to access your dashboard</p>
+      </div>
 
-    <mat-form-field appearance="outline" class="mb-4">
-      <mat-label>Username</mat-label>
-      <mat-icon matPrefix>perm_identity</mat-icon>
-      <input matInput formControlName="username" type="text" />
-      @if (
-        loginForm.get('username')?.invalid &&
-        (loginForm.get('username')?.dirty || loginForm.get('username')?.touched)
-      ) {
-        <mat-error>{{ getError('username') }}</mat-error>
-      }
-    </mat-form-field>
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Username</mat-label>
+        <mat-icon matPrefix>perm_identity</mat-icon>
+        <input matInput formControlName="username" type="text" />
+        @if (
+          loginForm.get('username')?.invalid &&
+          (loginForm.get('username')?.dirty || loginForm.get('username')?.touched)
+        ) {
+          <mat-error>{{ getError('username') }}</mat-error>
+        }
+      </mat-form-field>
 
-    <mat-form-field appearance="outline" class="mb-6">
-      <mat-label>Password</mat-label>
-      <mat-icon matPrefix>lock</mat-icon>
-      <input matInput formControlName="password" type="password" />
-      @if (
-        loginForm.get('password')?.invalid &&
-        (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)
-      ) {
-        <mat-error>{{ getError('password') }}</mat-error>
-      }
-    </mat-form-field>
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Password</mat-label>
+        <mat-icon matPrefix>lock</mat-icon>
+        <input matInput formControlName="password" type="password" />
+        @if (
+          loginForm.get('password')?.invalid &&
+          (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)
+        ) {
+          <mat-error>{{ getError('password') }}</mat-error>
+        }
+      </mat-form-field>
 
-    <div class="flex flex-col gap-3">
-      <button mat-flat-button class="primary-btn" (click)="onSubmit()">LOG IN</button>
-      <button mat-stroked-button class="secondary-btn" (click)="router.navigate(['register'])">
-        CREATE ACCOUNT
-      </button>
-    </div>
-    <div class="or-divider">OR</div>
+      <div class="flex flex-col gap-3 mt-2">
+        <button
+          mat-flat-button
+          color="primary"
+          class="w-full h-11 rounded-xl font-medium tracking-wide"
+          (click)="onSubmit()"
+        >
+          LOG IN
+        </button>
 
-    <div class="flex justify-center gap-4">
-      <button type="button" class="social-login-btn">
-        <img
-          ngSrc="/images/google.svg"
-          alt="Google"
-          width="40"
-          height="40"
-          class="rounded-full opacity-80 hover:opacity-100"
-        />
-      </button>
-      <button type="button" class="social-login-btn">
-        <img
-          ngSrc="/images/github.svg"
-          alt="GitHub"
-          width="40"
-          height="40"
-          class="rounded-full opacity-80 hover:opacity-100"
-        />
-      </button>
-      <button type="button" class="social-login-btn">
-        <img
-          ngSrc="/images/microsoft.svg"
-          alt="Microsoft"
-          width="40"
-          height="40"
-          class="rounded-full opacity-80 hover:opacity-100"
-        />
-      </button>
-    </div>
-  </form>
+        <button
+          mat-stroked-button
+          class="w-full h-11 rounded-xl font-medium"
+          (click)="router.navigate(['register'])"
+        >
+          CREATE ACCOUNT
+        </button>
+      </div>
+
+      <div class="relative my-4">
+        <div class="absolute inset-0 flex items-center">
+          <div class="w-full border-t border-white/10"></div>
+        </div>
+        <div class="relative flex justify-center text-xs uppercase tracking-wider">
+          <span class="bg-(--bg-surface-1) px-3 text-(--text-secondary)"> OR </span>
+        </div>
+      </div>
+
+      <div class="flex justify-center gap-5">
+        <button
+          type="button"
+          class="rounded-full bg-(--bg-surface-2) border border-white/5 transition-all duration-200 hover:scale-105 hover:border-white/20"
+        >
+          <img ngSrc="/images/google.svg" alt="Google" width="36" height="36" />
+        </button>
+
+        <button
+          type="button"
+          class="rounded-full bg-(--bg-surface-2) border border-white/5 transition-all duration-200 hover:scale-105 hover:border-white/20;"
+        >
+          <img ngSrc="/images/github.svg" alt="GitHub" width="36" height="36" />
+        </button>
+
+        <button
+          type="button"
+          class="rounded-full bg-(--bg-surface-2) border border-white/5 transition-all duration-200 hover:scale-105 hover:border-white/20;"
+        >
+          <img ngSrc="/images/microsoft.svg" alt="Microsoft" width="36" height="36" />
+        </button>
+      </div>
+    </form>
+  </div>
 </div>

@@ -16,7 +16,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { SocketService } from '../../socket/socket.service';
 import { Events } from '../../socket/events.enum';
-import { Message } from '../../socket/message.model';
 import markdown from 'markdown-it';
 import { v4 } from 'uuid';
 
@@ -41,7 +40,6 @@ export interface UIChatMessage {
     MatIconModule,
   ],
   templateUrl: './ai-chat.html',
-  styleUrl: './ai-chat.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AIComponent implements OnInit, AfterViewInit {

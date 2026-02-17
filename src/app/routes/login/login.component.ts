@@ -27,7 +27,6 @@ import { MatButton } from '@angular/material/button';
     NgOptimizedImage,
   ],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
   loginForm: FormGroup;
@@ -76,6 +75,4 @@ export class LoginComponent {
     if (control.hasError('required')) return `${controlName} is required`;
     return null;
   }
-
-  protected readonly LoaderActions = LoaderActions;
 }

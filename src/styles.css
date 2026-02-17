@@ -36,6 +36,9 @@
   /* Borders & grid */
   --color-border-soft: var(--border-soft);
   --color-border-strong: var(--border-strong);
+
+  --color-success: var(--neon-green-700);
+  --color-danger: var(--neon-red-700);
 }
 
 .mdc-notched-outline__notch {

@@ -10,29 +10,41 @@
 
     <div class="mt-2">
       @for (record of records(); let idx = $index; track $index) {
-        <div class="flex mt-2 p-2 w-2xl">
-          <div>
+        <div
+          class="group flex items-center gap-4 mt-3 px-4 py-3 rounded-xl bg-(--bg-surface-1) border border-(--border-soft) shadow-(--shadow-sm) transition-all duration-200 hover:bg-(--bg-card-hover) hover:border-(--neon-blue-300)/40"
+        >
+          <div class="flex items-center justify-center rounded-lg bg-(--bg-surface-2) p-2">
             <img
-              ngSrc="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/discord-round-color-icon.png"
-              alt=""
-              width="50"
-              height="50"
-              class=""
+              [ngSrc]="'https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/discord-round-color-icon.png'"
+              alt="User Avatar"
+              [width]="56"
+              [height]="56"
+              class="rounded-md"
             />
           </div>
-          <div class="flex flex-col ml-3 w-full">
-            <div class="text-xl font-medium">{{ record.user.name }}</div>
-            <div class="">{{ record.user.username }}</div>
+          <div class="flex flex-col flex-1 min-w-0">
+            <div class="text-base text-(--text-primary-strong) truncate">
+              {{ record.user.name }}
+            </div>
+            <div class="text-sm text-(--text-muted) truncate">&#64;{{ record.user.username }}</div>
           </div>
           <div>
             @if (record.invited) {
-              <button matButton="outlined" disabled>
-                <mat-icon>check</mat-icon>
+              <button
+                matButton="outlined"
+                disabled
+                class="border-(--neon-green-500)! text-(--neon-green-500)! bg-(--neon-green-300)/10!"
+              >
+                <mat-icon class="text-(--neon-green-500)!">check</mat-icon>
                 Invited
               </button>
             } @else {
-              <button matButton="outlined" (click)="inviteUser(record.user, idx)">
-                <mat-icon>create</mat-icon>
+              <button
+                matButton="outlined"
+                (click)="inviteUser(record.user, idx)"
+                class="border-(--neon-blue-500)! text-(--neon-blue-500)! transition-all duration-200 hover:bg-(--neon-blue-300)/15! hover:border-(--neon-blue-700)! hover:text-(--neon-blue-700)!"
+              >
+                <mat-icon class="text-(--neon-blue-500)!"> create</mat-icon>
                 Invite
               </button>
             }

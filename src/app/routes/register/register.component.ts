@@ -32,9 +32,9 @@ import { MatButton } from '@angular/material/button';
     MatPrefix,
     MatButton,
     MatError,
+    NgOptimizedImage,
   ],
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
   regForm: FormGroup;
@@ -128,6 +128,4 @@ export class RegisterComponent {
       this.toast.error(`Validation(s) Failed`, `Please enter valid details`);
     }
   }
-
-  protected readonly LoaderActions = LoaderActions;
 }
