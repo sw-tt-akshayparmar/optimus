@@ -11,7 +11,7 @@
         <div
           class="px-4 py-3 rounded-2xl text-sm shadow-sm wrap-break-word transition-all duration-150"
           [ngClass]="{
-            'bg-(--bg-card-soft) text-(--text-primary) rounded-br-md':
+            'bg-(--neon-blue-300) text-(--text-inverse) rounded-br-md':
               message.sender === userService.getUserData().id,
             'bg-(--bg-surface-3) text-(--text-primary) rounded-bl-md':
               message.sender !== userService.getUserData().id,
@@ -38,7 +38,8 @@
         (keyup.enter)="sendMessage()"
       />
       <button
-        class="px-4 py-2 rounded-full bg-(--neon-blue-500) text-(--text-inverse) text-sm hover:bg-(--neon-blue-700) transition-all duration-150"
+        class="send-btn px-4 py-2 rounded-full bg-(--color-primary) text-(--text-inverse) text-sm transition-all duration-150"
+        (click)="sendMessage()"
       >
         Send
       </button>

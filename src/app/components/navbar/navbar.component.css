@@ -8,8 +8,8 @@ nav {
 .logo {
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--neon-cyan);
-  text-shadow: 0 0 8px rgba(46, 242, 255, 0.5);
+  color: var(--neon-cyan-500);
+  text-shadow: var(--glow-cyan);
 }
 
 .nav-link {
@@ -25,11 +25,11 @@ nav {
 
 .nav-link:hover {
   color: var(--text-primary);
-  background-color: var(--bg-surface-2);
+  background-color: var(--neon-cyan-300);
 }
 
 .nav-link.active {
-  color: var(--neon-cyan);
+  color: var(--neon-cyan-500);
   background-color: var(--bg-surface-3);
 }
 
@@ -41,8 +41,8 @@ nav {
   transform: translateX(-50%);
   width: 60%;
   height: 2px;
-  background-color: var(--neon-cyan);
-  box-shadow: 0 0 8px var(--neon-cyan);
+  background-color: var(--neon-cyan-700);
+  box-shadow: var(--glow-cyan);
 }
 
 .mat-mdc-button {
@@ -51,11 +51,33 @@ nav {
 }
 
 .login-btn {
-  background-color: var(--neon-cyan) !important;
-  color: var(--bg-root) !important;
+  background-color: var(--neon-cyan-500) !important;
+  color: var(--bg-root-900) !important;
+  transition: all 0.2s ease;
+}
+
+.login-btn:hover {
+  background-color: var(--neon-cyan-700) !important;
+  box-shadow: var(--glow-cyan);
+}
+
+.login-btn:active {
+  background-color: var(--neon-cyan-900) !important;
 }
 
 .signup-btn {
-  border-color: var(--neon-cyan) !important;
-  color: var(--neon-cyan) !important;
+  border-color: var(--neon-cyan-500) !important;
+  color: var(--neon-cyan-500) !important;
+  transition: all 0.2s ease;
+}
+
+.signup-btn:hover {
+  background-color: var(--neon-cyan-300) !important;
+  color: var(--neon-cyan-700) !important;
+  border-color: var(--neon-cyan-700) !important;
+}
+
+.signup-btn:active {
+  background-color: var(--neon-cyan-500) !important;
+  color: var(--bg-root-900) !important;
 }

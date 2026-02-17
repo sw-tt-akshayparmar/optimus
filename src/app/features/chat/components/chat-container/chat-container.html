@@ -8,8 +8,7 @@
     <div class="flex flex-col gap-2 p-4">
       <button
         mat-flat-button
-        color="primary"
-        class="w-full justify-start"
+        class="new-chat-btn w-full justify-start"
         (click)="router.navigate(['new'], { relativeTo: route })"
       >
         <mat-icon class="mr-2">create</mat-icon>
@@ -17,7 +16,7 @@
       </button>
       <button
         mat-stroked-button
-        class="w-full justify-start"
+        class="requests-btn w-full justify-start"
         (click)="router.navigate(['all'], { relativeTo: route })"
       >
         <mat-icon class="mr-2">mark_chat_unread</mat-icon>
@@ -27,7 +26,7 @@
     <div class="flex-1 overflow-y-auto px-2 pb-4">
       @for (c of conversations(); track c.id) {
         <div
-          class="group flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition-all duration-200 bg-(--bg-surface-2) hover:bg-(--bg-card-hover)"
+          class="chat-item group flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition-all duration-200 bg-(--bg-surface-2) hover:bg-(--bg-card-hover)"
           (click)="openConv(c)"
         >
           <img

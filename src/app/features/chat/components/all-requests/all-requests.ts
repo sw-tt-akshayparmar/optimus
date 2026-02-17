@@ -5,11 +5,12 @@ import { UserService } from '../../../../services/user.service';
 import { NgOptimizedImage } from '@angular/common';
 import { ToastService } from '../../../../services/toast.service';
 import { MatIcon } from '@angular/material/icon';
+import { MatIconButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-all-requests',
   standalone: true,
-  imports: [NgOptimizedImage, MatIcon],
+  imports: [NgOptimizedImage, MatIcon, MatIconButton],
   templateUrl: 'all-requests.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -1,0 +1,13 @@
+.send-btn {
+  background-color: var(--color-primary) !important;
+  color: var(--text-inverse) !important;
+}
+
+.send-btn:hover {
+  background-color: var(--color-primary-hover) !important;
+  box-shadow: var(--glow-blue);
+}
+
+.send-btn:active {
+  background-color: var(--color-primary-active) !important;
+}

@@ -188,8 +188,8 @@ export const BAR_CHART_SPEC = {
               y2: 0,
               gradient: 'linear',
               stops: [
-                { offset: 0, color: '#6666FF' },
-                { offset: 1, color: '#0000FF' },
+                { offset: 0, color: '#8da9ff' }, // blue-300
+                { offset: 1, color: '#4d7cff' }, // blue-500
               ],
             },
           },
