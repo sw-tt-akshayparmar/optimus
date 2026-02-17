@@ -5,22 +5,38 @@
 @import url("./assets/theme.css");
 @import url("./assets/markdown.css");
 
+/* Tailwind v4 @theme mapping to design tokens defined in assets/theme.css */
 @theme {
-  --color-primary: var(--neon-cyan);
-  --color-primary-foreground: var(--bg-root);
-  --color-secondary: var(--neon-purple);
+  /* Primary action family (blue) */
+  --color-primary: var(--neon-blue-500);
+  --color-primary-hover: var(--neon-blue-700);
+  --color-primary-foreground: var(--text-inverse);
+
+  /* Secondary accent (purple) */
+  --color-secondary: var(--neon-purple-500);
+  --color-secondary-hover: var(--neon-purple-700);
   --color-secondary-foreground: var(--text-primary);
 
-  --color-bg-root: var(--bg-root);
+  /* Background hierarchy */
+  --color-bg-root: var(--bg-root-900);
   --color-bg-surface-1: var(--bg-surface-1);
   --color-bg-surface-2: var(--bg-surface-2);
   --color-bg-surface-3: var(--bg-surface-3);
+  --color-bg-card-soft: var(--bg-card-soft);
+  --color-bg-card-hover: var(--bg-card-hover);
+  --color-bg-card-active: var(--bg-card-active);
 
+  /* Typography */
   --color-text-primary: var(--text-primary);
+  --color-text-primary-strong: var(--text-primary-strong);
   --color-text-secondary: var(--text-secondary);
   --color-text-muted: var(--text-muted);
-}
+  --color-text-disabled: var(--text-disabled);
 
+  /* Borders & grid */
+  --color-border-soft: var(--border-soft);
+  --color-border-strong: var(--border-strong);
+}
 
 .mdc-notched-outline__notch {
   border-right: none;
@@ -45,6 +61,6 @@ html, body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  background-color: var(--bg-root);
+  background-color: var(--bg-root-900);
   color: var(--text-primary);
 }

@@ -1,5 +1,5 @@
 <div
-  class="ai-chat-container p-4 rounded-xl bg-(--bg-surface-2) border border-white/5 shadow-lg flex flex-col h-full w-full items-center"
+  class="ai-chat-container p-4 rounded-xl bg-(--bg-surface-2) border border-(--border-soft) shadow-lg flex flex-col h-full w-full items-center"
 >
   <div #chatContainer class="message-list grow overflow-y-auto mb-4 w-6xl space-y-4">
     @for (message of messages(); track $index) {
@@ -12,10 +12,9 @@
           class="message-content p-3 rounded-lg markdown"
           [class.max-w-xs]="message.sender === 'user'"
           [class.w-full]="message.sender === 'ai'"
-          [class.bg-blue-600]="message.sender === 'user'"
-          [class.text-white]="message.sender === 'user'"
-          [class.bg-gray-700]="message.sender === 'ai'"
-          [class.text-gray-300]="message.sender === 'ai'"
+          [class.bg-(--bg-card-soft)]="message.sender === 'user'"
+          [class.text-(--text-primary)]="true"
+          [class.bg-(--bg-surface-3)]="message.sender === 'ai'"
           [innerHTML]="this.md.render(message.text)"
         ></div>
       </div>

@@ -11,14 +11,15 @@
         <div
           class="px-4 py-3 rounded-2xl text-sm shadow-sm wrap-break-word transition-all duration-150"
           [ngClass]="{
-            'bg-blue-600 text-white rounded-br-md': message.sender === userService.getUserData().id,
-            'bg-(--bg-surface-3) text-white rounded-bl-md':
+            'bg-(--bg-card-soft) text-(--text-primary) rounded-br-md':
+              message.sender === userService.getUserData().id,
+            'bg-(--bg-surface-3) text-(--text-primary) rounded-bl-md':
               message.sender !== userService.getUserData().id,
           }"
         >
           {{ message.content }}
         </div>
-        <div class="mt-1 text-[11px] text-gray-400 flex gap-2">
+        <div class="mt-1 text-[11px] text-(--text-muted) flex gap-2">
           <span>{{ message.user?.name || message.sender }}</span>
           <span>•</span>
           <span>{{ getDateFormat(message.created_at) }}</span>
@@ -27,17 +28,17 @@
     }
   </div>
 
-  <div class="border-t border-(--bg-surface-3) bg-(--bg-surface-1) px-4 py-3">
+  <div class="border-t border-(--border-soft) bg-(--bg-surface-1) px-4 py-3">
     <div class="flex items-center gap-3">
       <input
         type="text"
         [formControl]="input"
         placeholder="Type a message..."
-        class="flex-1 px-4 py-2 rounded-full bg-(--bg-surface-3) text-white text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+        class="flex-1 px-4 py-2 rounded-full bg-(--bg-surface-3) text-(--text-primary) text-sm outline-none focus:ring-2 focus:ring-(--neon-blue-700) transition-all duration-200"
         (keyup.enter)="sendMessage()"
       />
       <button
-        class="px-4 py-2 rounded-full bg-blue-600 text-white text-sm hover:bg-blue-700 transition-all duration-150"
+        class="px-4 py-2 rounded-full bg-(--neon-blue-500) text-(--text-inverse) text-sm hover:bg-(--neon-blue-700) transition-all duration-150"
       >
         Send
       </button>

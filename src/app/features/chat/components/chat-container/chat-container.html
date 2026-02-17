@@ -1,9 +1,9 @@
-<div class="chat-container flex h-full w-full bg-(--bg-root) border-l border-(--bg-surface-3)">
+<div class="chat-container flex h-full w-full bg-(--bg-root-900) border-l border-(--border-soft)">
   <aside
-    class="side-pane w-72 h-full flex flex-col bg-(--bg-surface-1) border-r border-(--bg-surface-3)"
+    class="side-pane w-72 h-full flex flex-col bg-(--bg-surface-1) border-r border-(--border-soft)"
   >
-    <div class="px-4 py-4 border-b border-(--bg-surface-3)">
-      <h2 class="text-lg font-semibold text-white tracking-wide">Chats</h2>
+    <div class="px-4 py-4 border-b border-(--border-soft)">
+      <h2 class="text-lg font-semibold text-(--text-primary)">Chats</h2>
     </div>
     <div class="flex flex-col gap-2 p-4">
       <button
@@ -27,23 +27,23 @@
     <div class="flex-1 overflow-y-auto px-2 pb-4">
       @for (c of conversations(); track c.id) {
         <div
-          class="group flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition-all duration-200 bg-(--bg-surface-2)"
+          class="group flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition-all duration-200 bg-(--bg-surface-2) hover:bg-(--bg-card-hover)"
           (click)="openConv(c)"
         >
           <img
             [alt]="c.title"
             [ngSrc]="'https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/discord-round-color-icon.png'"
-            class="h-10 w-10 flex items-center justify-center rounded-full bg-(--bg-surface-3) text-sm font-semibold text-white"
+            class="h-10 w-10 flex items-center justify-center rounded-full bg-(--bg-surface-3) text-sm font-semibold text-(--text-primary)"
             [height]="100"
             [width]="10"
           />
           <div class="flex-1 min-w-0">
-            <div class="text-sm font-medium text-white truncate">
+            <div class="text-sm font-medium text-(--text-primary) truncate">
               {{ c.title }}
             </div>
-            <div class="text-xs text-gray-400 truncate">Last message preview...</div>
+            <div class="text-xs text-(--text-secondary) truncate">Last message preview...</div>
           </div>
-          <div class="text-xs text-gray-500">2h</div>
+          <div class="text-xs text-(--text-muted)">2h</div>
         </div>
       }
     </div>
