@@ -3,7 +3,7 @@ import { SocketService } from '../../../socket/socket.service';
 import { Events } from '../../../socket/events.enum';
 import { ApiService } from '../../../services/api.service';
 import APIConfig from '../../../config/api.config';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { Message as SockMessage } from '../../../socket/message.model';
 import { SuccessResponse } from '../../../models/Response.model';
 import { RecordModel } from '../../../models/record.model';
@@ -15,6 +15,7 @@ import { UserService } from '../../../services/user.service';
   providedIn: 'root',
 })
 export class ChatService {
+  conversations: Conversation[] = [];
   constructor(
     private readonly socketService: SocketService,
     private readonly apiService: ApiService,
@@ -61,7 +62,11 @@ export class ChatService {
   }
 
   getAlConversations() {
-    return this.apiService.get<Conversation[]>(APIConfig.CHAT);
+    return this.apiService.get<Conversation[]>(APIConfig.CHAT).pipe(
+      tap((res) => {
+        this.conversations = res.data;
+      }),
+    );
   }
   getAllMessages(convId: string) {
     return this.apiService.get<RecordModel<ChatMessage>>(APIConfig.CHAT, [convId]);

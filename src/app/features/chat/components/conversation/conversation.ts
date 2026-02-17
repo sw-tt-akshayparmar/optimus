@@ -4,13 +4,13 @@ import {
   OnDestroy,
   ChangeDetectionStrategy,
   signal,
-  inject,
+  Input,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChatService } from '../../services/chat.service';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { filter, map, Subscription } from 'rxjs';
-import { Message as ChatMessage } from '../../models/chat.models';
+import { Message as ChatMessage, Conversation as ConvModel } from '../../models/chat.models';
 import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../../../../services/user.service';
 import { Message as SockMessage } from '../../../../socket/message.model';
@@ -26,8 +26,8 @@ import { Message as SockMessage } from '../../../../socket/message.model';
 export class Conversation implements OnInit, OnDestroy {
   messages = signal<ChatMessage[]>([]);
   input!: FormControl;
-  conversation_id!: string;
-  s: Subscription[] = [];
+  conversation!: ConvModel;
+  subs: Subscription[] = [];
 
   constructor(
     private router: Router,
@@ -38,7 +38,6 @@ export class Conversation implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.conversation_id = this.route.snapshot.params['conversationId'];
     this.input = this.fb.control('');
     const s = this.route.paramMap
       .pipe(
@@ -46,34 +45,42 @@ export class Conversation implements OnInit, OnDestroy {
         filter((id): id is string => !!id),
       )
       .subscribe((convId) => {
-        this.getAllConversations(convId);
+        this.conversation = this.chatService.conversations.find((c) => convId === c.id)!;
+        this.getAllMessages(convId);
       });
-    this.s.push(s);
+    this.subs.push(s);
 
     this.chatService.onMessage((sockMsg: SockMessage<ChatMessage>) => {
       this.messages.update((prev) => [...prev, sockMsg.data]);
     });
   }
-  getAllConversations(convId: string): void {
-    this.conversation_id = convId;
+  getAllMessages(convId: string): void {
     let s = this.chatService.getAllMessages(convId).subscribe({
       next: (res) => {
         this.messages.set(res.data.records);
       },
     });
-    this.s.push(s);
+    this.subs.push(s);
   }
 
   ngOnDestroy(): void {
     this.chatService.offMessage();
-    this.s.forEach((_s) => _s.unsubscribe());
-    this.s = [];
+    this.subs.forEach((_s) => _s.unsubscribe());
+    this.subs = [];
   }
 
   sendMessage(): void {
-    if (this.conversation_id && this.input.value) {
-      this.chatService.sendMessage(this.conversation_id, this.input.value);
+    if (this.input.value) {
+      this.chatService.sendMessage(this.conversation.id, this.input.value);
     }
     this.input.reset();
+  }
+  getSenderName(userId: string) {
+    return (
+      this.conversation?.participations?.find((p) => p.user_id === userId)?.user.name || userId
+    );
+  }
+  getDateFormat(timestamp: Date | string) {
+    return new Date(timestamp).toLocaleTimeString();
   }
 }

@@ -19,9 +19,9 @@
           {{ message.content }}
         </div>
         <div class="mt-1 text-[11px] text-gray-400 flex gap-2">
-          <span>{{ message.sender }}</span>
+          <span>{{ getSenderName(message.sender) }}</span>
           <span>•</span>
-          <span>{{ message.created_at }}</span>
+          <span>{{ getDateFormat(message.created_at) }}</span>
         </div>
       </div>
     }
