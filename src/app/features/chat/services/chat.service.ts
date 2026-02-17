@@ -36,6 +36,7 @@ export class ChatService {
         conversation_id: conversationId,
         sender: this.userService.getUserData().id,
         content,
+        created_at: new Date(),
       } as ChatMessage,
     };
     this.socketService.emit(Events.CHAT_UP, sockMsg);
