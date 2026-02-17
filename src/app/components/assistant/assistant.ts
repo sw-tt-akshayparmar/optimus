@@ -4,5 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-assistant',
   imports: [],
   templateUrl: './assistant.html',
-      styleUrl: './assistant.css',})
+  styleUrl: './assistant.css',
+})
 export class Assistant {}
