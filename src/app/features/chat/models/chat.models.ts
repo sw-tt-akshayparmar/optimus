@@ -156,7 +156,7 @@ export class Conversation {
       copy.messages = this.messages.map((m) => m.getCopy());
     }
     if (this.participations) {
-      copy.participations = this.participations.map((u) => u.getCopy());
+      copy.participations = this.participations;
     }
     return copy;
   }
