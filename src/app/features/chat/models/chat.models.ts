@@ -10,6 +10,9 @@ export class Message {
   public deleted_at!: Date | null;
   public is_deleted!: boolean;
 
+  public user?: User;
+  public conversation?: Conversation;
+
   private constructor() {}
   static from(mObj: {
     id: string;
@@ -19,6 +22,8 @@ export class Message {
     created_at: Date;
     deleted_at: Date | null;
     is_deleted: boolean;
+    user?: User;
+    conversation?: Conversation;
   }): Message {
     const message = new Message();
     message.id = mObj.id;
@@ -29,10 +34,17 @@ export class Message {
     message.deleted_at = mObj.deleted_at;
     message.is_deleted = mObj.is_deleted;
 
+    if (mObj.user) {
+      message.user = User.from(mObj.user);
+    }
+    if (mObj.conversation) {
+      message.conversation = Conversation.from(mObj.conversation);
+    }
+
     return message;
   }
   getCopy(): Message {
-    return Message.from({
+    const copy = Message.from({
       id: this.id,
       conversation_id: this.conversation_id,
       sender: this.sender,
@@ -41,6 +53,9 @@ export class Message {
       deleted_at: this.deleted_at,
       is_deleted: this.is_deleted,
     });
+    copy.user = this.user?.getCopy();
+    copy.conversation = this.conversation?.getCopy();
+    return copy;
   }
 }
 
@@ -51,7 +66,7 @@ export class Request {
   public status!: RequestStatus;
   public description?: string;
 
-  public sender_user?: User;
+  public user?: User;
   public receiver_user?: User;
 
   private constructor() {}
@@ -62,7 +77,7 @@ export class Request {
     receiver: string;
     status: RequestStatus;
     description?: string | null;
-    sender_user?: User;
+    user?: User;
     receiver_user?: User;
   }): Request {
     const request = new Request();
@@ -71,7 +86,7 @@ export class Request {
     request.receiver = rObj.receiver;
     request.status = rObj.status;
     request.receiver = rObj.receiver;
-    request.sender_user = rObj.sender_user ? User.from(rObj.sender_user) : rObj.sender_user;
+    request.user = rObj.user ? User.from(rObj.user) : rObj.user;
     request.receiver_user = rObj.receiver_user ? User.from(rObj.receiver_user) : rObj.receiver_user;
 
     return request;
@@ -84,7 +99,7 @@ export class Request {
       receiver: this.receiver,
       status: this.status,
       description: this.description,
-      sender_user: this.sender_user,
+      user: this.user,
       receiver_user: this.receiver_user,
     });
   }

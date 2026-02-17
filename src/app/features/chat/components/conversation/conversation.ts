@@ -75,11 +75,7 @@ export class Conversation implements OnInit, OnDestroy {
     }
     this.input.reset();
   }
-  getSenderName(userId: string) {
-    return (
-      this.conversation?.participations?.find((p) => p.user_id === userId)?.user.name || userId
-    );
-  }
+
   getDateFormat(timestamp: Date | string) {
     return new Date(timestamp).toLocaleTimeString();
   }
