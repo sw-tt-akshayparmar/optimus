@@ -52,9 +52,16 @@ export class ChatService {
     return this.socketService.on<SockMessage<ChatMessage>>(Events.CHAT_DOWN, (sockMsg) => {
       if (this.conversationId() === sockMsg.data.conversation_id) {
         this.messages.update((prev) => [...prev, sockMsg.data]);
+      } else {
+        this.conversations.update((cs) => {
+          const c = cs.find((_c) => _c.id === sockMsg.data.conversation_id)!;
+          const num = Number(c.newMsg) || 0;
+          c.newMsg = num + 1;
+          return [...cs];
+        });
       }
       this.conversations.update((cs) => {
-        const c = cs.find((_c) => (_c.id = sockMsg.data.conversation_id))!;
+        const c = cs.find((_c) => _c.id === sockMsg.data.conversation_id)!;
         c.messages = [sockMsg.data];
         return [...cs];
       });
@@ -84,6 +91,7 @@ export class ChatService {
           })?.user.name;
         });
         this.conversations.set(res.data);
+        console.log(res.data);
       }),
     );
   }

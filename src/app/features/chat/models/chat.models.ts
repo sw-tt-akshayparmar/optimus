@@ -115,6 +115,8 @@ export class Conversation {
   public messages?: Message[];
   public participations?: any[];
 
+  public newMsg: number = 0;
+
   private constructor() {}
 
   static from(conversationObj: {
@@ -125,6 +127,7 @@ export class Conversation {
     is_deleted?: boolean;
     messages?: Message[];
     participations?: any[];
+    newMsg: number;
   }): Conversation {
     const conversation = new Conversation();
     conversation.id = conversationObj.id;
@@ -132,6 +135,7 @@ export class Conversation {
     conversation.created_at = conversationObj.created_at;
     conversation.deleted_at = conversationObj.deleted_at ?? null;
     conversation.is_deleted = conversationObj.is_deleted ?? false;
+    conversation.newMsg = Number(conversationObj.newMsg) || 0;
 
     if (conversationObj.messages) {
       conversation.messages = conversationObj.messages.map((m) => Message.from(m));
@@ -151,6 +155,7 @@ export class Conversation {
       created_at: this.created_at,
       deleted_at: this.deleted_at,
       is_deleted: this.is_deleted,
+      newMsg: Number(this.newMsg) || 0,
     });
     if (this.messages) {
       copy.messages = this.messages.map((m) => m.getCopy());
