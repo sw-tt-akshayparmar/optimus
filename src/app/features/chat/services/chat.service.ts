@@ -91,7 +91,6 @@ export class ChatService {
           })?.user.name;
         });
         this.conversations.set(res.data);
-        console.log(res.data);
       }),
     );
   }
