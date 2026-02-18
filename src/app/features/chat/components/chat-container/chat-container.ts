@@ -15,31 +15,22 @@ import { UserService } from '../../../../services/user.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChatContainer implements OnInit, OnDestroy {
-  protected conversations = signal<Conversation[]>([]);
-  protected selected: Conversation | null = null;
   constructor(
     protected readonly router: Router,
     protected readonly route: ActivatedRoute,
-    private readonly chatService: ChatService,
-    private readonly userService: UserService,
+    protected readonly chatService: ChatService,
   ) {}
 
   ngOnInit(): void {
     this.chatService.getAlConversations().subscribe({
-      next: (res) => {
-        res.data.forEach((c: Conversation) => {
-          c.title = c.participations?.find((p) => {
-            return p.user_id !== this.userService.getUserData().id;
-          })?.user.name;
-        });
-        this.conversations.set(res.data);
-      },
+      next: (res) => {},
     });
   }
 
   ngOnDestroy(): void {}
   openConv(c: Conversation) {
-    this.selected = c;
+    this.chatService.conversation.set(c);
+    this.chatService.conversationId.set(c.id);
     this.router.navigate([c.id], { relativeTo: this.route });
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { SocketService } from '../../../socket/socket.service';
 import { Events } from '../../../socket/events.enum';
 import { ApiService } from '../../../services/api.service';
@@ -15,7 +15,10 @@ import { UserService } from '../../../services/user.service';
   providedIn: 'root',
 })
 export class ChatService {
-  conversations: Conversation[] = [];
+  conversations = signal<Conversation[]>([]);
+  conversation = signal<Conversation>({} as any);
+  conversationId = signal<string>('');
+  messages = signal<ChatMessage[]>([]);
   constructor(
     private readonly socketService: SocketService,
     private readonly apiService: ApiService,
@@ -46,7 +49,10 @@ export class ChatService {
     return this.apiService.post(APIConfig.CHAT_REQUEST, null, null, { receiver: userId });
   }
   onMessage(callback: (data: SockMessage<ChatMessage>) => void) {
-    return this.socketService.on<SockMessage<ChatMessage>>(Events.CHAT_DOWN, callback);
+    return this.socketService.on<SockMessage<ChatMessage>>(Events.CHAT_DOWN, (sockMsg) => {
+      this.messages.update((prev) => [...prev, sockMsg.data]);
+      callback(sockMsg);
+    });
   }
 
   offMessage() {
@@ -65,11 +71,20 @@ export class ChatService {
   getAlConversations() {
     return this.apiService.get<Conversation[]>(APIConfig.CHAT).pipe(
       tap((res) => {
-        this.conversations = res.data;
+        res.data.forEach((c: Conversation) => {
+          c.title = c.participations?.find((p) => {
+            return p.user_id !== this.userService.getUserData().id;
+          })?.user.name;
+        });
+        this.conversations.set(res.data);
       }),
     );
   }
   getAllMessages(convId: string) {
-    return this.apiService.get<RecordModel<ChatMessage>>(APIConfig.CHAT, [convId]);
+    return this.apiService.get<RecordModel<ChatMessage>>(APIConfig.CHAT, [convId]).pipe(
+      tap((res) => {
+        this.messages.set(res.data.records);
+      }),
+    );
   }
 }

@@ -1,16 +1,10 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  ChangeDetectionStrategy,
-  signal,
-} from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, signal } from '@angular/core';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import { ChatService } from '../../services/chat.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { filter, map, Subscription } from 'rxjs';
-import { Message as ChatMessage, Conversation as ConvModel } from '../../models/chat.models';
+import { Message as ChatMessage } from '../../models/chat.models';
 import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../../../../services/user.service';
 import { Message as SockMessage } from '../../../../socket/message.model';
@@ -23,13 +17,11 @@ import { Message as SockMessage } from '../../../../socket/message.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Conversation implements OnInit, OnDestroy {
-  messages = signal<ChatMessage[]>([]);
   input!: FormControl;
-  conversation!: ConvModel;
   subs: Subscription[] = [];
 
   constructor(
-    private readonly chatService: ChatService,
+    protected readonly chatService: ChatService,
     private readonly fb: FormBuilder,
     protected readonly userService: UserService,
     private readonly route: ActivatedRoute,
@@ -43,19 +35,18 @@ export class Conversation implements OnInit, OnDestroy {
         filter((id): id is string => !!id),
       )
       .subscribe((convId) => {
-        this.conversation = this.chatService.conversations.find((c) => convId === c.id)!;
+        this.chatService.conversationId.set(convId);
         this.getAllMessages(convId);
       });
     this.subs.push(s);
 
     this.chatService.onMessage((sockMsg: SockMessage<ChatMessage>) => {
-      this.messages.update((prev) => [...prev, sockMsg.data]);
+      //
     });
   }
   getAllMessages(convId: string): void {
     let s = this.chatService.getAllMessages(convId).subscribe({
       next: (res) => {
-        this.messages.set(res.data.records);
         requestAnimationFrame(this.scrollToBottom);
       },
     });
@@ -69,7 +60,7 @@ export class Conversation implements OnInit, OnDestroy {
   }
   sendMessage(): void {
     if (!this.input.value) return;
-    this.chatService.sendMessage(this.conversation.id, this.input.value);
+    this.chatService.sendMessage(this.chatService.conversationId(), this.input.value);
     this.input.reset();
     requestAnimationFrame(this.scrollToBottom);
   }
