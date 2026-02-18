@@ -50,7 +50,14 @@ export class ChatService {
   }
   onMessage(callback: (data: SockMessage<ChatMessage>) => void) {
     return this.socketService.on<SockMessage<ChatMessage>>(Events.CHAT_DOWN, (sockMsg) => {
-      this.messages.update((prev) => [...prev, sockMsg.data]);
+      if (this.conversationId() === sockMsg.data.conversation_id) {
+        this.messages.update((prev) => [...prev, sockMsg.data]);
+      }
+      this.conversations.update((cs) => {
+        const c = cs.find((_c) => (_c.id = sockMsg.data.conversation_id))!;
+        c.messages = [sockMsg.data];
+        return [...cs];
+      });
       callback(sockMsg);
     });
   }
@@ -83,7 +90,7 @@ export class ChatService {
   getAllMessages(convId: string) {
     return this.apiService.get<RecordModel<ChatMessage>>(APIConfig.CHAT, [convId]).pipe(
       tap((res) => {
-        this.messages.set(res.data.records);
+        this.messages.set(res.data.records.reverse());
       }),
     );
   }

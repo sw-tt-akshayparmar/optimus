@@ -19,6 +19,7 @@ export class ChatContainer implements OnInit, OnDestroy {
     protected readonly router: Router,
     protected readonly route: ActivatedRoute,
     protected readonly chatService: ChatService,
+    protected readonly userService: UserService,
   ) {}
 
   ngOnInit(): void {

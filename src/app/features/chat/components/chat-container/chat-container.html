@@ -27,10 +27,11 @@
     <div class="flex-1 overflow-y-auto px-3 pb-4">
       @for (c of chatService.conversations(); track c.id) {
         <div
-          class="chat-item group flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer bg-(--bg-surface-2) border border-transparent transition-all duration-200 hover:bg-(--bg-card-hover) hover:border-(--neon-blue-300)/40"
+          class="chat-item group flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer border border-transparent transition-all duration-200 hover:bg-(--bg-card-hover) hover:border-(--neon-blue-300)/40"
           (click)="openConv(c)"
           [ngClass]="{
-            'bg-(--bg-surface-5)': chatService.conversationId() === c.id
+            'bg-(--bg-surface-5)': chatService.conversationId() === c.id,
+            'bg-(--bg-surface-2)': chatService.conversationId() !== c.id
           }"
         >
           <div
@@ -49,7 +50,10 @@
               {{ c.title }}
             </div>
 
-            <div class="text-xs text-(--text-secondary) truncate">Last message preview...</div>
+            <div class="text-xs text-(--text-secondary) truncate">
+                <span
+                  class="text-(--text-muted)">{{ c?.messages?.[0]?.user?.id === userService.getUserData().id ? 'You' : c?.messages?.[0]?.user?.name?.split?.(' ')?.[0] }}</span>: {{ c?.messages?.[0]?.content }}
+            </div>
           </div>
           <div
             class="text-xs text-(--text-muted) group-hover:text-(--neon-blue-500) transition-colors duration-200"
@@ -57,6 +61,7 @@
             2h
           </div>
         </div>
+        <div class="bg-(--bg-glass-lg) w-full h-[1px]"></div>
       }
     </div>
   </aside>

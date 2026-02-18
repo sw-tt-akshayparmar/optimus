@@ -41,7 +41,7 @@ export class Conversation implements OnInit, OnDestroy {
     this.subs.push(s);
 
     this.chatService.onMessage((sockMsg: SockMessage<ChatMessage>) => {
-      //
+      this.scrollToBottom();
     });
   }
   getAllMessages(convId: string): void {
@@ -65,8 +65,12 @@ export class Conversation implements OnInit, OnDestroy {
     requestAnimationFrame(this.scrollToBottom);
   }
 
-  getDateFormat(timestamp: Date | string) {
-    return new Date(timestamp).toLocaleTimeString();
+  getDateFormat(timestamp: Date) {
+    return new Intl.DateTimeFormat('en-IN', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+    }).format(new Date(timestamp));
   }
 
   private scrollToBottom(): void {
