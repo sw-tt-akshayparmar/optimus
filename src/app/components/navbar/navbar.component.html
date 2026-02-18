@@ -15,7 +15,7 @@
       <li>
         <a
           [routerLink]="link.to"
-          routerLinkActive="active"
+          [routerLinkActive]="'bg-(--bg-glass-lg)'"
           [routerLinkActiveOptions]="{ exact: link.to === '/' }"
           class="relative px-3 py-2 rounded-lg text-sm font-medium text-(--text-secondary) transition-all duration-200 hover:text-(--text-primary) hover:bg-(--bg-glass-sm)"
         >

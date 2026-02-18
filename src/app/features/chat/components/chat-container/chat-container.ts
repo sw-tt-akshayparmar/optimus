@@ -16,6 +16,7 @@ import { UserService } from '../../../../services/user.service';
 })
 export class ChatContainer implements OnInit, OnDestroy {
   protected conversations = signal<Conversation[]>([]);
+  protected selected: Conversation | null = null;
   constructor(
     protected readonly router: Router,
     protected readonly route: ActivatedRoute,
@@ -38,6 +39,7 @@ export class ChatContainer implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {}
   openConv(c: Conversation) {
+    this.selected = c;
     this.router.navigate([c.id], { relativeTo: this.route });
   }
 }
