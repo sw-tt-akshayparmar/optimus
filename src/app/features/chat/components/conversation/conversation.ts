@@ -1,4 +1,11 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, signal } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ChangeDetectionStrategy,
+  ElementRef,
+  ViewChild,
+} from '@angular/core';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import { ChatService } from '../../services/chat.service';
@@ -19,6 +26,7 @@ import { Message as SockMessage } from '../../../../socket/message.model';
 export class Conversation implements OnInit, OnDestroy {
   input!: FormControl;
   subs: Subscription[] = [];
+  @ViewChild('viewport') private readonly viewport!: ElementRef;
 
   constructor(
     protected readonly chatService: ChatService,
@@ -47,7 +55,7 @@ export class Conversation implements OnInit, OnDestroy {
   getAllMessages(convId: string): void {
     let s = this.chatService.getAllMessages(convId).subscribe({
       next: (res) => {
-        requestAnimationFrame(this.scrollToBottom);
+        this.scrollToBottom();
       },
     });
     this.subs.push(s);
@@ -62,7 +70,7 @@ export class Conversation implements OnInit, OnDestroy {
     if (!this.input.value) return;
     this.chatService.sendMessage(this.chatService.conversationId(), this.input.value);
     this.input.reset();
-    requestAnimationFrame(this.scrollToBottom);
+    this.scrollToBottom();
   }
 
   getDateFormat(timestamp: Date) {
@@ -74,10 +82,8 @@ export class Conversation implements OnInit, OnDestroy {
   }
 
   private scrollToBottom(): void {
-    const viewport = document.getElementById('viewport')!;
-    viewport.scrollTo({
-      top: viewport.scrollHeight,
-      behavior: 'smooth',
+    setTimeout(() => {
+      this.viewport.nativeElement.scrollTop = this.viewport.nativeElement.scrollHeight;
     });
   }
 }
