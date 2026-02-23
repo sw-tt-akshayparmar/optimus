@@ -8,9 +8,6 @@ import { provideHttpClient } from '@angular/common/http';
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { withFetch } from '@angular/common/http';
-import { MessageService } from 'primeng/api';
-import { providePrimeNG } from 'primeng/config';
-import theme from '@primeuix/themes/aura';
 import { provideSocketIo } from 'ngx-socket-io';
 import environments from './environments';
 
@@ -21,12 +18,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
     provideHttpClient(withFetch()),
-    providePrimeNG({
-      theme: {
-        preset: theme,
-      },
-    }),
-    MessageService,
     provideSocketIo({
       url: environments.SERVER_SOCKETIO_URL,
       options: {

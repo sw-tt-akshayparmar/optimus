@@ -1,49 +1,24 @@
 import { Injectable } from '@angular/core';
-import { MessageService } from 'primeng/api';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ToastService {
-  constructor(private messageService: MessageService) {}
+  constructor() {}
 
   success(summary: string, detail: string, life: number = 3000, key?: string) {
-    this.messageService.add({
-      severity: 'success',
-      summary,
-      detail,
-      life,
-      key,
-    });
+
   }
 
   error(summary: string, detail: string, life: number = 3000, key?: string) {
-    this.messageService.add({
-      severity: 'error',
-      summary,
-      detail,
-      life,
-      key,
-    });
+
   }
 
   info(summary: string, detail: string, life: number = 3000, key?: string) {
-    this.messageService.add({
-      severity: 'info',
-      summary,
-      detail,
-      life,
-      key,
-    });
+
   }
 
   warn(summary: string, detail: string, life: number = 3000, key?: string) {
-    this.messageService.add({
-      severity: 'warn',
-      summary,
-      detail,
-      life,
-      key,
-    });
+
   }
 }
