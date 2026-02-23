@@ -27,4 +27,6 @@ export enum Events {
   CHAT_JOIN = 'chat.join',
   CHAT_UP = 'chat.up',
   CHAT_DOWN = 'chat.down',
+  CHAT_REACT_UP = 'chat.react.up',
+  CHAT_REACT_DOWN = 'chat.react.down',
 }

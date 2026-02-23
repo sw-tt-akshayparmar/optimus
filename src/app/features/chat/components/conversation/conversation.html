@@ -8,24 +8,50 @@
           'mr-auto items-start': message.sender !== userService.getUserData().id,
         }"
       >
-        <div class="flex" [ngClass]="{'flex-row-reverse': message.sender !== userService.getUserData().id}">
-          <div class="relative p-2 opacity-0 hover:opacity-100 cursor-pointer" (click)="openReaction($event)">
-            <div></div>
-            <mat-icon>more_vert</mat-icon>
+        <div
+          class="flex items-end"
+          [ngClass]="{ 'flex-row-reverse': message.sender !== userService.getUserData().id }"
+        >
+          <div
+            class="relative h-10 flex items-center gap-2 px-3 py-1.5 rounded-full bg-(--bg-surface-1) border border-(--bg-surface-3) opacity-0 scale-95 transition-all duration-200 group-hover:scale-100 hover:opacity-100"
+          >
+            @for (i of reactions; track i) {
+              <span
+                class="text-base hover:scale-125 transition-transform duration-150 cursor-pointer"
+                (click)="addReaction(i, message)"
+                >{{ i }}</span
+              >
+            }
           </div>
           <div
             class="px-4 py-3 rounded-2xl text-sm shadow-(--shadow-sm) wrap-break-word transition-all duration-200"
             [ngClass]="{
-            'bg-(--neon-blue-300) text-inverse rounded-br-md hover:bg-(--neon-blue-700)':
-              message.sender === userService.getUserData().id,
+              'bg-(--neon-blue-300) text-(--text-inverse) rounded-br-md hover:bg-(--neon-blue-700)':
+                message.sender === userService.getUserData().id,
 
-            'bg-(--bg-surface-3) text-primary rounded-bl-md border border-(--border-soft)':
-              message.sender !== userService.getUserData().id,
-          }"
+              'bg-(--bg-surface-3) text-(--text-primary) rounded-bl-md border border-(--border-soft)':
+                message.sender !== userService.getUserData().id,
+            }"
           >
             {{ message.content }}
           </div>
         </div>
+        <div class="mt-1 flex items-center gap-1">
+          @let rc = renderReactions(message);
+          @for (i of rc.r; let last = $last; track i) {
+            <div
+              class="flex items-center justify-center min-w-7 h-7 px-2 text-sm rounded-full bg-(--bg-surface-1) border border-(--border-soft) shadow-sm hover:scale-110 transition-all duration-150 cursor-pointer"
+            >
+              {{ i }}
+            </div>
+          }
+          <div
+            class="px-2 py-0.5 text-[11px] font-medium rounded-full bg-(--bg-surface-3) text-(--text-muted) border border-(--border-soft)"
+          >
+            {{ rc.c }}
+          </div>
+        </div>
+
         <div class="mt-1 text-[11px] text-(--text-muted) flex gap-2">
           <span class="truncate">
             {{ message.user?.name || message.sender }}

@@ -7,7 +7,7 @@ import { Observable, tap } from 'rxjs';
 import { Message as SockMessage } from '../../../socket/message.model';
 import { SuccessResponse } from '../../../models/Response.model';
 import { RecordModel } from '../../../models/record.model';
-import { Conversation, Message as ChatMessage, Request } from '../models/chat.models';
+import { Conversation, Message as ChatMessage, Reaction, Request } from '../models/chat.models';
 import { v4 } from 'uuid';
 import { UserService } from '../../../services/user.service';
 import { ToastService } from '../../../services/toast.service';
@@ -72,6 +72,16 @@ export class ChatService {
     });
   }
 
+  onReaction(callback: (data: SockMessage<Reaction>) => void) {
+    return this.socketService.on<SockMessage<Reaction>>(Events.CHAT_REACT_DOWN, (sockMsg) => {
+      this.messages.update((prev) => {
+        const m = prev.find((_m) => _m.id === sockMsg.data.message_id)!;
+        m.reactions = [sockMsg.data];
+        return [...prev];
+      });
+      callback(sockMsg);
+    });
+  }
   offMessage() {
     this.socketService.off(Events.CHAT_DOWN);
   }
@@ -103,5 +113,22 @@ export class ChatService {
         this.messages.set(res.data.records.reverse());
       }),
     );
+  }
+  addReaction(reaction: string, message: ChatMessage) {
+    const sockMsg: SockMessage<Reaction> = {
+      clientId: '',
+      messageId: v4(),
+      success: true,
+      event: Events.CHAT_REACT_UP,
+      message: 'Reaction',
+      room: message.conversation_id,
+      data: {
+        reaction,
+        message_id: message.id,
+        user_id: this.userService.getUserData().id,
+        created_at: new Date(),
+      } as unknown as Reaction,
+    };
+    this.socketService.emit(Events.CHAT_REACT_UP, sockMsg);
   }
 }
