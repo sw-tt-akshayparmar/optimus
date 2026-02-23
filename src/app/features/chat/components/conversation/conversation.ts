@@ -15,11 +15,17 @@ import { Message as ChatMessage } from '../../models/chat.models';
 import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../../../../services/user.service';
 import { Message as SockMessage } from '../../../../socket/message.model';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-conversation',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ScrollingModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    ScrollingModule,
+    MatIcon,
+  ],
   templateUrl: 'conversation.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -27,6 +33,7 @@ export class Conversation implements OnInit, OnDestroy {
   input!: FormControl;
   subs: Subscription[] = [];
   @ViewChild('viewport') private readonly viewport!: ElementRef;
+  // @ViewChild('reactions') protected readonly reactions!: ElementRef;
 
   constructor(
     protected readonly chatService: ChatService,
@@ -85,5 +92,7 @@ export class Conversation implements OnInit, OnDestroy {
     setTimeout(() => {
       this.viewport.nativeElement.scrollTop = this.viewport.nativeElement.scrollHeight;
     });
+  }
+  openReaction(event: PointerEvent) {
   }
 }

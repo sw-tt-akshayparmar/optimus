@@ -10,6 +10,7 @@ import { RecordModel } from '../../../models/record.model';
 import { Conversation, Message as ChatMessage, Request } from '../models/chat.models';
 import { v4 } from 'uuid';
 import { UserService } from '../../../services/user.service';
+import { ToastService } from '../../../services/toast.service';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +24,7 @@ export class ChatService {
     private readonly socketService: SocketService,
     private readonly apiService: ApiService,
     private readonly userService: UserService,
+    private readonly toastService: ToastService,
   ) {
     this.socketService.emit(Events.CHAT_JOIN, {} as any);
   }
@@ -53,6 +55,7 @@ export class ChatService {
       if (this.conversationId() === sockMsg.data.conversation_id) {
         this.messages.update((prev) => [...prev, sockMsg.data]);
       } else {
+        this.toastService.info(sockMsg.data.user?.name!, sockMsg.data.content);
         this.conversations.update((cs) => {
           const c = cs.find((_c) => _c.id === sockMsg.data.conversation_id)!;
           const num = Number(c.newMsg) || 0;

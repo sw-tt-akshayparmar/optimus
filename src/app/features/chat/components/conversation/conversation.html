@@ -8,17 +8,23 @@
           'mr-auto items-start': message.sender !== userService.getUserData().id,
         }"
       >
-        <div
-          class="px-4 py-3 rounded-2xl text-sm shadow-(--shadow-sm) wrap-break-word transition-all duration-200"
-          [ngClass]="{
-            'bg-(--neon-blue-300) text-(--text-inverse) rounded-br-md hover:bg-(--neon-blue-700)':
+        <div class="flex" [ngClass]="{'flex-row-reverse': message.sender !== userService.getUserData().id}">
+          <div class="relative p-2 opacity-0 hover:opacity-100 cursor-pointer" (click)="openReaction($event)">
+            <div></div>
+            <mat-icon>more_vert</mat-icon>
+          </div>
+          <div
+            class="px-4 py-3 rounded-2xl text-sm shadow-(--shadow-sm) wrap-break-word transition-all duration-200"
+            [ngClass]="{
+            'bg-(--neon-blue-300) text-inverse rounded-br-md hover:bg-(--neon-blue-700)':
               message.sender === userService.getUserData().id,
 
-            'bg-(--bg-surface-3) text-(--text-primary) rounded-bl-md border border-(--border-soft)':
+            'bg-(--bg-surface-3) text-primary rounded-bl-md border border-(--border-soft)':
               message.sender !== userService.getUserData().id,
           }"
-        >
-          {{ message.content }}
+          >
+            {{ message.content }}
+          </div>
         </div>
         <div class="mt-1 text-[11px] text-(--text-muted) flex gap-2">
           <span class="truncate">
