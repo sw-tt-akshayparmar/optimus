@@ -90,10 +90,28 @@ export class Conversation implements OnInit, OnDestroy {
   }
   addReaction(i: string, message: ChatMessage): void {
     i.trim();
-    this.chatService.addReaction(i.slice(1), message);
+    this.chatService.addReaction(i, message);
   }
 
   renderReactions(message: ChatMessage) {
-    return { r: ['👍', '😂', '😝'], c: '12k+' };
+    if (!message.reactions || message.reactions.length === 0) {
+      return {};
+    }
+    const obj: Record<string, number> = {};
+    let c = 0;
+    message.reactions.forEach((r) => {
+      c++;
+      if (obj[r.reaction]) {
+        obj[r.reaction]++;
+      } else {
+        obj[r.reaction] = 1;
+      }
+    });
+    const r = Object.entries(obj);
+    r.sort((a, b) => {
+      return a[1] - b[1];
+    });
+
+    return { r, c: c > 3 ? c : undefined };
   }
 }
