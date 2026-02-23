@@ -27,7 +27,7 @@ export class Conversation implements OnInit, OnDestroy {
   input!: FormControl;
   subs: Subscription[] = [];
   @ViewChild('viewport') private readonly viewport!: ElementRef;
-  protected readonly reactions = ['👍', '😂', '😝', '😍', '♥', '👎'];
+  protected readonly reactions = ['👍', '😂', '😝', '😍', '❤️', '👎'];
 
   constructor(
     protected readonly chatService: ChatService,
