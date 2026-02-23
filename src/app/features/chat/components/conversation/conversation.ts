@@ -27,7 +27,7 @@ export class Conversation implements OnInit, OnDestroy {
   input!: FormControl;
   subs: Subscription[] = [];
   @ViewChild('viewport') private readonly viewport!: ElementRef;
-  protected readonly reactions = ['👍', '😂', '😝', '😍', '❤️', '👎'];
+  protected readonly reactions = ['👍', '😂', '😝', '😍', '❤️', '😡', '😤', '😎', '😮', '🙏', '👎'];
 
   constructor(
     protected readonly chatService: ChatService,
@@ -95,7 +95,7 @@ export class Conversation implements OnInit, OnDestroy {
 
   renderReactions(message: ChatMessage) {
     if (!message.reactions || message.reactions.length === 0) {
-      return {};
+      return [];
     }
     const obj: Record<string, number> = {};
     let c = 0;
@@ -111,7 +111,6 @@ export class Conversation implements OnInit, OnDestroy {
     r.sort((a, b) => {
       return a[1] - b[1];
     });
-
-    return { r, c: c > 3 ? c : undefined };
+    return r;
   }
 }

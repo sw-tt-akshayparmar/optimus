@@ -537,16 +537,7 @@ export class H6502 {
   BRK() {
     this.push((this.PC >> 8) & 0xff);
     this.push(this.PC & 0xff);
-    let status = 0;
-    if (this.flags.N) status |= 0x80;
-    if (this.flags.V) status |= 0x40;
-    if (this.flags.U) status |= 0x20;
-    if (this.flags.B) status |= 0x10;
-    if (this.flags.D) status |= 0x08;
-    if (this.flags.I) status |= 0x04;
-    if (this.flags.Z) status |= 0x02;
-    if (this.flags.C) status |= 0x01;
-    this.push(status);
+    this.PHP();
     this.flags.B = true;
     this.PC = (this.memory.read(0xfffe) | (this.memory.read(0xffff) << 8)) & 0xffff;
     this.flags.I = true;

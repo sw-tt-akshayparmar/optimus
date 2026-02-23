@@ -46,8 +46,8 @@
   --grid-line-strong: rgba(120, 140, 255, 0.2);
 
   --axis-line: rgba(160, 180, 255, 0.22);
-  --border-soft: rgba(160, 180, 255, 0.12);
-  --border-strong: rgba(160, 180, 255, 0.28);
+  --border-soft: rgba(160, 180, 255, 0.25);
+  --border-strong: rgba(160, 180, 255, 0.50);
 
   --neon-cyan-300: #7efaff;
   --neon-cyan-500: #2ef2ff;

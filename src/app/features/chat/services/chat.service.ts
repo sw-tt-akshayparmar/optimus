@@ -76,7 +76,11 @@ export class ChatService {
     return this.socketService.on<SockMessage<Reaction>>(Events.CHAT_REACT_DOWN, (sockMsg) => {
       this.messages.update((prev) => {
         const m = prev.find((_m) => _m.id === sockMsg.data.message_id)!;
-        m.reactions = [sockMsg.data];
+        if (m.reactions && Array.isArray(m.reactions)) {
+          m.reactions.push(sockMsg.data);
+        } else {
+          m.reactions = [sockMsg.data];
+        }
         return [...prev];
       });
       callback(sockMsg);
