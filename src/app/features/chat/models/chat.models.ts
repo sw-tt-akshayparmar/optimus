@@ -12,6 +12,7 @@ export class Message {
 
   public user?: User;
   public conversation?: Conversation;
+  public reactions?: Reaction[];
 
   private constructor() {}
   static from(mObj: {
@@ -24,6 +25,7 @@ export class Message {
     is_deleted: boolean;
     user?: User;
     conversation?: Conversation;
+    reactions?: Reaction[];
   }): Message {
     const message = new Message();
     message.id = mObj.id;
@@ -41,6 +43,9 @@ export class Message {
       message.conversation = Conversation.from(mObj.conversation);
     }
 
+    if (mObj.reactions && mObj.reactions.length > 0) {
+      message.reactions = mObj.reactions.map((r) => Reaction.from(r));
+    }
     return message;
   }
   getCopy(): Message {
@@ -52,6 +57,7 @@ export class Message {
       created_at: this.created_at,
       deleted_at: this.deleted_at,
       is_deleted: this.is_deleted,
+      reactions: this.reactions,
     });
     copy.user = this.user?.getCopy();
     copy.conversation = this.conversation?.getCopy();
@@ -163,6 +169,66 @@ export class Conversation {
     if (this.participations) {
       copy.participations = this.participations;
     }
+    return copy;
+  }
+}
+
+export class Reaction {
+  public id!: string;
+  public reaction!: string;
+  public message_id!: string;
+  public user_id!: string;
+
+  public created_at!: Date;
+  public deleted_at!: Date | null;
+  public is_deleted!: boolean;
+
+  public user?: User;
+  public message?: Message;
+
+  static from(rObj: {
+    id: string;
+    reaction: string;
+    message_id: string;
+    user_id: string;
+    created_at: Date;
+    deleted_at: Date | null;
+    is_deleted: boolean;
+    user?: User;
+    message?: Message;
+  }): Reaction {
+    const r = new Reaction();
+    r.id = rObj.id;
+    r.reaction = rObj.reaction;
+    r.message_id = rObj.message_id;
+    r.user_id = rObj.user_id;
+
+    r.created_at = rObj.created_at;
+    r.deleted_at = rObj.deleted_at;
+    r.is_deleted = rObj.is_deleted;
+
+    if (rObj.user) {
+      r.user = User.from(rObj.user);
+    }
+    if (rObj.message) {
+      r.message = Message.from(rObj.message);
+    }
+
+    return r;
+  }
+  getCopy(): Reaction {
+    const copy = Reaction.from({
+      id: this.id,
+      reaction: this.reaction,
+      user_id: this.user_id,
+      message_id: this.message_id,
+
+      created_at: this.created_at,
+      deleted_at: this.deleted_at,
+      is_deleted: this.is_deleted,
+    });
+    copy.user = this.user?.getCopy();
+    copy.message = this.message?.getCopy();
     return copy;
   }
 }

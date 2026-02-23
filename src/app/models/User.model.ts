@@ -1,5 +1,5 @@
 import { Project } from './Project.model';
-import { Message, Request } from '../features/chat/models/chat.models';
+import { Message, Reaction, Request } from '../features/chat/models/chat.models';
 
 export class User {
   public id!: string;
@@ -15,6 +15,7 @@ export class User {
   messages?: Message[];
   requests_sent?: Request[];
   requests_received?: Request[];
+  reactions?: Reaction[];
 
   // games_as_white?: Game[];
   // games_as_black?: Game[];
@@ -34,6 +35,7 @@ export class User {
       messages?: Message[];
       requests_sent?: Request[];
       requests_received?: Request[];
+      reactions?: Reaction[];
     },
     password?: boolean,
   ): User {
@@ -60,6 +62,9 @@ export class User {
     if (userObj.requests_received && userObj.requests_received.length > 0) {
       user.requests_received = userObj.requests_received.map((r) => Request.from(r));
     }
+    if (userObj.reactions && userObj.reactions.length > 0) {
+      user.reactions = userObj.reactions.map((r) => Reaction.from(r));
+    }
     return user;
   }
   getCopy(): User {
@@ -77,6 +82,7 @@ export class User {
       messages: this.messages,
       requests_sent: this.requests_sent,
       requests_received: this.requests_received,
+      reactions: this.reactions,
       // games_as_white: this.games_as_white,
       // games_as_black: this.games_as_black,
     });
