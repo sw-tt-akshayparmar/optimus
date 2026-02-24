@@ -89,6 +89,9 @@ export class ChatService {
   offMessage() {
     this.socketService.off(Events.CHAT_DOWN);
   }
+  offReaction() {
+    this.socketService.off(Events.CHAT_REACT_DOWN);
+  }
   getAlRequests(
     type: 'all' | 'sent' | 'received' = 'received',
   ): Observable<SuccessResponse<RecordModel<Request>>> {

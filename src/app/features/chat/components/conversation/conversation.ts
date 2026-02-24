@@ -65,6 +65,7 @@ export class Conversation implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.chatService.offMessage();
+    this.chatService.offReaction();
     this.subs.forEach((_s) => _s.unsubscribe());
     this.subs = [];
   }
