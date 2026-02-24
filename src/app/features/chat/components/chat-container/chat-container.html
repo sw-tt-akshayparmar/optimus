@@ -1,6 +1,6 @@
 <div class="chat-container flex h-full w-full bg-(--bg-root-900) border-l border-(--border-soft)">
   <aside
-    class="side-pane w-72 h-full flex flex-col bg-(--bg-surface-1) border-r border-(--border-soft)"
+    class="rounded-3 side-pane w-72 h-full flex flex-col bg-(--bg-surface-1) border-r border-(--border-soft)"
   >
     <div class="px-5 py-4 border-b border-(--border-soft)">
       <h2 class="text-lg text-(--text-primary-strong)">Chats</h2>
@@ -31,7 +31,7 @@
           (click)="openConv(c)"
           [ngClass]="{
             'bg-(--bg-surface-5)': chatService.conversationId() === c.id,
-            'bg-(--bg-surface-2)': chatService.conversationId() !== c.id
+            'bg-(--bg-surface-2)': chatService.conversationId() !== c.id,
           }"
         >
           <div
@@ -46,13 +46,20 @@
             />
           </div>
           <div class="flex-1 min-w-0">
-            <div class="text-sm text-(--text-primary) truncate" [matBadge]="c.newMsg === 0 ? undefined: c.newMsg">
+            <div
+              class="text-sm text-(--text-primary) truncate"
+              [matBadge]="c.newMsg === 0 ? undefined : c.newMsg"
+            >
               {{ c.title }}
             </div>
 
             <div class="text-xs text-(--text-secondary) truncate">
-                <span
-                  class="text-(--text-muted)">{{ c?.messages?.[0]?.user?.id === userService.getUserData().id ? 'You' : c?.messages?.[0]?.user?.name?.split?.(' ')?.[0] }}</span>: {{ c?.messages?.[0]?.content }}
+              <span class="text-(--text-muted)">{{
+                c?.messages?.[0]?.user?.id === userService.getUserData().id
+                  ? 'You'
+                  : c?.messages?.[0]?.user?.name?.split?.(' ')?.[0]
+              }}</span
+              >: {{ c?.messages?.[0]?.content }}
             </div>
           </div>
           <div

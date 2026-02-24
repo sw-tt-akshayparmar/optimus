@@ -1,13 +1,6 @@
-<nav
-  class="w-full flex items-center justify-between px-6 py-1 bg-(--bg-surface-1) border-b border-(--border-soft) shadow-(--shadow-sm)"
->
+<nav class="w-full flex items-center justify-between px-6 py-1 bg-black">
   <div class="logo">
-    <a
-      routerLink="/"
-      class="text-xl tracking-wide text-(--neon-blue-500) transition-all duration-200 hover:text-(--neon-blue-700) hover:drop-shadow-(--glow-blue)"
-    >
-      OPTIMUS
-    </a>
+    <a routerLink="/" class="text-xl text-(--neon-green-300)"> OPTIMUS </a>
   </div>
 
   <ul class="flex items-center gap-6 list-none m-0 p-0">
@@ -15,9 +8,9 @@
       <li>
         <a
           [routerLink]="link.to"
-          [routerLinkActive]="'bg-(--bg-glass-lg)'"
+          routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: link.to === '/' }"
-          class="relative px-3 py-2 rounded-lg text-sm font-medium text-(--text-secondary) transition-all duration-200 hover:text-(--text-primary) hover:bg-(--bg-glass-sm)"
+          class="relative px-3 py-2 rounded-lg text-(--text-secondary) font-medium hover:text-white"
         >
           {{ link.label }}
         </a>
@@ -27,9 +20,7 @@
 
   @if (userService.isLoggedIn()) {
     <div class="flex items-center gap-5">
-      <div
-        class="p-1 rounded-lg bg-(--bg-surface-2) border border-(--border-soft) hover:border-(--neon-purple-300)/40 transition-all duration-200"
-      >
+      <div class="p-1 rounded-lg">
         <img
           [ngSrc]="'https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/discord-round-color-icon.png'"
           alt="User Avatar"
@@ -41,10 +32,10 @@
 
       <button
         matButton="outlined"
-        class="border-(--neon-red-500)! text-(--neon-red-500)! transition-all duration-200 hover:bg-(--neon-red-300)/15! hover:border-(--neon-red-700)! hover:text-(--neon-red-700)!"
+        class="border-(--neon-red-500)! text-(--neon-red-500)!"
         (click)="logout()"
       >
-        <mat-icon class="text-(--neon-red-500)!"> exit_to_app</mat-icon>
+        <mat-icon> exit_to_app</mat-icon>
         LOG OUT
       </button>
     </div>
@@ -52,7 +43,7 @@
     <div class="flex items-center gap-4">
       <button
         mat-flat-button
-        class="bg-(--neon-blue-500)! text-(--text-inverse)! transition-all duration-200 hover:bg-(--neon-blue-700)! hover:shadow-(--glow-blue)"
+        class="bg-(--neon-blue-500)! text-(--text-inverse)!"
         (click)="login()"
       >
         <mat-icon class="text-(--text-inverse)!"> login</mat-icon>
@@ -61,7 +52,7 @@
 
       <button
         mat-stroked-button
-        class="border-(--neon-purple-500)! text-(--neon-purple-500)! transition-all duration-200 hover:bg-(--neon-purple-300)/15! hover:border-(--neon-purple-700)! hover:text-(--neon-purple-700)!"
+        class="border-(--neon-purple-500)! text-(--neon-purple-500)!"
         (click)="register()"
       >
         <mat-icon class="text-(--neon-purple-500)!"> person_add</mat-icon>

@@ -10,6 +10,13 @@ import { NgOptimizedImage } from '@angular/common';
   standalone: true,
   imports: [RouterModule, RouterLinkActive, MatButton, MatIcon, NgOptimizedImage],
   templateUrl: './navbar.component.html',
+  styles: [
+    `
+      .active {
+        color: var(--text-primary);
+      }
+    `,
+  ],
 })
 export class NavbarComponent {
   constructor(
