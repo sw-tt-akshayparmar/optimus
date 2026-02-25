@@ -72,16 +72,15 @@ export class ChatService {
     });
   }
 
-  onReaction(callback: (data: SockMessage<Reaction>) => void) {
-    return this.socketService.on<SockMessage<Reaction>>(Events.CHAT_REACT_DOWN, (sockMsg) => {
+  onReaction(callback: (data: SockMessage<ChatMessage>) => void) {
+    return this.socketService.on<SockMessage<ChatMessage>>(Events.CHAT_REACT_DOWN, (sockMsg) => {
       this.messages.update((prev) => {
-        const m = prev.find((_m) => _m.id === sockMsg.data.message_id)!;
-        if (m.reactions && Array.isArray(m.reactions)) {
-          m.reactions.push(sockMsg.data);
-        } else {
-          m.reactions = [sockMsg.data];
-        }
-        return [...prev];
+        return prev.map((_m) => {
+          if (_m.id === sockMsg.data.id) {
+            return sockMsg.data;
+          }
+          return _m;
+        })!;
       });
       callback(sockMsg);
     });

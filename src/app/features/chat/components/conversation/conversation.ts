@@ -15,11 +15,13 @@ import { Message as ChatMessage, Reaction } from '../../models/chat.models';
 import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../../../../services/user.service';
 import { Message as SockMessage } from '../../../../socket/message.model';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-conversation',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ScrollingModule],
+  imports: [CommonModule, ReactiveFormsModule, ScrollingModule, MatIconButton, MatIcon],
   templateUrl: 'conversation.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -52,7 +54,7 @@ export class Conversation implements OnInit, OnDestroy {
     this.chatService.onMessage((sockMsg: SockMessage<ChatMessage>) => {
       this.scrollToBottom();
     });
-    this.chatService.onReaction((sockMsg: SockMessage<Reaction>) => {});
+    this.chatService.onReaction((sockMsg: SockMessage<ChatMessage>) => {});
   }
   getAllMessages(convId: string): void {
     let s = this.chatService.getAllMessages(convId).subscribe({

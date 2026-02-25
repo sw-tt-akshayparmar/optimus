@@ -2,16 +2,16 @@ import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, signal } from '@
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
-import { MatButton } from '@angular/material/button';
 import { Conversation } from '../../models/chat.models';
 import { ChatService } from '../../services/chat.service';
 import { UserService } from '../../../../services/user.service';
 import { MatBadge } from '@angular/material/badge';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-chat-container',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, MatIcon, MatButton, NgOptimizedImage, MatBadge],
+  imports: [CommonModule, RouterOutlet, MatIcon, NgOptimizedImage, MatBadge, MatButton],
   templateUrl: 'chat-container.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
