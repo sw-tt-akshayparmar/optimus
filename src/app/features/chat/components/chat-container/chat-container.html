@@ -1,42 +1,26 @@
-<div class="chat-container flex h-full w-full bg-(--bg-root-900) border-l border-(--border-soft)">
-  <aside
-    class="rounded-3 side-pane w-72 h-full flex flex-col bg-(--bg-surface-1) border-r border-(--border-soft)"
-  >
-    <div class="px-5 py-4 border-b border-(--border-soft)">
-      <h2 class="text-lg text-(--text-primary-strong)">Chats</h2>
-    </div>
-
+<div class="chat-container flex h-full w-full bg-(--bg-root-900)">
+  <aside class="p-1 side-pane rounded-2xl w-72 h-full flex flex-col bg-(--bg-surface-2)">
     <div class="flex flex-col gap-3 p-4">
       <button
         mat-flat-button
-        class="bg-(--neon-blue-500)! text-(--text-inverse)! w-full justify-start transition-all duration-200 hover:bg-(--neon-blue-700)! hover:shadow-(--glow-blue)"
+        class="w-full justify-start bg-(--neon-blue-500)! text-(--text-inverse)!"
         (click)="router.navigate(['new'], { relativeTo: route })"
       >
-        <mat-icon class="mr-2 text-(--text-inverse)!"> create</mat-icon>
+        <mat-icon class="mr-2">create</mat-icon>
         New Chat
       </button>
-      <button
-        mat-stroked-button
-        class="border-(--neon-purple-500)! text-(--neon-purple-500)! w-full justify-start transition-all duration-200 hover:bg-(--neon-purple-300)/15! hover:border-(--neon-purple-700)! hover:text-(--neon-purple-700)!"
-        (click)="router.navigate(['all'], { relativeTo: route })"
-      >
-        <mat-icon class="mr-2 text-(--neon-purple-500)!"> mark_chat_unread</mat-icon>
-        Requests
-      </button>
     </div>
-    <div class="flex-1 overflow-y-auto px-3 pb-4">
+    <div class="flex-1 overflow-y-auto h-full">
       @for (c of chatService.conversations(); track c.id) {
         <div
-          class="chat-item group flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer border border-transparent transition-all duration-200 hover:bg-(--bg-card-hover) hover:border-(--neon-blue-300)/40"
+          class="chat-item rounded-full group flex items-center gap-3 px-4 py-3 cursor-pointer hover:border-(--bg-card-hover)"
           (click)="openConv(c)"
           [ngClass]="{
-            'bg-(--bg-surface-5)': chatService.conversationId() === c.id,
+            'bg-(--bg-card-active)': chatService.conversationId() === c.id,
             'bg-(--bg-surface-2)': chatService.conversationId() !== c.id,
           }"
         >
-          <div
-            class="h-10 w-10 rounded-full flex items-center justify-center bg-(--bg-surface-3) border border-(--border-soft)"
-          >
+          <div class="h-10 w-10 rounded-full flex items-center justify-center">
             <img
               [alt]="c.title"
               [ngSrc]="'https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/discord-round-color-icon.png'"
@@ -53,26 +37,25 @@
               {{ c.title }}
             </div>
 
-            <div class="text-xs text-(--text-secondary) truncate">
-              <span class="text-(--text-muted)">{{
-                c?.messages?.[0]?.user?.id === userService.getUserData().id
-                  ? 'You'
-                  : c?.messages?.[0]?.user?.name?.split?.(' ')?.[0]
-              }}</span
-              >: {{ c?.messages?.[0]?.content }}
-            </div>
+            @if (c?.messages && c?.messages?.length! > 0) {
+              <div class="text-xs text-(--text-secondary) truncate">
+                <span class="text-(--text-muted)">{{
+                  c?.messages?.[0]?.user?.id === userService.getUserData().id
+                    ? 'You'
+                    : c?.messages?.[0]?.user?.name?.split?.(' ')?.[0]
+                }}</span
+                >: {{ c?.messages?.[0]?.content }}
+              </div>
+            }
           </div>
-          <div
-            class="text-xs text-(--text-muted) group-hover:text-(--neon-blue-500) transition-colors duration-200"
-          >
+          <div class="text-xs text-(--text-muted) me-2">
             {{ getTimeSinceLast(c) }}
           </div>
         </div>
-        <div class="bg-(--bg-glass-lg) w-full h-[1px]"></div>
       }
     </div>
   </aside>
-  <main class="main-pane flex-1 h-full w-full bg-(--bg-surface-2)">
+  <main class="main-pane flex-1 h-full w-full">
     <router-outlet />
   </main>
 </div>

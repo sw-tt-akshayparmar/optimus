@@ -1,8 +1,8 @@
-<div class="flex flex-col h-full bg-(--bg-surface-2)">
+<div class="flex rounded-2xl flex-col h-full bg-(--bg-root-800)">
   <div #viewport class="flex-1 overflow-y-auto px-6 py-5 space-y-5 scroll-smooth">
     @for (message of chatService.messages(); track message.id) {
       <div
-        class="group flex flex-col max-w-[75%] relative"
+        class="group flex flex-col relative"
         [ngClass]="{
           'ml-auto items-end': message.sender === userService.getUserData().id,
           'mr-auto items-start': message.sender !== userService.getUserData().id,
@@ -13,7 +13,7 @@
           [ngClass]="{ 'flex-row-reverse': message.sender !== userService.getUserData().id }"
         >
           <div
-            class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-(--bg-surface-1)/95 backdrop-blur-md border border-(--border-soft) shadow-lg opacity-0 scale-95 transition-all duration-200 hover:opacity-100 hover:scale-100 group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto"
+            class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-(--bg-surface-1)/95 border border-(--border-soft) opacity-0 scale-95 hover:opacity-100 hover:scale-100 group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto"
           >
             @for (i of reactions; track i) {
               <span
@@ -25,7 +25,7 @@
             }
           </div>
           <div
-            class="relative px-4 py-3 rounded-2xl text-sm shadow-sm wrap-break-word transition-all duration-200"
+            class="relative px-4 py-3 rounded-2xl wrap-break-word"
             [ngClass]="{
               'bg-(--neon-blue-300) text-(--text-inverse) rounded-br-md':
                 message.sender === userService.getUserData().id,
@@ -66,21 +66,21 @@
       </div>
     }
   </div>
-  <div class="border-t border-(--border-soft) bg-(--bg-surface-1) px-5 py-4">
-    <div class="flex items-center gap-3">
-      <input
-        type="text"
-        [formControl]="input"
-        placeholder="Type a message..."
-        (keyup.enter)="sendMessage()"
-        class="flex-1 px-4 py-2 rounded-full bg-(--bg-surface-3) text-(--text-primary) text-sm border border-(--border-soft) outline-none transition-all duration-200 focus:border-(--neon-blue-500) focus:ring-2 focus:ring-(--neon-blue-300)/40"
-      />
-      <button
-        class="px-5 py-2 rounded-full text-sm bg-(--neon-blue-500) text-(--text-inverse) transition-all duration-200 hover:bg-(--neon-blue-700) active:bg-(--neon-blue-900) hover:shadow-(--glow-blue)"
-        (click)="sendMessage()"
-      >
-        Send
-      </button>
-    </div>
+  <div class="flex items-center gap-3 px-5 py-4">
+    <input
+      type="text"
+      [formControl]="input"
+      placeholder="Type a message..."
+      (keyup.enter)="sendMessage()"
+      id="input"
+      class="flex-1 px-3 py-3 rounded-full bg-(--bg-surface-3) text-(--text-primary)"
+    />
+    <button
+      mat-icon-button
+      class="px-5 py-3 rounded-full text-(--text-inverse)"
+      (click)="sendMessage()"
+    >
+      <mat-icon>send</mat-icon>
+    </button>
   </div>
 </div>
