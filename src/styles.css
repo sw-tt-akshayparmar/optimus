@@ -7,38 +7,41 @@
 
 /* Tailwind v4 @theme mapping to design tokens defined in assets/theme.css */
 @theme {
-  /* Primary action family (blue) */
   --color-primary: var(--neon-blue-500);
   --color-primary-hover: var(--neon-blue-700);
-  --color-primary-foreground: var(--text-inverse);
+  --color-primary-active: var(--neon-blue-900);
 
-  /* Secondary accent (purple) */
-  --color-secondary: var(--neon-purple-500);
-  --color-secondary-hover: var(--neon-purple-700);
-  --color-secondary-foreground: var(--text-primary);
+  --color-accent: var(--neon-purple-500);
+  --color-accent-hover: var(--neon-purple-700);
+  --color-accent-active: var(--neon-purple-900);
 
-  /* Background hierarchy */
-  --color-bg-root: var(--bg-root-900);
-  --color-bg-surface-1: var(--bg-surface-1);
-  --color-bg-surface-2: var(--bg-surface-2);
-  --color-bg-surface-3: var(--bg-surface-3);
-  --color-bg-card-soft: var(--bg-card-soft);
-  --color-bg-card-hover: var(--bg-card-hover);
-  --color-bg-card-active: var(--bg-card-active);
+  --color-success: var(--neon-green-500);
+  --color-success-hover: var(--neon-green-700);
+  --color-success-active: var(--neon-green-900);
+  --color-success-soft: var(--neon-green-300);
 
-  /* Typography */
-  --color-text-primary: var(--text-primary);
-  --color-text-primary-strong: var(--text-primary-strong);
-  --color-text-secondary: var(--text-secondary);
-  --color-text-muted: var(--text-muted);
-  --color-text-disabled: var(--text-disabled);
+  --color-warning: var(--neon-yellow-500);
+  --color-warning-hover: var(--neon-yellow-700);
+  --color-warning-active: var(--neon-yellow-900);
+  --color-warning-soft: var(--neon-yellow-300);
 
-  /* Borders & grid */
-  --color-border-soft: var(--border-soft);
-  --color-border-strong: var(--border-strong);
+  --color-danger: var(--neon-red-500);
+  --color-danger-hover: var(--neon-red-700);
+  --color-danger-active: var(--neon-red-900);
+  --color-danger-soft: var(--neon-red-300);
 
-  --color-success: var(--neon-green-700);
-  --color-danger: var(--neon-red-700);
+  --color-info: var(--neon-cyan-500);
+  --color-info-hover: var(--neon-cyan-700);
+  --color-info-active: var(--neon-cyan-900);
+  --color-info-soft: var(--neon-cyan-300);
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 6px 18px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.6);
+
+  --glow-cyan: 0 0 12px var(--neon-cyan-glow);
+  --glow-blue: 0 0 12px var(--neon-blue-glow);
+  --glow-purple: 0 0 14px var(--neon-purple-glow);
 }
 
 .mdc-notched-outline__notch {
