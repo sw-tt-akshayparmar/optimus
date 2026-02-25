@@ -1,19 +1,20 @@
 ### Architecture Overview
 
-The chat system is built using a unidirectional data flow pattern, leveraging Angular Signals for state management and RxJS for socket event streams.
+The chat system is built using a unidirectional data flow pattern, leveraging Angular Signals for state management and
+RxJS for socket event streams.
 
 #### 1. Socket Event Contract
 
-| Event | Direction | Payload | Description |
-| :--- | :--- | :--- | :--- |
-| `join:room` | Client -> Server | `{ roomId: string }` | Join a specific chat room |
-| `leave:room` | Client -> Server | `{ roomId: string }` | Leave a specific chat room |
-| `message:send` | Client -> Server | `{ roomId: string, content: string, nonce: string }` | Send a new message |
-| `message:receive` | Server -> Client | `Message` | Received a new message |
-| `message:ack` | Server -> Client | `{ nonce: string, status: 'delivered' \| 'failed', message?: Message }` | Acknowledgment of a sent message |
-| `typing:start` | Client <-> Server | `{ roomId: string, userId: string, username: string }` | User started typing |
-| `typing:stop` | Client <-> Server | `{ roomId: string, userId: string }` | User stopped typing |
-| `presence:update` | Server -> Client | `{ userId: string, status: 'online' \| 'offline' }` | Presence update |
+| Event             | Direction         | Payload                                                                 | Description                      |
+|:------------------|:------------------|:------------------------------------------------------------------------|:---------------------------------|
+| `join:room`       | Client -> Server  | `{ roomId: string }`                                                    | Join a specific chat room        |
+| `leave:room`      | Client -> Server  | `{ roomId: string }`                                                    | Leave a specific chat room       |
+| `message:send`    | Client -> Server  | `{ roomId: string, content: string, nonce: string }`                    | Send a new message               |
+| `message:receive` | Server -> Client  | `Message`                                                               | Received a new message           |
+| `message:ack`     | Server -> Client  | `{ nonce: string, status: 'delivered' \| 'failed', message?: Message }` | Acknowledgment of a sent message |
+| `typing:start`    | Client <-> Server | `{ roomId: string, userId: string, username: string }`                  | User started typing              |
+| `typing:stop`     | Client <-> Server | `{ roomId: string, userId: string }`                                    | User stopped typing              |
+| `presence:update` | Server -> Client  | `{ userId: string, status: 'online' \| 'offline' }`                     | Presence update                  |
 
 #### 2. Models
 
@@ -56,13 +57,12 @@ sequenceDiagram
     participant CC as ChatContainer
     participant CSS as ChatService
     participant S as Server
-
-    UI->>CC: Send Content
-    CC->>CC: Create Pending Message (Optimistic)
-    CC->>CSS: Emit 'message:send'
-    CSS->>S: Socket.IO Emit
-    S-->>CSS: Socket.IO Ack / 'message:ack'
-    CSS-->>CC: Update Message Status
+    UI ->> CC: Send Content
+    CC ->> CC: Create Pending Message (Optimistic)
+    CC ->> CSS: Emit 'message:send'
+    CSS ->> S: Socket.IO Emit
+    S -->> CSS: Socket.IO Ack / 'message:ack'
+    CSS -->> CC: Update Message Status
 ```
 
 #### 5. Socket Lifecycle
