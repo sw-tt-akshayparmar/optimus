@@ -10,6 +10,7 @@ import { provideClientHydration, withEventReplay } from '@angular/platform-brows
 import { withFetch } from '@angular/common/http';
 import { provideSocketIo } from 'ngx-socket-io';
 import environments from './environments';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,5 +25,6 @@ export const appConfig: ApplicationConfig = {
         autoConnect: false,
       },
     }),
+    MatSnackBar,
   ],
 };

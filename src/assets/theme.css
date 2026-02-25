@@ -5,35 +5,63 @@
   --bg-root-700: #181818;
   --bg-root-600: #1f1f1f;
 
+  --bg-i-root-900: #F8F9FA;
+  --bg-i-root-800: #F1F3F5;
+  --bg-i-root-700: #E9ECEF;
+  --bg-i-root-600: #DEE2E6;
+
   --bg-surface-1: #1e1e1e;
   --bg-surface-2: #242424;
   --bg-surface-3: #2c2c2c;
   --bg-surface-4: #333333;
   --bg-surface-5: #3d3d3d;
 
+  --bg-i-surface-1: #FFFFFF;
+  --bg-i-surface-2: #FBFCFD;
+  --bg-i-surface-3: #F1F3F5;
+  --bg-i-surface-4: #E9ECEF;
+  --bg-i-surface-5: #CED4DA;
+
   --bg-card-soft: rgba(255, 255, 255, 0.03);
   --bg-card-hover: rgba(255, 255, 255, 0.07);
   --bg-card-active: rgba(255, 255, 255, 0.12);
+
+  --bg-i-card-soft: rgba(0, 0, 0, 0.02);
+  --bg-i-card-hover: rgba(0, 0, 0, 0.05);
+  --bg-i-card-active: rgba(0, 0, 0, 0.08);
+
 
   --bg-overlay: rgba(5, 7, 10, 0.8);
   --bg-glass-sm: rgba(255, 255, 255, 0.03);
   --bg-glass-md: rgba(255, 255, 255, 0.06);
   --bg-glass-lg: rgba(255, 255, 255, 0.10);
 
-  --text-primary: #f0f4ff;
-  --text-secondary: rgba(240, 244, 255, 0.7);
-  --text-muted: rgba(240, 244, 255, 0.45);
-  --text-disabled: rgba(240, 244, 255, 0.25);
-  --text-inverse: #05070a;
+  --text-primary: #f5f5f5;
+  --text-secondary: #a3a3a3;
+  --text-muted: #737373;
+  --text-disabled: rgba(255, 255, 255, 0.25);
+  --text-inverse: #121212;
+
+  --text-i-primary: #212529;
+  --text-i-secondary: #495057;
+  --text-i-muted: #adb5bd;
 
   --grid-line-soft: rgba(120, 140, 255, 0.08);
   --grid-line: rgba(120, 140, 255, 0.12);
   --grid-line-strong: rgba(120, 140, 255, 0.2);
 
-  --axis-line: rgba(160, 180, 255, 0.22);
-  --border-soft: rgba(160, 180, 255, 0.25);
-  --border-strong: rgba(160, 180, 255, 0.50);
+
+  --border-subtle: rgba(255, 255, 255, 0.05);
+  --border-default: rgba(255, 255, 255, 0.12);
+  --border-bright: rgba(255, 255, 255, 0.20);
   --border-glass: rgba(255, 255, 255, 0.1);
+
+  --border-i-subtle: rgba(0, 0, 0, 0.08);
+
+  --accent-primary: #6366f1;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --error: #ef4444;
 
   --neon-cyan-300: #7efaff;
   --neon-cyan-500: #2ef2ff;

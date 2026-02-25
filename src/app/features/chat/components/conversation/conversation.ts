@@ -5,6 +5,7 @@ import {
   ChangeDetectionStrategy,
   ElementRef,
   ViewChild,
+  inject,
 } from '@angular/core';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';

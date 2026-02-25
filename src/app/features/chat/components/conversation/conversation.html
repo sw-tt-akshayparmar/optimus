@@ -13,7 +13,7 @@
           [ngClass]="{ 'flex-row-reverse': message.sender !== userService.getUserData().id }"
         >
           <div
-            class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-(--bg-surface-1)/95 border border-(--border-soft) opacity-0 scale-95 hover:opacity-100 hover:scale-100 group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto"
+            class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-(--bg-surface-1)/95 border border-(--border-default) opacity-0 scale-95 hover:opacity-100 hover:scale-100 group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto"
           >
             @for (i of reactions; track i) {
               <span
@@ -25,12 +25,12 @@
             }
           </div>
           <div
-            class="relative px-4 py-3 rounded-2xl wrap-break-word"
+            class="relative px-4 py-3 rounded-2xl"
             [ngClass]="{
-              'bg-(--neon-blue-300) text-(--text-inverse) rounded-br-md':
+              'bg-(--bg-i-surface-4) text-(--text-i-primary) rounded-br-md':
                 message.sender === userService.getUserData().id,
 
-              'bg-(--bg-surface-3) text-(--text-primary) rounded-bl-md border border-(--border-soft)':
+              'bg-(--bg-surface-3) text-(--text-primary) rounded-bl-md border border-(--border-default)':
                 message.sender !== userService.getUserData().id,
             }"
           >
@@ -42,13 +42,13 @@
           <div class="flex items-center">
             @for (i of rc; let idx = $index; track idx) {
               <div
-                class="flex items-center justify-center px-1 text-sm rounded-full bg-(--bg-surface-1) border border-(--border-soft) shadow-sm transition-all duration-150 hover:z-10 hover:scale-110 cursor-pointer"
+                class="flex items-center justify-center px-1 rounded-full bg-(--bg-surface-1) border border-(--border-bright) transition-all duration-150 hover:z-10 hover:scale-110 cursor-pointer"
                 [style]="{ 'z-index': 10 - idx }"
                 (click)="addReaction(i[0], message)"
               >
-                <span class="p-1"> {{ i[0] }}</span>
+                <span> {{ i[0] }}</span>
                 @if (i[1] > 1) {
-                  <span class="p-1 text-(--text-muted) text-sm">{{ i[1] }}</span>
+                  <span class="px-1 text-(--text-muted)">{{ i[1] }}</span>
                 }
               </div>
             }

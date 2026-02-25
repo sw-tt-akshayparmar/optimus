@@ -4,11 +4,11 @@
   "type": "module",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --host=0.0.0.0",
+    "start": "ng serve",
     "build": "ng build",
-    "watch": "ng build --watch --configuration development",
+    "watch": "ng build --watch",
     "test": "ng test",
-    "serve:ssr": "node dist/optimus/server/server.mjs",
+    "serve:ssr": "bun --hot dist/optimus/server/server.mjs",
     "lint": "eslint . --ext .ts,.html",
     "lint:fix": "eslint . --ext .ts,.html --fix",
     "format": "prettier --write \"src/**/*.{ts,html,scss,css,md}\""
