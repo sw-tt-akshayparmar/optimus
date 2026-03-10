@@ -8,6 +8,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MatFormField, MatInput, MatLabel, MatPrefix } from '@angular/material/input';
 import { ChatService } from '../../services/chat.service';
 import { ToastService } from '../../../../services/toast.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-request',
   standalone: true,
@@ -29,6 +30,8 @@ export class Request implements OnInit, OnDestroy {
   records = signal<{ user: User; invited: boolean }[]>([]);
 
   form!: FormGroup;
+  t?: NodeJS.Timeout;
+  s?: Subscription;
   constructor(
     private readonly userService: UserService,
     private readonly formBuilder: FormBuilder,
@@ -37,19 +40,25 @@ export class Request implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.form = this.formBuilder.group({
-      search: [''],
+    this.form = this.formBuilder.group<{ search: string }>({
+      search: '',
     });
   }
 
   ngOnDestroy(): void {}
 
   searchUsers(event: any) {
-    this.userService.getAllUsers(event.target.value.trim()).subscribe({
-      next: (res) => {
-        this.records.set(res.data.records.map((user: User) => ({ user, invited: false })));
-      },
-    });
+    if (this.t) {
+      clearTimeout(this.t);
+    }
+    if (this.form.value.search?.trim?.())
+      this.t = setTimeout(() => {
+        this.s = this.userService.getAllUsers(this.form.value.search.trim()).subscribe({
+          next: (res) => {
+            this.records.set(res.data.records.map((user: User) => ({ user, invited: false })));
+          },
+        });
+      }, 250);
   }
 
   inviteUser(user: User, index: number) {
