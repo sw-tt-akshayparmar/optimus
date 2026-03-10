@@ -105,9 +105,11 @@ export class ChatService {
     return this.apiService.get<Conversation[]>(APIConfig.CHAT).pipe(
       tap((res) => {
         res.data.forEach((c: Conversation) => {
-          c.title = c.participations?.find((p) => {
-            return p.user_id !== this.userService.getUserData().id;
-          })?.user.name;
+          if (!c.title) {
+            c.title = c.participations?.find((p) => {
+              return p.user_id !== this.userService.getUserData().id;
+            })?.user.name;
+          }
         });
         this.conversations.set(res.data);
       }),
