@@ -42,6 +42,7 @@
     "@typescript-eslint/utils": "^8.56.1",
     "animejs": "^4.3.6",
     "compression": "^1.8.1",
+    "dexie": "^4.3.0",
     "express": "^5.2.1",
     "helmet": "^8.1.0",
     "markdown-it": "^14.1.1",

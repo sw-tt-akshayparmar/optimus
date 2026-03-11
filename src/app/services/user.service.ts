@@ -2,7 +2,7 @@ import { Injectable, inject, PLATFORM_ID } from '@angular/core';
 import { User } from '../models/User.model';
 import { ApiService } from './api.service';
 import APIConfig from '../config/api.config';
-import { catchError, map, throwError } from 'rxjs';
+import { catchError, from, map, switchMap, throwError } from 'rxjs';
 import { SuccessResponse } from '../models/Response.model';
 import { AuthToken } from '../models/Auth.model';
 import { Exception } from '../exception/app.exception';
@@ -12,6 +12,7 @@ import { SocketService } from '../socket/socket.service';
 import Keys from '../enums/keys.enum';
 import { RecordModel } from '../models/record.model';
 import { Utils } from '../utils/utils';
+import { UserKeyBootstrapService } from '../crypto/user-key-bootstrap.service';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -21,16 +22,11 @@ export class UserService {
     private readonly apiService: ApiService,
     private readonly socketService: SocketService,
     private readonly utils: Utils,
+    private readonly userKeyBootstrapService: UserKeyBootstrapService,
   ) {}
   login(data: { username: string; password: string }) {
     return this.apiService.post<AuthToken>(APIConfig.LOGIN, data).pipe(
-      map<SuccessResponse<AuthToken>, User>((res) => {
-        this.socketService.auth(res.data.accessToken, this.getSocketId() ?? undefined);
-        this.setAccessToken(res.data.accessToken);
-        this.setRefreshToken(res.data.refreshToken);
-        this.setUserData(res.data.user);
-        return res.data.user;
-      }),
+      switchMap((res) => from(this.completeLogin(res.data))),
       catchError((err) => {
         let exception: Exception;
         if (err.status === 0) {
@@ -62,6 +58,15 @@ export class UserService {
         return throwError(() => exception);
       }),
     );
+  }
+
+  private async completeLogin(auth: AuthToken): Promise<User> {
+    this.socketService.auth(auth.accessToken, this.getSocketId() ?? undefined);
+    this.setAccessToken(auth.accessToken);
+    this.setRefreshToken(auth.refreshToken);
+    this.setUserData(auth.user);
+    await this.userKeyBootstrapService.initialize(auth.user.id);
+    return auth.user;
   }
 
   getAllUsers(search?: string, pageNumber?: number, pageSize?: number) {

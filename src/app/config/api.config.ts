@@ -29,6 +29,14 @@ const APIConfig = {
   USERS: {
     path: '/users',
   },
+
+  CRYPTO: {
+    path: '/crypto',
+  },
+
+  CRYPTO_KEY: {
+    path: '/crypto/key',
+  },
 };
 
 export default APIConfig;
